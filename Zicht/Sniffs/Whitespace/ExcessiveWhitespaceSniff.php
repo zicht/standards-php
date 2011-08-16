@@ -22,14 +22,14 @@ class Zicht_Sniffs_Whitespace_ExcessiveWhitespaceSniff implements PHP_CodeSniffe
 
     /**
      * Sniffs for multiple newlines
-     * 
+     *
      * @param PHP_CodeSniffer_File $phpcsFile
      * @param int $stackPtr
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
         $tokens = $phpcsFile->getTokens();
-        if($tokens[$stackPtr -1]['code'] == T_WHITESPACE) {
+        if($tokens[$stackPtr - 1]['code'] == T_WHITESPACE) {
             // we already processed consecutive whitespace, no need to do it again.
             return;
         }
@@ -49,7 +49,7 @@ class Zicht_Sniffs_Whitespace_ExcessiveWhitespaceSniff implements PHP_CodeSniffe
         }
 
         $newlines = substr_count($concat, "\n");
-        
+
         if($newlines > 3) {
             $phpcsFile->addWarning(
                 'Excessive whitespace, no more than two lines of whitespace is allowed',
@@ -57,9 +57,9 @@ class Zicht_Sniffs_Whitespace_ExcessiveWhitespaceSniff implements PHP_CodeSniffe
                 'WhiteLines'
             );
         }
-        
+
         if(!isset($tokens[$pos]) && $newlines > 1) {
-            $phpcsFile->addWarning('Excess whitespace at end of file', $stackPtr, 'WhiteLinesBeforeClosingBracket');
+            $phpcsFile->addWarning('Excess whitespace at end of file', $stackPtr, 'WhiteLinesAtEndOfFile');
         } elseif(
             isset($tokens[$pos])
             && in_array(
