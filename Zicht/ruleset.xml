@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<ruleset name="Zicht">
+    <description>The Zicht PHP coding standard.</description>
+
+    <!-- see readme.md -->
+
+    <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+    <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
+    <rule ref="Generic.WhiteSpace.ScopeIndent"/>
+
+    <rule ref="Zend">
+        <exclude name="PEAR.Commenting.FileComment"/>
+        <exclude name="Zend.NamingConventions.ValidVariableName"/>
+        <exclude name="PEAR.Commenting.ClassComment"/>
+        <exclude name="Squiz.Functions.GlobalFunction"/>
+        <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
+        <exclude name="PEAR.Functions.FunctionDeclaration"/>
+        <exclude name="PEAR.Classes.ClassDeclaration"/>
+        <exclude name="PEAR.WhiteSpace.ScopeIndent.Incorrect"/>
+    </rule>
+    <rule ref="PEAR.Commenting.FunctionComment.ParameterNamesNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PEAR.Commenting.FunctionComment.ParameterCommentsNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PEAR.Commenting.FunctionComment.MissingParamComment">
+        <severity>1</severity>
+    </rule>
+    <rule ref="Zicht.Commenting.FileComment.MissingVersion">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Zicht.Commenting.FileComment.EmptyCopyright">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Zicht.Commenting.FileComment.TagIndent">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Zicht.Commenting.ClassComment.TagIndent">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Zicht.Commenting.FileComment.SpacingBeforeTags">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PEAR.Commenting.FunctionComment.SpacingAfterParams">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PEAR.ControlStructures.ControlSignature">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PEAR.Commenting.ClassComment.EmptyCopyright">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="130"/>
+        </properties>
+    </rule>
+    
+</ruleset>

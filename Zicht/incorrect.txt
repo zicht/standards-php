@@ -1,0 +1,33 @@
+<?php
+
+// Doc comment is missing for the file
+
+
+class A // wrong brace placement
+{
+     const wrongFormat = '2314';
+}
+
+
+define('someConstant');
+
+
+
+
+
+
+// excessive whitespace
+
+function wrongFunctionName() {
+    // more excessive whitespace
+
+}
+
+
+
+class invalidName {
+}
+
+
+class Invalid_name {
+}
