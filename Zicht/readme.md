@@ -23,3 +23,20 @@ modifications to these standards:
 - All constants, both global and class constants are `UPPERCASED_AND_UNDERSCORED`
 - Excessive whitespace is discouraged, i.e. more than two lines of whitespace and whitespace before the end of a
   scope (before a closing '}') causes warnings
+
+# Usage #
+
+Install PHPCS through pear:
+
+    pear install PHP_CodeSniffer
+
+Install the Zicht directory in the PHPCS library:
+
+    cd /usr/lib/php/PHP/CodeSniffer/Standards/
+    cp ~/path/to/Zicht .
+
+Run the codechecker on your code:
+
+    phpcs --standard=Zicht ./my/library/
+
+Read it and weep :)
