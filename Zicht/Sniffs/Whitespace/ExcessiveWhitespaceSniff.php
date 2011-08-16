@@ -40,12 +40,15 @@ class Zicht_Sniffs_Whitespace_ExcessiveWhitespaceSniff implements PHP_CodeSniffe
             $concat .= $tokens[$pos]['content'];
         }
 
-        if(preg_match('/^[^\n]\s+?\n/', $concat)) {
-            $phpcsFile->addWarning(
-                "There should be no whitespace before the end of line",
-                $stackPtr,
-                "WhitespaceBeforeEol"
-            );
+        if(preg_match('/^[^\n](\s+?)\n/', $concat, $m)) {
+            // carriage return should be catched by the line ending style sniffs
+            if(strpos($m[0], "\r") === false) {
+                $phpcsFile->addWarning(
+                    "There should be no whitespace before the end of line",
+                    $stackPtr,
+                    "WhitespaceBeforeEol"
+                );
+            }
         }
 
         $newlines = substr_count($concat, "\n");

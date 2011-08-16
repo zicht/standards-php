@@ -31,7 +31,7 @@ class A {
      * @return mixed
      */
     function somethingElse($someParameter = null) {
-        switch ($someParameter) {
+        switch($someParameter) {
             case true:
                 return 'foo';
                 break;

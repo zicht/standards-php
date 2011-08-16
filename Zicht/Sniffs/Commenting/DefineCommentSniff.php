@@ -21,7 +21,7 @@ class Zicht_Sniffs_Commenting_DefineCommentSniff implements PHP_CodeSniffer_Snif
     /**
      * Called when one of the token types that this sniff is listening for
      * is found.
-     * 
+     *
      * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
      *                                        token was found.
      * @param int                  $stackPtr  The position in the PHP_CodeSniffer

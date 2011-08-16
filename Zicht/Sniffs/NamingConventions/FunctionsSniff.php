@@ -40,7 +40,7 @@ class Zicht_Sniffs_NamingConventions_FunctionsSniff implements PHP_CodeSniffer_S
             // scanning for function name
         }
         $functionName = $tokens[$pos]['content'];
-        
+
         switch($tokens[$stackPtr]['level']) {
             case 0:
                 if(!preg_match('/^[a-z_]+$/', $functionName)) {
@@ -63,9 +63,10 @@ class Zicht_Sniffs_NamingConventions_FunctionsSniff implements PHP_CodeSniffer_S
                 ) {
                     return;
                 }
-                if(!preg_match('/^[a-z][a-zA-Z]+$/', $functionName)) {
+                if(!preg_match('/^_?[a-z][a-zA-Z]+$/', $functionName)) {
                     $phpcsFile->addError(
-                        "Method name \"%s\" should be formatted lowerCamelCased and contain no underscores",
+                        "Method name \"%s\" should be formatted lowerCamelCased "
+                        . "and contain no underscores after the first",
                         $stackPtr,
                         'MethodNaming',
                         array($functionName)

@@ -20,7 +20,7 @@ class Zicht_Sniffs_NamingConventions_ConstantsSniff implements PHP_CodeSniffer_S
             T_STRING
         );
     }
-    
+
 
     /**
      * Checks if constants are UPPERCASED_AND_UNDERSCORED
