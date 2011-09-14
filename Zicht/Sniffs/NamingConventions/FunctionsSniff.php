@@ -58,12 +58,19 @@ class Zicht_Sniffs_NamingConventions_FunctionsSniff implements PHP_CodeSniffer_S
                     substr($functionName, 0, 2) == '__'
                     && in_array(
                         substr($functionName, 2),
-                        array('construct', 'get', 'set', 'call', 'callStatic', 'invoke', 'destruct', 'toString')
+                        array('construct', 'get', 'set', 'call', 'callStatic', 'invoke', 'destruct', 'toString', 'clone', 'invoke', 'invokeStatic')
                     )
                 ) {
                     return;
                 }
-                if(!preg_match('/^_?[a-z][a-zA-Z]+$/', $functionName)) {
+                if(preg_match('/^_?[a-z][a-zA-Z0-9]*$/', $functionName) && preg_match('/[0-9]/', $functionName)) {
+                    $phpcsFile->addWarning(
+                        "Usage of numbers in methodname \"%s\" is discouraged",
+                        $stackPtr,
+                        'MethodNaming',
+                        array($functionName)
+                    );
+                } elseif(!preg_match('/^_?[a-z][a-zA-Z]*$/', $functionName)) {
                     $phpcsFile->addError(
                         "Method name \"%s\" should be formatted lowerCamelCased "
                         . "and contain no underscores after the first",
