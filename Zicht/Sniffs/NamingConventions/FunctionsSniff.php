@@ -44,12 +44,15 @@ class Zicht_Sniffs_NamingConventions_FunctionsSniff implements PHP_CodeSniffer_S
         switch($tokens[$stackPtr]['level']) {
             case 0:
                 if(!preg_match('/^[a-z_]+$/', $functionName)) {
-                    $phpcsFile->addError(
-                        "Global function name \"%s\" should be formatted with lowercase and underscores only",
-                        $stackPtr,
-                        'GlobalNaming',
-                        array($functionName)
-                    );
+                    // make an exception for drupal update functions
+                    if(!preg_match('/_update_[0-9]+/', $functionName)) {
+                        $phpcsFile->addError(
+                            "Global function name \"%s\" should be formatted with lowercase and underscores only",
+                            $stackPtr,
+                            'GlobalNaming',
+                            array($functionName)
+                        );
+                    }
                 }
                 break;
             case 1:

@@ -5,17 +5,6 @@ modifications to these standards:
 
 - There are no required tags for file and class comments.
 - All bracing style is "same line", including class, function and method declarations
-- The control structures have no space trailing the keyword,
-  i.e.:
-
-      if($a == $b) // this is correct
-      if ($a == $b) // this is wrong
-
-  Same goes for function calls:
-
-      fn($a == $b); // this is correct
-      fn ($a == $b); // this is wrong
-
 - Since we do no longer live in an era with fixed width consoles, the line length limit is fixed at 120, warning at
   120, erroring at 130
 - Doc comment tags are compulsory for define() calls

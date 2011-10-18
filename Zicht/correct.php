@@ -76,6 +76,16 @@ some_global_function(
 
 
 /**
+ * Drupal update functions may contain numbers, as long as they pertain the format *_update_NNNN
+ * with NNNN being the version number
+ *
+ * @return void
+ */
+function mod_some_drupal_update_hook_update_6001() {
+}
+
+
+/**
  * The description of this constant
  */
 define('SOME_DEFAULT_VALUE', '1234');
