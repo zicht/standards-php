@@ -73,7 +73,7 @@ class Zicht_Sniffs_Whitespace_ScopeIndentSniff extends Generic_Sniffs_WhiteSpace
         // Based on the conditions that surround this token, determine the
         // indent that we expect this current content to be.
         $expectedIndent = $this->calculateExpectedIndent($tokens, $firstToken);
-
+        
         if ($tokens[$firstToken]['column'] !== $expectedIndent) {
             $error = 'Line indented incorrectly; expected %s spaces, found %s';
             $data  = array(
@@ -243,8 +243,16 @@ class Zicht_Sniffs_Whitespace_ScopeIndentSniff extends Generic_Sniffs_WhiteSpace
                 }//end if
             }//end if
         }//end for
-
     }//end process()
+
+
+    protected function calculateExpectedIndent(array $tokens, $stackPtr) {
+        // skip closure start indent, because it does not work correctly by default
+        if($tokens[$stackPtr]['code'] == T_CLOSURE) {
+            return $tokens[$stackPtr]['column'];
+        }
+        return parent::calculateExpectedIndent($tokens, $stackPtr);
+    }
 }//end class
 
 ?>

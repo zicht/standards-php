@@ -5,7 +5,7 @@
  */
 
 /**
- * Sniffs for 
+ * Sniffs for
  */
 class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
     /**
@@ -33,6 +33,19 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+        $tokens = $phpcsFile->getTokens();
+        $ptr = $stackPtr;
+
+        do {
+            $ptr++;
+        } while ($tokens[$ptr] == T_WHITESPACE);
+
+        if ($tokens[$ptr]['code'] == T_OPEN_PARENTHESIS) {
+            // skip, this is the case where use is part of a closure:
+            // function() use($var) {}
+            return;
+        }
+
         $this->processUseStatementValue($phpcsFile, $stackPtr);
         $this->processUseStatementPosition($phpcsFile, $stackPtr);
         $this->processUseLists($phpcsFile, $stackPtr);
@@ -45,13 +58,13 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
         $ptr = $stackPtr;
         $commas = 0;
         do {
-            $ptr ++;
-            if($tokens[$ptr]['code'] == T_COMMA) {
+            $ptr++;
+            if ($tokens[$ptr]['code'] == T_COMMA) {
                 $commas++;
             }
-        } while($tokens[$ptr]['code'] != T_SEMICOLON);
+        } while ($tokens[$ptr]['code'] != T_SEMICOLON);
 
-        if($commas > 0) {
+        if ($commas > 0) {
             $phpcsFile->addError(
                 'Use statements must be split up, usage of comma\'s in use statement is disallowed',
                 $stackPtr
@@ -93,9 +106,9 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
                 'TopOfFile'
             );
         } else {
-            if(!empty($tokens[$stackPtr-1])) {
+            if (!empty($tokens[$stackPtr - 1])) {
                 $previous = $tokens[$stackPtr - 1];
-                if($previous['content']{strlen($previous['content']) -1} != "\n") {
+                if ($previous['content']{strlen($previous['content']) - 1} != "\n") {
                     $phpcsFile->addWarning(
                         'Use statement should be on its own line.',
                         $stackPtr
@@ -108,7 +121,6 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
 
     public function processUseStatementValue(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
         $tokens = $phpcsFile->getTokens();
-
         $ptr = $stackPtr;
         do {
             ++$ptr;
