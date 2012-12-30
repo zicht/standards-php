@@ -54,7 +54,7 @@ class Zicht_Sniffs_PHP_NamespaceSniff implements PHP_CodeSniffer_Sniff {
         $ptrRight2 = $ptrRight1;
         do {
             ++$ptrRight2;
-        } while ($tokens[$ptrRight1]['code'] == T_WHITESPACE);
+        } while ($tokens[$ptrRight2]['code'] == T_WHITESPACE);
 
         if($tokens[$ptrLeft]['code'] != T_USE && $tokens[$ptrLeft]['code'] != T_STRING) {
             if ($tokens[$ptrRight2]['code'] == T_NS_SEPARATOR) {
