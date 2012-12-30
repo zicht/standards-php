@@ -1,10 +1,9 @@
 # Zicht coding standards #
 
-Roughly based on the PEAR and Zend coding standards, the Zicht coding standard applies some custom rules and
-modifications to these standards:
+Roughly based on the PEAR and Zend coding standards, with inclusion of the PSR-1 and PSR-2 standards, the Zicht coding
+standard applies some custom rules and modifications to these standards:
 
 - There are no required tags for file and class comments.
-- All bracing style is "same line", including class, function and method declarations
 - Since we do no longer live in an era with fixed width consoles, the line length limit is fixed at 120, warning at
   120, erroring at 130
 - Doc comment tags are compulsory for define() calls

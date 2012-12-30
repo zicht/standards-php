@@ -4,7 +4,7 @@
 
     <!-- see readme.md -->
 
-    <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
     <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>
 
@@ -13,7 +13,6 @@
         <exclude name="Zend.NamingConventions.ValidVariableName"/>
         <exclude name="PEAR.Commenting.ClassComment"/>
         <exclude name="Squiz.Functions.GlobalFunction"/>
-        <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
         <!-- overridden in Zicht standard -->
         <exclude name="Generic.WhiteSpace.ScopeIndent"/>
         <exclude name="PEAR.Functions.FunctionDeclaration"/>
@@ -22,6 +21,9 @@
     </rule>
     <!-- This messgae is not required as spaces are allowed for alignment -->
     <rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Generic.Formatting.SpaceAfterCast.NoSpace">
         <severity>0</severity>
     </rule>
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
@@ -39,6 +41,9 @@
     </rule>
     <rule ref="PEAR.Commenting.FunctionComment.MissingParamComment">
         <severity>1</severity>
+    </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterCloseBracket">
+        <severity>0</severity>
     </rule>
     <rule ref="Zicht.Commenting.FileComment.MissingVersion">
         <severity>0</severity>
@@ -71,5 +76,7 @@
             <property name="absoluteLineLimit" value="130"/>
         </properties>
     </rule>
+    <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine" />
+    <rule ref="PSR" />
 
 </ruleset>

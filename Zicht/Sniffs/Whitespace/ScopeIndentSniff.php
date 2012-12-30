@@ -75,12 +75,14 @@ class Zicht_Sniffs_Whitespace_ScopeIndentSniff extends Generic_Sniffs_WhiteSpace
         $expectedIndent = $this->calculateExpectedIndent($tokens, $firstToken);
         
         if ($tokens[$firstToken]['column'] !== $expectedIndent) {
-            $error = 'Line indented incorrectly; expected %s spaces, found %s';
-            $data  = array(
-                      ($expectedIndent - 1),
-                      ($tokens[$firstToken]['column'] - 1),
-                     );
-            $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
+            if ($tokens[$firstToken]['code'] != T_OBJECT_OPERATOR) {
+                $error = 'Line indented incorrectly; expected %s spaces, found %s';
+                $data  = array(
+                    ($expectedIndent - 1),
+                    ($tokens[$firstToken]['column'] - 1),
+                );
+                $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
+            }
         }
 
         $scopeOpener = $tokens[$stackPtr]['scope_opener'];

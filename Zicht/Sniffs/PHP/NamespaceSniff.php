@@ -41,18 +41,29 @@ class Zicht_Sniffs_PHP_NamespaceSniff implements PHP_CodeSniffer_Sniff {
         $tokens = $phpcsFile->getTokens();
 
         // find the previous token. 
-        $ptr = $stackPtr;
+        $ptrLeft = $stackPtr;
         do {
-            --$ptr;
-        } while ($tokens[$ptr]['code'] == T_WHITESPACE);
+            --$ptrLeft;
+        } while ($tokens[$ptrLeft]['code'] == T_WHITESPACE);
 
+        $ptrRight1 = $stackPtr;
+        do {
+            ++$ptrRight1;
+        } while ($tokens[$ptrRight1]['code'] == T_WHITESPACE);
 
-        if($tokens[$ptr]['code'] != T_USE && $tokens[$ptr]['code'] != T_STRING) {
-            $phpcsFile->addWarning(
-                'Referring global namespaces (without use statement) is discouraged',
-                $stackPtr,
-                'GlobalNamespaceReferral'
-            );
+        $ptrRight2 = $ptrRight1;
+        do {
+            ++$ptrRight2;
+        } while ($tokens[$ptrRight1]['code'] == T_WHITESPACE);
+
+        if($tokens[$ptrLeft]['code'] != T_USE && $tokens[$ptrLeft]['code'] != T_STRING) {
+            if ($tokens[$ptrRight2]['code'] == T_NS_SEPARATOR) {
+                $phpcsFile->addWarning(
+                    'Referring a non global namespace globally (without use statement) is discouraged',
+                    $stackPtr,
+                    'GlobalNamespaceReferral'
+                );
+            }
         }
     }
 }
