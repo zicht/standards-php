@@ -10,6 +10,7 @@
 
     <rule ref="Zend">
         <exclude name="PEAR.Commenting.FileComment"/>
+        <exclude name="PEAR.Commenting.FunctionComment"/>
         <exclude name="Zend.NamingConventions.ValidVariableName"/>
         <exclude name="PEAR.Commenting.ClassComment"/>
         <exclude name="Squiz.Functions.GlobalFunction"/>
