@@ -19,7 +19,8 @@ define('someConstant');
 // excessive whitespace
 
 function invalidFunctionName() {
-    // more excessive whitespace
+    // excess whitespace at end of function
+    return false;
 
 }
 

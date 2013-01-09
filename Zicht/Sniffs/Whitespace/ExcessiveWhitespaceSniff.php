@@ -53,7 +53,7 @@ class Zicht_Sniffs_Whitespace_ExcessiveWhitespaceSniff implements PHP_CodeSniffe
 
         $newlines = substr_count($concat, "\n");
 
-        if($newlines > 3) {
+        if ($newlines > 3) {
             $phpcsFile->addWarning(
                 'Excessive whitespace, no more than two lines of whitespace is allowed',
                 $stackPtr,
@@ -61,21 +61,24 @@ class Zicht_Sniffs_Whitespace_ExcessiveWhitespaceSniff implements PHP_CodeSniffe
             );
         }
 
-        if(!isset($tokens[$pos]) && $newlines > 1) {
+        if (!isset($tokens[$pos]) && $newlines > 1) {
             $phpcsFile->addWarning('Excess whitespace at end of file', $stackPtr, 'WhiteLinesAtEndOfFile');
-        } elseif(
+        } elseif (
             isset($tokens[$pos])
-            && in_array(
-                $tokens[$pos]['code'],
-                array(T_CLOSE_CURLY_BRACKET, T_CLOSE_PARENTHESIS, T_CLOSE_PARENTHESIS)
-            )
-            && $newlines > 1
+            && (
+                in_array(
+                    $tokens[$pos]['type'],
+                    array('T_CLOSE_CURLY_BRACKET', 'T_CLOSE_PARENTHESIS')
+                )
+            ) && $newlines > 1
         ) {
             $phpcsFile->addWarning(
                 'Excess whitespace before closing bracket',
                 $stackPtr,
                 'WhiteLinesBeforeClosingBracket'
             );
-        } 
+        } else {
+            var_dump($tokens[$pos]['type']);
+        }
     }
 }
