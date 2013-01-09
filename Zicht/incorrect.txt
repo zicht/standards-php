@@ -4,8 +4,7 @@
 // Doc comment is missing for the file
 
 
-class A // wrong brace placement
-{
+class A { // wrong brace placement
      const wrongFormat = '2314';
 }
 
@@ -32,3 +31,5 @@ class invalidName {
 
 class Invalid_name {
 }
+
+

@@ -6,7 +6,8 @@
 /**
  * Comment of class A
  */
-class A {
+class A
+{
     /**
      * Constant description
      */
@@ -19,7 +20,8 @@ class A {
      * @param string $paramOne First parameter
      * @param string $paramTwo Second parameter
      */
-    function __construct($paramOne, $paramTwo = SOME_DEFAULT_VALUE) {
+    public function __construct($paramOne, $paramTwo = SOME_DEFAULT_VALUE)
+    {
         $this->somethingElse();
     }
 
@@ -30,7 +32,8 @@ class A {
      * @param string $someParameter some parameter that does something cool
      * @return mixed
      */
-    function somethingElse($someParameter = null) {
+    public function somethingElse($someParameter = null)
+    {
         switch($someParameter) {
             case true:
                 return 'foo';
@@ -47,13 +50,15 @@ class A {
 /**
  * Sample interface
  */
-interface C {
+interface C
+{
 }
 
 /**
  * Comment of class B
  */
-class B extends A implements C {
+class B extends A implements C
+{
 }
 
 
@@ -62,7 +67,8 @@ class B extends A implements C {
  *
  * @return void
  */
-function some_global_function() {
+function some_global_function()
+{
 }
 
 
@@ -81,7 +87,8 @@ some_global_function(
  *
  * @return void
  */
-function mod_some_drupal_update_hook_update_6001() {
+function mod_some_drupal_update_hook_update_6001()
+{
 }
 
 
