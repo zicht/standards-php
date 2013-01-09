@@ -11,6 +11,9 @@ standard applies some custom rules and modifications to these standards:
 - All constants, both global and class constants are `UPPERCASED_AND_UNDERSCORED`
 - Excessive whitespace is discouraged, i.e. more than two lines of whitespace and whitespace before the end of a
   scope (before a closing '}') causes warnings
+- Referring local namespaces in use statements is discouraged, and they should begin with a backslash
+- Referring global namespaces for non-global classes (i.e., classes that do not reside in the global namespace
+  is discouraged.
 
 # Usage #
 
@@ -22,6 +25,8 @@ Install the Zicht directory in the PHPCS library:
 
     cd /usr/lib/php/PHP/CodeSniffer/Standards/
     cp ~/path/to/Zicht .
+    # or
+    svn checkout svn://url/to/Zicht
 
 Run the codechecker on your code:
 
