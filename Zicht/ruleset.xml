@@ -34,15 +34,20 @@
     <rule ref="PEAR.Functions.FunctionCallSignature.Indent">
         <severity>0</severity>
     </rule>
-    <rule ref="PEAR.Commenting.FunctionComment.ParameterNamesNotAligned">
+
+    <rule ref="Zicht.Commenting.FunctionComment.ParameterNamesNotAligned">
         <severity>0</severity>
     </rule>
-    <rule ref="PEAR.Commenting.FunctionComment.ParameterCommentsNotAligned">
+    <rule ref="Zicht.Commenting.FunctionComment.ParameterCommentsNotAligned">
         <severity>0</severity>
     </rule>
-    <rule ref="PEAR.Commenting.FunctionComment.MissingParamComment">
+    <rule ref="Zicht.Commenting.FunctionComment.MissingParamComment">
         <severity>1</severity>
     </rule>
+    <rule ref="Zicht.Commenting.FunctionComment.SpacingAfterParams">
+        <severity>0</severity>
+    </rule>
+
     <rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterCloseBracket">
         <severity>0</severity>
     </rule>
@@ -59,9 +64,6 @@
         <severity>0</severity>
     </rule>
     <rule ref="Zicht.Commenting.FileComment.SpacingBeforeTags">
-        <severity>0</severity>
-    </rule>
-    <rule ref="PEAR.Commenting.FunctionComment.SpacingAfterParams">
         <severity>0</severity>
     </rule>
     <rule ref="PEAR.ControlStructures.ControlSignature">
