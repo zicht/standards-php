@@ -78,7 +78,7 @@ class Zicht_Sniffs_Whitespace_ExcessiveWhitespaceSniff implements PHP_CodeSniffe
                 'WhiteLinesBeforeClosingBracket'
             );
         } else {
-            var_dump($tokens[$pos]['type']);
+//            var_dump($tokens[$pos]['type']);
         }
     }
 }
