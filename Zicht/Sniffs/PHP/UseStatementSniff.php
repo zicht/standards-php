@@ -38,9 +38,9 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
 
         do {
             $ptr++;
-        } while ($tokens[$ptr] == T_WHITESPACE);
+        } while ($tokens[$ptr]['code'] == T_WHITESPACE);
 
-        if ($tokens[$ptr]['code'] == T_OPEN_PARENTHESIS) {
+        if ($tokens[$ptr]['content'] == '(') {
             // skip, this is the case where use is part of a closure:
             // function() use($var) {}
             return;
@@ -75,8 +75,9 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
 
     public function processUseStatementPosition(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
         $tokens = $phpcsFile->getTokens();
-        $ptr = $stackPtr;
 
+
+        $ptr = $stackPtr;
         // scan back to the start of file, and make sure only the specified tokens occur before
         // the use statement
         do {
