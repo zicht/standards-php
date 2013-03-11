@@ -20,6 +20,9 @@
         <exclude name="PEAR.Classes.ClassDeclaration"/>
         <exclude name="PEAR.WhiteSpace.ScopeIndent.Incorrect"/>
     </rule>
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase">
+        <severity>0</severity>
+    </rule>
     <!-- This messgae is not required as spaces are allowed for alignment -->
     <rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
         <severity>0</severity>
