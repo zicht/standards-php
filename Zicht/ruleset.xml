@@ -87,5 +87,7 @@
     </rule>
     <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine" />
     <rule ref="PSR" />
-
+    <rule ref="PSR.NamingConventions.ValidFunctionName.MethodDoubleUnderscore">
+        <severity>0</severity>
+    </rule>
 </ruleset>
