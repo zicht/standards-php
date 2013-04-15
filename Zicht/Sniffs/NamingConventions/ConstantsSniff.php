@@ -49,8 +49,8 @@ class Zicht_Sniffs_NamingConventions_ConstantsSniff implements PHP_CodeSniffer_S
             $name = substr($name, 1, -1);
         }
 
-        if(!preg_match('/^[A-Z][A-Z_]*$/', $name)) {
-            $phpcsFile->addError(
+        if(!preg_match('/^[A-Z][A-Z_]*[0-9]*$/', $name)) {
+            $phpcsFile->addWarning(
                 "Constant \"%s\" should be UPPERCASED_AND_UNDERSCORED",
                 $stackPtr,
                 'InvalidName',
