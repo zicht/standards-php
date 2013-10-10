@@ -187,7 +187,10 @@ class Zicht_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
         // Zicht-specific: we skip checking the docs if the method is an accessor or a mutator.
         $functionName = $phpcsFile->getTokensAsString($phpcsFile->findNext(array(T_STRING), $this->_functionToken), 1);
-        if (preg_match('/^(set|get|is)[A-Z]/', $functionName)) {
+        if (
+            preg_match('/^(set|get|is)[A-Z]/', $functionName)
+            || $functionName === '__toString'
+        ) {
             return;
         }
 
