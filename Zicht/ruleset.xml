@@ -75,6 +75,9 @@
     <rule ref="PEAR.Commenting.ClassComment.EmptyCopyright">
         <severity>0</severity>
     </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
+        <severity>0</severity>
+    </rule>     
     <rule ref="PSR.NamingConventions.ValidFunctionName.FunctionNoCaptial">
         <severity>0</severity>
     </rule>
