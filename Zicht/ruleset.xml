@@ -19,6 +19,7 @@
         <exclude name="PEAR.Functions.FunctionDeclaration"/>
         <exclude name="PEAR.Classes.ClassDeclaration"/>
         <exclude name="PEAR.WhiteSpace.ScopeIndent.Incorrect"/>
+        <exclude name="Generic.Files.LineLength"/>
     </rule>
     <rule ref="Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase">
         <severity>0</severity>
