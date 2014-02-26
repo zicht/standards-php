@@ -94,4 +94,7 @@
     <rule ref="PSR.NamingConventions.ValidFunctionName.MethodDoubleUnderscore">
         <severity>0</severity>
     </rule>
+    <rule ref="PSR.NamingConventions.ValidFunctionName.FunctionNoCapital">
+        <severity>0</severity>
+    </rule>
 </ruleset>
