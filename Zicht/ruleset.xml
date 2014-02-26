@@ -79,9 +79,6 @@
     <rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
         <severity>0</severity>
     </rule>     
-    <rule ref="PSR.NamingConventions.ValidFunctionName.FunctionNoCaptial">
-        <severity>0</severity>
-    </rule>
 
     <rule ref="Generic.Files.LineLength">
         <properties>
@@ -90,11 +87,5 @@
         </properties>
     </rule>
     <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine" />
-    <rule ref="PSR" />
-    <rule ref="PSR.NamingConventions.ValidFunctionName.MethodDoubleUnderscore">
-        <severity>0</severity>
-    </rule>
-    <rule ref="PSR.NamingConventions.ValidFunctionName.FunctionNoCapital">
-        <severity>0</severity>
-    </rule>
+    <rule ref="PSR1" />
 </ruleset>
