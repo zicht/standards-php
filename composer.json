@@ -1,5 +1,8 @@
 {
      "name": "zicht-standards/php",
      "description": "Contains the Zicht PHP coding standards, including phpcs ruleset",
-     "license": "MIT"
+     "license": "MIT",
+     "autoload": {
+          "classmap": ["php/Zicht"]
+     }
 }
