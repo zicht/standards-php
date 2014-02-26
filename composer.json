@@ -3,6 +3,6 @@
      "description": "Contains the Zicht PHP coding standards, including phpcs ruleset",
      "license": "MIT",
      "autoload": {
-          "classmap": ["php/Zicht"]
+          "classmap": ["Zicht"]
      }
 }
