@@ -127,14 +127,14 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
             ++$ptr;
         } while ($tokens[$ptr]['code'] == T_WHITESPACE);
 
-        if ($tokens[$ptr]['code'] != T_NS_SEPARATOR) {
+        if ($tokens[$ptr]['code'] == T_NS_SEPARATOR) {
             $code = '';
             do {
                 $code .= $tokens[$ptr]['content'];
                 ++$ptr;
             } while (isset($tokens[$ptr]) && !in_array($tokens[$ptr]['content'], array(';', 'as')));
             $phpcsFile->addWarning(
-                'Use statements should always refer global namespace, found ' . trim($code),
+                'Use statements should not refer global namespace, found ' . trim($code),
                 $stackPtr,
                 'GlobalReference'
             );
