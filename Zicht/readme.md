@@ -11,7 +11,7 @@ standard applies some custom rules and modifications to these standards:
 - All constants, both global and class constants are `UPPERCASED_AND_UNDERSCORED`
 - Excessive whitespace is discouraged, i.e. more than two lines of whitespace and whitespace before the end of a
   scope (before a closing '}') causes warnings
-- Referring local namespaces in use statements is discouraged, and they should begin with a backslash
+- Referring namespaces in use statements, starting with a backslash is discouraged.
 - Referring global namespaces for non-global classes (i.e., classes that do not reside in the global namespace
   is discouraged.
 
