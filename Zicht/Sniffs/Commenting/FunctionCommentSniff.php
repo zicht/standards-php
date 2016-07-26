@@ -309,7 +309,7 @@ class Zicht_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             if ($this->commentParser->getReturn() === null) {
                 $error = 'Missing @return tag in function comment';
                 $this->currentFile->addError($error, $commentEnd, 'MissingReturn');
-            } else if (trim($this->commentParser->getReturn()->getRawContent()) === '') {
+            } elseif (trim($this->commentParser->getReturn()->getRawContent()) === '') {
                 $error    = '@return tag is empty in function comment';
                 $errorPos = ($commentStart + $this->commentParser->getReturn()->getLine());
                 $this->currentFile->addError($error, $errorPos, 'EmptyReturn');
