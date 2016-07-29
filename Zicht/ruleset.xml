@@ -4,7 +4,6 @@
 
     <!-- see readme.md -->
 
-    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
     <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>
 
@@ -67,6 +66,9 @@
         <severity>0</severity>
     </rule>
     <rule ref="PEAR.Commenting.ClassComment.EmptyCopyright">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine">
         <severity>0</severity>
     </rule>
 
