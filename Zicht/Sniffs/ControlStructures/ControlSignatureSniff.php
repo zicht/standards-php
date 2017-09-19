@@ -4,17 +4,23 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+namespace Zicht\Sniffs\ControlStructures;
+
+use PHP_CodeSniffer\Sniffs\AbstractPatternSniff;
+
 /**
  * Checks for the defined control structures signature.
  */
-class Zicht_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffer_Standards_AbstractPatternSniff {
+class ControlSignatureSniff extends AbstractPatternSniff
+{
     /**
      * Returns the patterns that this test wishes to verify.
      *
      * @return array(string)
      */
-    protected function getPatterns() {
-        return array(
+    protected function getPatterns()
+    {
+        return [
             'do {EOL...} while (...);EOL',
             'while (...) {EOL',
             'for (...) {EOL',
@@ -24,6 +30,6 @@ class Zicht_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniff
             '} elseif (...) {EOL',
             '} else {EOL',
             'do {EOL',
-        );
+        ];
     }
 }

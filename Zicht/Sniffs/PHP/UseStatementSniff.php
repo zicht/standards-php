@@ -4,41 +4,49 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+namespace Zicht\Sniffs\PHP;
+
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Sniffs for
  */
-class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
+class UseStatementSniff implements Sniff
+{
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
      * @return array(int)
      * @see    Tokens.php
      */
-    public function register() {
-        return array(
-            T_USE
-        );
+    public function register()
+    {
+        return [
+            T_USE,
+        ];
     }
 
     /**
      * Called when one of the token types that this sniff is listening for
      * is found.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
+     * @param File $phpcsFile The PHP_CodeSniffer file where the
      *                                        token was found.
-     * @param int                  $stackPtr  The position in the PHP_CodeSniffer
+     * @param int $stackPtr The position in the PHP_CodeSniffer
      *                                        file's token stack where the token
      *                                        was found.
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+    public function process(File $phpcsFile, $stackPtr)
+    {
         $tokens = $phpcsFile->getTokens();
         $ptr = $stackPtr;
 
         // only check if the use statement is part of the global scope
         while (--$ptr) {
-            if (in_array($tokens[$ptr]['code'], [T_FUNCTION, T_CLASS, T_TRAIT, T_INTERFACE])) {
+            if (in_array($tokens[ $ptr ]['code'], [T_FUNCTION, T_CLASS, T_TRAIT, T_INTERFACE])) {
                 return;
             }
         }
@@ -49,17 +57,18 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
     }
 
 
-    public function processUseLists(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+    public function processUseLists(File $phpcsFile, $stackPtr)
+    {
         $tokens = $phpcsFile->getTokens();
 
         $ptr = $stackPtr;
         $commas = 0;
         do {
             $ptr++;
-            if ($tokens[$ptr]['code'] == T_COMMA) {
+            if ($tokens[ $ptr ]['code'] == T_COMMA) {
                 $commas++;
             }
-        } while ($tokens[$ptr]['code'] != T_SEMICOLON);
+        } while ($tokens[ $ptr ]['code'] != T_SEMICOLON);
 
         if ($commas > 0) {
             $phpcsFile->addError(
@@ -70,7 +79,8 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
     }
 
 
-    public function processUseStatementPosition(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+    public function processUseStatementPosition(File $phpcsFile, $stackPtr)
+    {
         $tokens = $phpcsFile->getTokens();
 
 
@@ -82,19 +92,25 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
         } while (
             $ptr > 0
             && in_array(
-                $tokens[$ptr]['code'],
-                array(
-                     T_OPEN_TAG,
-                     T_NAMESPACE,
-                     T_COMMENT,
-                     T_DOC_COMMENT,
-                     T_WHITESPACE,
-                     T_SEMICOLON,
-                     T_STRING,
-                     T_NS_SEPARATOR,
-                     T_USE,
-                     T_AS
-                )
+                $tokens[ $ptr ]['code'],
+                [
+                    T_OPEN_TAG,
+                    T_NAMESPACE,
+                    T_COMMENT,
+                    T_DOC_COMMENT,
+                    T_WHITESPACE,
+                    T_SEMICOLON,
+                    T_STRING,
+                    T_NS_SEPARATOR,
+                    T_USE,
+                    T_AS,
+                    'PHPCS_T_DOC_COMMENT_CLOSE_TAG',
+                    'PHPCS_T_DOC_COMMENT_WHITESPACE',
+                    'PHPCS_T_DOC_COMMENT_STRING',
+                    'PHPCS_T_DOC_COMMENT_TAG',
+                    'PHPCS_T_DOC_COMMENT_STAR',
+                    'PHPCS_T_DOC_COMMENT_OPEN_TAG',
+                ]
             )
         );
         if ($ptr !== 0) {
@@ -104,8 +120,8 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
                 'TopOfFile'
             );
         } else {
-            if (!empty($tokens[$stackPtr - 1])) {
-                $previous = $tokens[$stackPtr - 1];
+            if (!empty($tokens[ $stackPtr - 1 ])) {
+                $previous = $tokens[ $stackPtr - 1 ];
                 if ($previous['content']{strlen($previous['content']) - 1} != "\n") {
                     $phpcsFile->addWarning(
                         'Use statement should be on its own line.',
@@ -117,19 +133,20 @@ class Zicht_Sniffs_PHP_UseStatementSniff implements PHP_CodeSniffer_Sniff {
     }
 
 
-    public function processUseStatementValue(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+    public function processUseStatementValue(File $phpcsFile, $stackPtr)
+    {
         $tokens = $phpcsFile->getTokens();
         $ptr = $stackPtr;
         do {
             ++$ptr;
-        } while ($tokens[$ptr]['code'] == T_WHITESPACE);
+        } while ($tokens[ $ptr ]['code'] == T_WHITESPACE);
 
-        if ($tokens[$ptr]['code'] == T_NS_SEPARATOR) {
+        if ($tokens[ $ptr ]['code'] == T_NS_SEPARATOR) {
             $code = '';
             do {
-                $code .= $tokens[$ptr]['content'];
+                $code .= $tokens[ $ptr ]['content'];
                 ++$ptr;
-            } while (isset($tokens[$ptr]) && !in_array($tokens[$ptr]['content'], array(';', 'as')));
+            } while (isset($tokens[ $ptr ]) && !in_array($tokens[ $ptr ]['content'], [';', 'as']));
             $phpcsFile->addWarning(
                 'Use statements should not refer global namespace, found ' . trim($code),
                 $stackPtr,

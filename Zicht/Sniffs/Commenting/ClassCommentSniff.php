@@ -4,10 +4,15 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+namespace Zicht\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff as PEARClassCommentSniff;
+
 /**
  * Sniffs the doc comment tags in class level comments
  */
-class Zicht_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_ClassCommentSniff {
+class ClassCommentSniff extends PEARClassCommentSniff
+{
     protected $tags = array(
         'author' => array(
             'required' => false,

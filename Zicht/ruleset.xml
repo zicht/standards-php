@@ -20,6 +20,11 @@
         <exclude name="PEAR.WhiteSpace.ScopeIndent.Incorrect"/>
         <exclude name="Generic.Files.LineLength"/>
     </rule>
+
+    <rule ref="Internal.NoCodeFound">
+        <severity>0</severity>
+    </rule>
+
     <rule ref="Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase">
         <severity>0</severity>
     </rule>
