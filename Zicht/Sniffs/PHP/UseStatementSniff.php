@@ -104,12 +104,13 @@ class UseStatementSniff implements Sniff
                     T_NS_SEPARATOR,
                     T_USE,
                     T_AS,
-                    'PHPCS_T_DOC_COMMENT_CLOSE_TAG',
-                    'PHPCS_T_DOC_COMMENT_WHITESPACE',
-                    'PHPCS_T_DOC_COMMENT_STRING',
-                    'PHPCS_T_DOC_COMMENT_TAG',
-                    'PHPCS_T_DOC_COMMENT_STAR',
-                    'PHPCS_T_DOC_COMMENT_OPEN_TAG',
+                    T_DOC_COMMENT_CLOSE_TAG,
+                    T_DOC_COMMENT_STAR,
+                    T_DOC_COMMENT_WHITESPACE,
+                    T_DOC_COMMENT_TAG,
+                    T_DOC_COMMENT_OPEN_TAG,
+                    T_DOC_COMMENT_CLOSE_TAG,
+                    T_DOC_COMMENT_STRING,
                 ]
             )
         );
