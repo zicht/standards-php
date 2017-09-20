@@ -1,7 +1,10 @@
 {
-     "name": "zicht-standards/php",
+     "name": "zicht/standards-php",
      "description": "Contains the Zicht PHP coding standards, including phpcs ruleset",
      "license": "MIT",
+     "require": {
+          "squizlabs/php_codesniffer": "^3"
+     },
      "autoload": {
           "classmap": ["Zicht"]
      }
