@@ -5,36 +5,36 @@ standard applies some custom rules and modifications to these standards:
 
 - There are no required tags for file and class comments.
 - Since we do no longer live in an era with fixed width consoles, the line length limit is fixed at 120, warning at
-  120, erroring at 130
-- Doc comment tags are compulsory for define() calls
-- Global function names are `underscored_and_lowercased()`, and method names are `studlyCased`
-- All constants, both global and class constants are `UPPERCASED_AND_UNDERSCORED`
+  120, erroring at 130.
+- Doc comment tags are compulsory for define() calls.
+- Global function names are `underscored_and_lowercased()`, and method names are `studlyCased`.
+- All constants, both global and class constants are `UPPERCASED_AND_UNDERSCORED`.
 - Excessive whitespace is discouraged, i.e. more than two lines of whitespace and whitespace before the end of a
-  scope (before a closing '}') causes warnings
-- Referring local namespaces in use statements is discouraged, and they should begin with a backslash
+  scope (before a closing '}') causes warnings.
+- Referring local namespaces in use statements is discouraged, and they should begin with a backslash.
 - Referring global namespaces for non-global classes (i.e., classes that do not reside in the global namespace
   is discouraged.
 
 ## Usage 
 
-composer require --dev `zicht/standards-php`
+composer require --dev `zicht/standards-PHP`
 
-Run `./vendor/bin/phpcs -s src/Zicht/ --standard=vendor/zicht-standards/php/Zicht --extensions=php`
+Run `./vendor/bin/PHPcs -s src/Zicht/ --standard=vendor/zicht-standards/PHP/Zicht --extensions=PHP`
 
 Also you could incorporate the check in the `scripts` section of composer like this.
 ```
 "code-style": [
-    "./vendor/bin/phpcs -s src/Zicht/ --standard=vendor/zicht-standards/php/Zicht --extensions=php"
+    "./vendor/bin/PHPcs -s src/Zicht/ --standard=vendor/zicht-standards/PHP/Zicht --extensions=PHP"
 ]
 ```
 
 ## Current ruleset
 
 ### Zicht Sniffs
-In this section we will explain each of the rules from the Zicht set.
+In this section each of the rules from the Zicht set are explained.
 
 #### Zicht.Commenting.ClassComment
-Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff` adds rules about what the doc block could 
+Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff` and adds rules about what the doc block could 
 contain in a class doc comment.
 
 `@author` tag in doc is not required but one or more is allowed. Precedes `@copyright`.
@@ -42,16 +42,16 @@ contain in a class doc comment.
 `@copyright` tag in doc is not required but one or more is allowed. Follows `@author`.
 `@version` tag in doc is not required but only one is allowed. Follows `@license`.
 `@deprecated` tag in doc is not required but only one is allowed. Follows `@see` (if used) or `@version` (if used) or 
-`@copyright` (if used)
+`@copyright` (if used).
 
 #### Zicht.Commenting.ClassConstantComment
 Requires constants in classes to have a doc block. 
 
 #### Zicht.Commenting.DefineComment
-Looks for comments before the `define` function of php.
+Looks for comments before the `define` function of PHP.
 
 #### Zicht.Commenting.FileComment
-Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff` adds rules about what the doc block could 
+Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff` and adds rules about what the doc block could 
 contain in a file doc comment.
 
 `@author` tag in doc is not required but one or more is allowed. Precedes `@copyright`.
@@ -59,14 +59,14 @@ contain in a file doc comment.
 `@copyright` tag in doc is not required but one or more is allowed. Follows `@author`.
 `@version` tag in doc is not required but only one is allowed. Follows `@license`.
 `@deprecated` tag in doc is not required but only one is allowed. Follows `@see` (if used) or `@version` (if used) or 
-`@copyright` (if used)
+`@copyright` (if used).
 
 #### Zicht.Commenting.FunctionComment
-This is a fork of PEAR_Sniffs_Commenting_FunctionCommentSniff. The only difference is allowing @{inheritDoc} in the 
+This is a fork of `PEAR_Sniffs_Commenting_FunctionCommentSniff`. The only difference is allowing `@{inheritDoc}` in the 
 function comments, but only if it is the sole content of the comment.
 
 #### Zicht.ControlStructures.ControlSignature
-Checks of certain structures are formed like the signature tells it to look like.
+Checks if certain structures are formed according to the definition of the signature.
 
 `do {EOL...} while (...);EOL`,
 `while (...) {EOL`,
@@ -95,29 +95,29 @@ Class methods are required to be `studlyCased` or alternatively named `lowerCame
 The following methods are allowed: `construct`, `get`, `set`, `call`, `callStatic`, `invoke`, `destruct`, `toString`, 
 `clone`, `invoke`, `invokeStatic`.
 Underscore and numbers are discouraged to be used in method names in classes.
-A number creates a warning where an underscore creates an error.
+A number creates a warning whereas an underscore creates an error.
 
 Global functions are required to be `snake_cased` so all lower an divided by a underscore.
 
 #### Zicht.PHP.Namespace
-Except for global classes all other classes in name spaces are not allowed to be used in code referring to the fully
+Except for global classes all other classes in namespaces are not allowed to be used in code referring to the fully
 qualified class name. Like `$sniff = new \Zicht\Sniffs\PHP\NamespaceSniff())` use an use statement and format your
 code like `$sniff = new NamespaceSniff()`;
 
 #### Zicht.PHP.UseStatement
-This sniff defines that the use statements should be on top in a php file and can only be preceded by 
+This sniff defines that the use statements should be at the top of in a PHP file and can only be preceded by 
 doc blocks or the namespace declaration (and surely whitespaces etc).
 
 #### Zicht.PHP.VarProperty
-The php `var` keyword to declare properties is not allowed with this sniff.
+The PHP `var` keyword to declare properties is not allowed with this sniff.
 
 #### Zicht.Whitespace.ExcessiveWhitespace
 This sniff looks for more then one whitespace after the last `}` in a file. 
 
 ### Other rules
-To view the rules in this ruleset you can use the following command
+To view the rules in this ruleset you can use the following command.
 ```
-./vendor/bin/phpcs --standard=Zicht -e
+./vendor/bin/PHPcs --standard=Zicht -e
 ```
 That gives us the following set.
 
