@@ -29,6 +29,92 @@ Also you could incorporate the check in the `scripts` section of composer like t
 ```
 
 ## Current ruleset
+
+### Zicht Sniffs
+In this section we will explain each of the rules from the Zicht set.
+
+#### Zicht.Commenting.ClassComment
+Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff` adds rules about what the doc block could 
+contain in a class doc comment.
+
+`@author` tag in doc is not required but one or more is allowed. Precedes `@copyright`.
+`@see` tag in doc is not required but one or more is allowed. Follows `@link`.
+`@copyright` tag in doc is not required but one or more is allowed. Follows `@author`.
+`@version` tag in doc is not required but only one is allowed. Follows `@license`.
+`@deprecated` tag in doc is not required but only one is allowed. Follows `@see` (if used) or `@version` (if used) or 
+`@copyright` (if used)
+
+#### Zicht.Commenting.ClassConstantComment
+Requires constants in classes to have a doc block. 
+
+#### Zicht.Commenting.DefineComment
+Looks for comments before the `define` function of php.
+
+#### Zicht.Commenting.FileComment
+Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff` adds rules about what the doc block could 
+contain in a file doc comment.
+
+`@author` tag in doc is not required but one or more is allowed. Precedes `@copyright`.
+`@see` tag in doc is not required but one or more is allowed. Follows `@link`.
+`@copyright` tag in doc is not required but one or more is allowed. Follows `@author`.
+`@version` tag in doc is not required but only one is allowed. Follows `@license`.
+`@deprecated` tag in doc is not required but only one is allowed. Follows `@see` (if used) or `@version` (if used) or 
+`@copyright` (if used)
+
+#### Zicht.Commenting.FunctionComment
+This is a fork of PEAR_Sniffs_Commenting_FunctionCommentSniff. The only difference is allowing @{inheritDoc} in the 
+function comments, but only if it is the sole content of the comment.
+
+#### Zicht.ControlStructures.ControlSignature
+Checks of certain structures are formed like the signature tells it to look like.
+
+`do {EOL...} while (...);EOL`,
+`while (...) {EOL`,
+`for (...) {EOL`,
+`if (...) {EOL`,
+`foreach (...) {EOL`,
+`} else if (...) {EOL`,
+`} elseif (...) {EOL`,
+`} else {EOL`,
+`do {EOL`,
+
+for example `do {EOL...} while (...);EOL` means:
+do {// (EOL) End of line from here
+} while ();// (EOL) End of line from here.
+
+#### Zicht.NamingConventions.Classname
+This sniff requires class names to be `CamelCased`.
+
+#### Zicht.NamingConventions.Constants
+This sniff requires a constant name to start with letters `A-Z` followed by `A-Z`, `_` or `0-9`.
+ 
+#### Zicht.NamingConventions.Functions
+This sniff defines the naming conventions.
+
+Class methods are required to be `studlyCased` or alternatively named `lowerCamelCased`.
+The following methods are allowed: `construct`, `get`, `set`, `call`, `callStatic`, `invoke`, `destruct`, `toString`, 
+`clone`, `invoke`, `invokeStatic`.
+Underscore and numbers are discouraged to be used in method names in classes.
+A number creates a warning where an underscore creates an error.
+
+Global functions are required to be `snake_cased` so all lower an divided by a underscore.
+
+#### Zicht.PHP.Namespace
+Except for global classes all other classes in name spaces are not allowed to be used in code referring to the fully
+qualified class name. Like `$sniff = new \Zicht\Sniffs\PHP\NamespaceSniff())` use an use statement and format your
+code like `$sniff = new NamespaceSniff()`;
+
+#### Zicht.PHP.UseStatement
+This sniff defines that the use statements should be on top in a php file and can only be preceded by 
+doc blocks or the namespace declaration (and surely whitespaces etc).
+
+#### Zicht.PHP.VarProperty
+The php `var` keyword to declare properties is not allowed with this sniff.
+
+#### Zicht.Whitespace.ExcessiveWhitespace
+This sniff looks for more then one whitespace after the last `}` in a file. 
+
+### Other rules
 To view the rules in this ruleset you can use the following command
 ```
 ./vendor/bin/phpcs --standard=Zicht -e
@@ -129,90 +215,6 @@ PSR2
 Squiz
 Zend
 Zicht
-
-### Zicht Sniffs
-In this section we will explain each of the rules from the Zicht set.
-
-#### Zicht.Commenting.ClassComment
-Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff` adds rules about what the doc block should 
-contain in a class doc comment.
-
-`@author` tag in doc is not required but one or more is allowed. Precedes @copyright.
-`@see` tag in doc is not required but one or more is allowed. Follows @link.
-`@copyright` tag in doc is not required but one or more is allowed. Follows @author.
-`@version` tag in doc is not required but only one is allowed. Follows @license
-`@deprecated` tag in doc is not required but only one is allowed. Follows @see (if used) or @version (if used) or 
-@copyright (if used)
-
-#### Zicht.Commenting.ClassConstantComment
-Requires constants in classes to have a doc block. 
-
-#### Zicht.Commenting.DefineComment
-Looks for comments before the `define` function of php.
-
-#### Zicht.Commenting.FileComment
-Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff` adds rules about what the doc block should 
-contain in a file doc comment.
-
-`@author` tag in doc is not required but one or more is allowed. Precedes @copyright.
-`@see` tag in doc is not required but one or more is allowed. Follows @link.
-`@copyright` tag in doc is not required but one or more is allowed. Follows @author.
-`@version` tag in doc is not required but only one is allowed. Follows @license
-`@deprecated` tag in doc is not required but only one is allowed. Follows @see (if used) or @version (if used) or 
-@copyright (if used)
-
-#### Zicht.Commenting.FunctionComment
-This is a fork of PEAR_Sniffs_Commenting_FunctionCommentSniff. The only difference is allowing @{inheritDoc} in the 
-function comments, but only if it is the sole content of the comment.
-
-#### Zicht.ControlStructures.ControlSignature
-Checks of certain structures are formed like the signature tells it to look like.
-
-`do {EOL...} while (...);EOL`,
-`while (...) {EOL`,
-`for (...) {EOL`,
-`if (...) {EOL`,
-`foreach (...) {EOL`,
-`} else if (...) {EOL`,
-`} elseif (...) {EOL`,
-`} else {EOL`,
-`do {EOL`,
-
-for example `do {EOL...} while (...);EOL` means:
-do {// (EOL) End of line from here
-} while ();// (EOL) End of line from here.
-
-#### Zicht.NamingConventions.Classname
-This sniff requires class names to be `CamelCased`.
-
-#### Zicht.NamingConventions.Constants
-This sniff requires a constant name to start with letters `A-Z` followed by `A-Z`, `_` or `0-9`.
- 
-#### Zicht.NamingConventions.Functions
-This sniff defines the naming conventions.
-
-Class methods are required to be `studlyCased` or alternatively named `lowerCamelCased`.
-The following methods are allowed: `construct`, `get`, `set`, `call`, `callStatic`, `invoke`, `destruct`, `toString`, 
-`clone`, `invoke`, `invokeStatic`.
-Underscore and numbers are discouraged to be used in method names in classes.
-A number creates a warning where an underscore creates an error.
-
-Global methods are required to be `snake_cased` so all lower an divided by a underscore.
-
-#### Zicht.PHP.Namespace
-Except for global classes all other classes in name spaces are not allowed to be used in code referring to the fully
-qualified class name. Like `$sniff = new \Zicht\Sniffs\PHP\NamespaceSniff())` use an use statement and format your
-code like `$sniff = new NamespaceSniff()`;
-
-#### Zicht.PHP.UseStatement
-This sniff defines that the use statements should be on top in a php file and can only be preceded by 
-doc blocks or the namespace declaration (and surely whitespaces etc).
-
-#### Zicht.PHP.VarProperty
-The php `var` keyword to declare properties is not allowed with this sniff.
-
-#### Zicht.Whitespace.ExcessiveWhitespace
-This sniff looks for more then one whitespace after the last `}` in a file. 
 
 # Maintainer(s)
 * Muhammed Akbulut <muhammed@zicht.nl>
