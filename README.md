@@ -17,14 +17,14 @@ standard applies some custom rules and modifications to these standards:
 
 ## Usage 
 
-composer require --dev `zicht/standards-PHP`
+composer require --dev `zicht/standards-php`
 
-Run `./vendor/bin/PHPcs -s src/Zicht/ --standard=vendor/zicht-standards/PHP/Zicht --extensions=PHP`
+Run `./vendor/bin/phpcs -s src/Zicht/ --standard=vendor/zicht-standards/php/Zicht --extensions=php`
 
 Also you could incorporate the check in the `scripts` section of composer like this.
 ```
 "code-style": [
-    "./vendor/bin/PHPcs -s src/Zicht/ --standard=vendor/zicht-standards/PHP/Zicht --extensions=PHP"
+    "./vendor/bin/phpcs -s src/Zicht/ --standard=vendor/zicht-standards/php/Zicht --extensions=php"
 ]
 ```
 
