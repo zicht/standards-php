@@ -99,6 +99,13 @@ A number creates a warning whereas an underscore creates an error.
 
 Global functions are required to be `snake_cased` so all lower an divided by a underscore.
 
+#### Zicht.PHP.DisallowMultipleAssignmentsInIfStatementsSniff.TooManyAssignments
+Disallows multiple assignments in a condition of if statements.
+```
+if ($foo = $bar && $foo = $bar)
+```
+The example above is disallowed.
+
 #### Zicht.PHP.Namespace
 Except for global classes all other classes in namespaces are not allowed to be used in code referring to the fully
 qualified class name. Like `$sniff = new \Zicht\Sniffs\PHP\NamespaceSniff())` use an use statement and format your
