@@ -77,6 +77,11 @@
         <severity>0</severity>
     </rule>
 
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired">
+        <severity>5</severity>
+        <type>warning</type>
+    </rule>
+
     <rule ref="Generic.Files.LineLength">
         <properties>
             <property name="lineLimit" value="120"/>

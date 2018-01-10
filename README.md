@@ -122,7 +122,7 @@ To view the rules in this ruleset you can use the following command.
 That gives us the following set.
 
 ```  
-   The Zicht standard contains 61 sniffs
+   The Zicht standard contains 62 sniffs
    
    Generic (13 sniffs)
    -------------------
@@ -168,7 +168,7 @@ That gives us the following set.
      PSR2.Namespaces.NamespaceDeclaration
      PSR2.Namespaces.UseDeclaration
    
-   Squiz (14 sniffs)
+   Squiz (15 sniffs)
    -----------------
      Squiz.Classes.ValidClassName
      Squiz.ControlStructures.ControlSignature
@@ -180,6 +180,7 @@ That gives us the following set.
      Squiz.Functions.LowercaseFunctionKeywords
      Squiz.Functions.MultiLineFunctionDeclaration
      Squiz.Scope.MethodScope
+     Squiz.Strings.DoubleQuoteUsage.NotRequired
      Squiz.WhiteSpace.ControlStructureSpacing
      Squiz.WhiteSpace.ScopeClosingBrace
      Squiz.WhiteSpace.ScopeKeywordSpacing
