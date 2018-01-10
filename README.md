@@ -129,10 +129,11 @@ To view the rules in this ruleset you can use the following command.
 That gives us the following set.
 
 ```  
-   The Zicht standard contains 63 sniffs
+   The Zicht standard contains 64 sniffs
    
-   Generic (13 sniffs)
+   Generic (14 sniffs)
    -------------------
+     Generic.Arrays.DisallowLongArraySyntax.Found
      Generic.ControlStructures.InlineControlStructure
      Generic.Files.ByteOrderMark
      Generic.Files.LineEndings
