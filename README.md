@@ -122,7 +122,7 @@ To view the rules in this ruleset you can use the following command.
 That gives us the following set.
 
 ```  
-   The Zicht standard contains 62 sniffs
+   The Zicht standard contains 63 sniffs
    
    Generic (13 sniffs)
    -------------------
@@ -191,7 +191,7 @@ That gives us the following set.
      Zend.Debug.CodeAnalyzer
      Zend.Files.ClosingTag
    
-   Zicht (13 sniffs)
+   Zicht (14 sniffs)
    -----------------
      Zicht.Commenting.ClassComment
      Zicht.Commenting.ClassConstantComment
@@ -202,6 +202,7 @@ That gives us the following set.
      Zicht.NamingConventions.Classname
      Zicht.NamingConventions.Constants
      Zicht.NamingConventions.Functions
+     Zicht.PHP.DisallowMultipleAssignmentsInIfStatementsSniff.TooManyAssignments
      Zicht.PHP.Namespace
      Zicht.PHP.UseStatement
      Zicht.PHP.VarProperty

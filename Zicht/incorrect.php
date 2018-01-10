@@ -35,3 +35,9 @@ class Invalid_name {
 
 
 "invalid use of double quotes";
+
+$foo = false;
+
+if ($test = $foo || $test = $foo && $test = $foo) {
+} elseif ($test = $foo && $test = $foo) {
+}
