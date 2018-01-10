@@ -6,6 +6,7 @@
 
     <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
 
     <rule ref="Zend">
         <exclude name="PEAR.Commenting.FileComment"/>
