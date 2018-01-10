@@ -99,6 +99,13 @@ A number creates a warning whereas an underscore creates an error.
 
 Global functions are required to be `snake_cased` so all lower an divided by a underscore.
 
+#### Zicht.PHP.DisallowMultipleAssignmentsInIfStatementsSniff.TooManyAssignments
+Disallows multiple assignments in a condition of if statements.
+```
+if ($foo = $bar && $foo = $bar)
+```
+The example above is disallowed.
+
 #### Zicht.PHP.Namespace
 Except for global classes all other classes in namespaces are not allowed to be used in code referring to the fully
 qualified class name. Like `$sniff = new \Zicht\Sniffs\PHP\NamespaceSniff())` use an use statement and format your
@@ -122,7 +129,7 @@ To view the rules in this ruleset you can use the following command.
 That gives us the following set.
 
 ```  
-   The Zicht standard contains 62 sniffs
+   The Zicht standard contains 63 sniffs
    
    Generic (13 sniffs)
    -------------------
@@ -191,7 +198,7 @@ That gives us the following set.
      Zend.Debug.CodeAnalyzer
      Zend.Files.ClosingTag
    
-   Zicht (13 sniffs)
+   Zicht (14 sniffs)
    -----------------
      Zicht.Commenting.ClassComment
      Zicht.Commenting.ClassConstantComment
@@ -202,6 +209,7 @@ That gives us the following set.
      Zicht.NamingConventions.Classname
      Zicht.NamingConventions.Constants
      Zicht.NamingConventions.Functions
+     Zicht.PHP.DisallowMultipleAssignmentsInIfStatementsSniff.TooManyAssignments
      Zicht.PHP.Namespace
      Zicht.PHP.UseStatement
      Zicht.PHP.VarProperty
