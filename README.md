@@ -226,5 +226,7 @@ Squiz
 Zend
 Zicht
 
-# Maintainer(s)
-* Muhammed Akbulut <muhammed@zicht.nl>
+# Maintainers
+* Boudewijn Schoon <boudewijn@zicht.nl>
+* Erik Trapman <erik@zicht.nl>
+* Robert van Kempen <robert@zicht.nl>
