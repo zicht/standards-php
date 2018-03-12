@@ -3,11 +3,24 @@
  * File comment
  */
 
+namespace Zicht;
+
+/**
+ * Trait D
+ */
+trait D
+{
+
+}
+
 /**
  * Comment of class A
  */
 class A
 {
+
+    use D;
+
     /**
      * Constant description
      */
@@ -79,17 +92,6 @@ some_global_function(
          'array',
     )
 );
-
-
-/**
- * Drupal update functions may contain numbers, as long as they pertain the format *_update_NNNN
- * with NNNN being the version number
- *
- * @return void
- */
-function mod_some_drupal_update_hook_update_6001()
-{
-}
 
 
 /**

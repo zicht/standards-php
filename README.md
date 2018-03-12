@@ -115,9 +115,6 @@ code like `$sniff = new NamespaceSniff()`;
 This sniff defines that the use statements should be at the top of in a PHP file and can only be preceded by 
 doc blocks or the namespace declaration (and surely whitespaces etc).
 
-#### Zicht.PHP.VarProperty
-The PHP `var` keyword to declare properties is not allowed with this sniff.
-
 #### Zicht.Whitespace.ExcessiveWhitespace
 This sniff looks for more then one whitespace after the last `}` in a file. 
 
@@ -129,7 +126,7 @@ To view the rules in this ruleset you can use the following command.
 That gives us the following set.
 
 ```  
-   The Zicht standard contains 64 sniffs
+   The Zicht standard contains 63 sniffs
    
    Generic (14 sniffs)
    -------------------
@@ -199,7 +196,7 @@ That gives us the following set.
      Zend.Debug.CodeAnalyzer
      Zend.Files.ClosingTag
    
-   Zicht (14 sniffs)
+   Zicht (13 sniffs)
    -----------------
      Zicht.Commenting.ClassComment
      Zicht.Commenting.ClassConstantComment
@@ -213,7 +210,6 @@ That gives us the following set.
      Zicht.PHP.DisallowMultipleAssignmentsInIfStatementsSniff.TooManyAssignments
      Zicht.PHP.Namespace
      Zicht.PHP.UseStatement
-     Zicht.PHP.VarProperty
      Zicht.Whitespace.ExcessiveWhitespace
 ```
 
