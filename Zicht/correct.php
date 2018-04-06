@@ -24,7 +24,7 @@ class A
     /**
      * Constant description
      */
-    const CONSTANT = "Some value";
+    const CONSTANT = 'Some value';
 
 
     /**
@@ -47,7 +47,7 @@ class A
      */
     public function somethingElse($someParameter = null)
     {
-        switch($someParameter) {
+        switch ($someParameter) {
             case true:
                 return 'foo';
                 break;
@@ -72,6 +72,12 @@ interface C
  */
 class B extends A implements C
 {
+    /**
+     * method name with number in it
+     */
+    public function base64Encoding()
+    {
+    }
 }
 
 
@@ -86,11 +92,11 @@ function some_global_function()
 
 
 some_global_function(
-    array(1, 2, 3),
-    array(
+    [1, 2, 3],
+    [
          'indented',
          'array',
-    )
+    ]
 );
 
 

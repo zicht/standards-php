@@ -65,8 +65,7 @@ class FunctionsSniff implements Sniff
                 break;
             case 1:
                 // skip magic methods
-                if (
-                    substr($functionName, 0, 2) == '__'
+                if (substr($functionName, 0, 2) == '__'
                     && in_array(
                         substr($functionName, 2),
                         ['construct', 'get', 'set', 'call', 'callStatic', 'invoke', 'destruct', 'toString', 'clone', 'invoke', 'invokeStatic']
@@ -74,17 +73,10 @@ class FunctionsSniff implements Sniff
                 ) {
                     return;
                 }
-                if (preg_match('/^_?[a-z][a-zA-Z0-9]*$/', $functionName) && preg_match('/[0-9]/', $functionName)) {
-                    $phpcsFile->addWarning(
-                        "Usage of numbers in methodname \"%s\" is discouraged",
-                        $stackPtr,
-                        'MethodNaming',
-                        [$functionName]
-                    );
-                } elseif (!preg_match('/^_?[a-z][a-zA-Z]*$/', $functionName)) {
+
+                if (!preg_match('/^_?[a-z][a-zA-Z0-9]*$/', $functionName)) {
                     $phpcsFile->addError(
-                        "Method name \"%s\" should be formatted lowerCamelCased "
-                        . "and contain no underscores after the first",
+                        "Method name \"%s\" should be studlyCased and contain no underscores after the first",
                         $stackPtr,
                         'MethodNaming',
                         [$functionName]
