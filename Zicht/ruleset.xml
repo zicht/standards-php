@@ -82,10 +82,6 @@
         <severity>5</severity>
         <type>warning</type>
     </rule>
-    <rule ref="Squiz.PHP.DisallowComparisonAssignment.AssignedComparison">
-        <severity>5</severity>
-        <type>warning</type>
-    </rule>
 
     <rule ref="Generic.Files.LineLength">
         <properties>

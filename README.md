@@ -121,7 +121,7 @@ This sniff looks for more then one whitespace after the last `}` in a file.
 ### Other rules
 To view the rules in this ruleset you can use the following command.
 ```
-./vendor/bin/PHPcs --standard=Zicht -e
+./vendor/bin/phpcs --standard=Zicht -e
 ```
 That gives us the following set.
 
@@ -130,7 +130,7 @@ That gives us the following set.
    
    Generic (14 sniffs)
    -------------------
-     Generic.Arrays.DisallowLongArraySyntax.Found
+     Generic.Arrays.DisallowLongArraySyntax
      Generic.ControlStructures.InlineControlStructure
      Generic.Files.ByteOrderMark
      Generic.Files.LineEndings
@@ -185,7 +185,7 @@ That gives us the following set.
      Squiz.Functions.LowercaseFunctionKeywords
      Squiz.Functions.MultiLineFunctionDeclaration
      Squiz.Scope.MethodScope
-     Squiz.Strings.DoubleQuoteUsage.NotRequired
+     Squiz.Strings.DoubleQuoteUsage
      Squiz.WhiteSpace.ControlStructureSpacing
      Squiz.WhiteSpace.ScopeClosingBrace
      Squiz.WhiteSpace.ScopeKeywordSpacing
@@ -207,7 +207,7 @@ That gives us the following set.
      Zicht.NamingConventions.Classname
      Zicht.NamingConventions.Constants
      Zicht.NamingConventions.Functions
-     Zicht.PHP.DisallowMultipleAssignmentsInIfStatementsSniff.TooManyAssignments
+     Zicht.PHP.DisallowMultipleAssignmentsInIfStatements
      Zicht.PHP.Namespace
      Zicht.PHP.UseStatement
      Zicht.Whitespace.ExcessiveWhitespace

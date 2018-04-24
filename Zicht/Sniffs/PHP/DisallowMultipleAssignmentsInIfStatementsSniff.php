@@ -38,6 +38,9 @@ class DisallowMultipleAssignmentsInIfStatementsSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        // currently disabled
+        return;
+
         $tokens = $phpcsFile->getTokens();
 
         /**
