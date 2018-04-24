@@ -38,7 +38,7 @@ class Invalid_name {
 
 $foo = false;
 
-if ($test = $foo || $test = $foo && $test = $foo) {
+if ($test = $foo || $test == $foo && $test == $foo) {
 } elseif ($test = $foo && $test = $foo) {
 }
 $foo = array();

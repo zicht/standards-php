@@ -99,6 +99,11 @@ some_global_function(
     ]
 );
 
+$publishingDate = null;
+$now = new \DateTime();
+
+if ($isFuturePublishingDate = null !== $publishingDate && $now < $publishingDate) {
+}
 
 /**
  * The description of this constant
