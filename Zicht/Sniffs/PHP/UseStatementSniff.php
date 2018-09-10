@@ -95,6 +95,8 @@ class UseStatementSniff implements Sniff
                 $tokens[ $ptr ]['code'],
                 [
                     T_OPEN_TAG,
+                    T_DECLARE,
+                    T_LNUMBER,
                     T_NAMESPACE,
                     T_COMMENT,
                     T_DOC_COMMENT,
