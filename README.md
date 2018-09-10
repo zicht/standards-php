@@ -113,7 +113,7 @@ code like `$sniff = new NamespaceSniff()`;
 
 #### Zicht.PHP.UseStatement
 This sniff defines that the use statements should be at the top of in a PHP file and can only be preceded by 
-doc blocks or the namespace declaration (and surely whitespaces etc).
+a declare statement, doc blocks or the namespace declaration (and surely whitespaces etc).
 
 #### Zicht.Whitespace.ExcessiveWhitespace
 This sniff looks for more then one whitespace after the last `}` in a file. 
