@@ -44,7 +44,7 @@ class DefineCommentSniff implements Sniff
             $pos = $stackPtr;
             while ($tokens[ --$pos ]['code'] == T_WHITESPACE) {
             }
-            if ($tokens[ $pos ]['code'] !== T_DOC_COMMENT) {
+            if (!($tokens[ $pos ]['code'] === T_DOC_COMMENT_CLOSE_TAG || $tokens[ $pos ]['code'] === T_DOC_COMMENT)) {
                 $phpcsFile->addError('Doc comment missing for constant', $stackPtr, 'Missing');
             }
         }
