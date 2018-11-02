@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile -- this code has been copied from the original PEAR Sniff {@see zicht/standards-php#40}
 /**
  * Parses and verifies the doc comments for functions.
  *

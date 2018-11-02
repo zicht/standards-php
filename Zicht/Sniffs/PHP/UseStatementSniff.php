@@ -15,10 +15,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class UseStatementSniff implements Sniff
 {
     /**
-     * Registers the tokens that this sniff wants to listen for.
-     *
-     * @return array(int)
-     * @see    Tokens.php
+     * {@inheritdoc}
      */
     public function register()
     {
@@ -28,16 +25,7 @@ class UseStatementSniff implements Sniff
     }
 
     /**
-     * Called when one of the token types that this sniff is listening for
-     * is found.
-     *
-     * @param File $phpcsFile The PHP_CodeSniffer file where the
-     *                                        token was found.
-     * @param int $stackPtr The position in the PHP_CodeSniffer
-     *                                        file's token stack where the token
-     *                                        was found.
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -56,7 +44,10 @@ class UseStatementSniff implements Sniff
         $this->processUseLists($phpcsFile, $stackPtr);
     }
 
-
+    /**
+     * @param File $phpcsFile
+     * @param int $stackPtr
+     */
     public function processUseLists(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
@@ -78,44 +69,42 @@ class UseStatementSniff implements Sniff
         }
     }
 
-
+    /**
+     * @param File $phpcsFile
+     * @param int $stackPtr
+     */
     public function processUseStatementPosition(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
-
         $ptr = $stackPtr;
         // scan back to the start of file, and make sure only the specified tokens occur before
         // the use statement
+        $allowedTokens = [
+            T_OPEN_TAG,
+            T_DECLARE,
+            T_LNUMBER,
+            T_NAMESPACE,
+            T_COMMENT,
+            T_DOC_COMMENT,
+            T_WHITESPACE,
+            T_SEMICOLON,
+            T_STRING,
+            T_NS_SEPARATOR,
+            T_USE,
+            T_AS,
+            T_DOC_COMMENT_CLOSE_TAG,
+            T_DOC_COMMENT_STAR,
+            T_DOC_COMMENT_WHITESPACE,
+            T_DOC_COMMENT_TAG,
+            T_DOC_COMMENT_OPEN_TAG,
+            T_DOC_COMMENT_CLOSE_TAG,
+            T_DOC_COMMENT_STRING,
+        ];
         do {
             --$ptr;
-        } while (
-            $ptr > 0
-            && in_array(
-                $tokens[ $ptr ]['code'],
-                [
-                    T_OPEN_TAG,
-                    T_DECLARE,
-                    T_LNUMBER,
-                    T_NAMESPACE,
-                    T_COMMENT,
-                    T_DOC_COMMENT,
-                    T_WHITESPACE,
-                    T_SEMICOLON,
-                    T_STRING,
-                    T_NS_SEPARATOR,
-                    T_USE,
-                    T_AS,
-                    T_DOC_COMMENT_CLOSE_TAG,
-                    T_DOC_COMMENT_STAR,
-                    T_DOC_COMMENT_WHITESPACE,
-                    T_DOC_COMMENT_TAG,
-                    T_DOC_COMMENT_OPEN_TAG,
-                    T_DOC_COMMENT_CLOSE_TAG,
-                    T_DOC_COMMENT_STRING,
-                ]
-            )
-        );
+        } while ($ptr > 0 && in_array($tokens[ $ptr ]['code'], $allowedTokens));
+
         if ($ptr !== 0) {
             $phpcsFile->addWarning(
                 'Use statement on any other position than top of file is discouraged.',
@@ -135,7 +124,10 @@ class UseStatementSniff implements Sniff
         }
     }
 
-
+    /**
+     * @param File $phpcsFile
+     * @param int $stackPtr
+     */
     public function processUseStatementValue(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();

@@ -15,10 +15,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class FunctionsSniff implements Sniff
 {
     /**
-     * Registers the tokens that this sniff wants to listen for.
-     *
-     * @return array(int)
-     * @see    Tokens.php
+     * {@inheritdoc}
      */
     public function register()
     {
@@ -28,23 +25,14 @@ class FunctionsSniff implements Sniff
     }
 
     /**
-     * Called when one of the token types that this sniff is listening for
-     * is found.
-     *
-     * @param File $phpcsFile The PHP_CodeSniffer file where the
-     *                                        token was found.
-     * @param int $stackPtr The position in the PHP_CodeSniffer
-     *                                        file's token stack where the token
-     *                                        was found.
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
         $pos = $stackPtr;
-        while ($tokens[ ++$pos ]['code'] == T_WHITESPACE) {
+        while (T_WHITESPACE === $tokens[ ++$pos ]['code']) {
             // scanning for function name
         }
         $functionName = $tokens[ $pos ]['content'];
@@ -55,7 +43,7 @@ class FunctionsSniff implements Sniff
                     // make an exception for drupal update functions
                     if (!preg_match('/_update_[0-9]+/', $functionName)) {
                         $phpcsFile->addError(
-                            "Global function name \"%s\" should be formatted with lowercase and underscores only",
+                            'Global function name "%s" should be formatted with lowercase and underscores only',
                             $stackPtr,
                             'GlobalNaming',
                             [$functionName]
@@ -76,7 +64,7 @@ class FunctionsSniff implements Sniff
 
                 if (!preg_match('/^_?[a-z][a-zA-Z0-9]*$/', $functionName)) {
                     $phpcsFile->addError(
-                        "Method name \"%s\" should be studlyCased and contain no underscores after the first",
+                        'Method name "%s" should be studlyCased and contain no underscores after the first',
                         $stackPtr,
                         'MethodNaming',
                         [$functionName]
@@ -85,7 +73,7 @@ class FunctionsSniff implements Sniff
                 break;
             default:
                 $phpcsFile->addError(
-                    "Local function \"%s\" definition is not allowed. Either use closures, or defined globally",
+                    'Local function "%s" definition is not allowed. Either use closures, or defined globally',
                     $stackPtr,
                     'NestedDefinition',
                     [$functionName]

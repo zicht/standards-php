@@ -15,10 +15,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class ConstantsSniff implements Sniff
 {
     /**
-     * Registers the tokens that this sniff wants to listen for.
-     *
-     * @return array(int)
-     * @see    Tokens.php
+     * {@inheritdoc}
      */
     public function register()
     {
@@ -28,17 +25,10 @@ class ConstantsSniff implements Sniff
         ];
     }
 
-
     /**
      * Checks if constants are UPPERCASED_AND_UNDERSCORED
      *
-     * @param File $phpcsFile The PHP_CodeSniffer file where the
-     *                                        token was found.
-     * @param int $stackPtr The position in the PHP_CodeSniffer
-     *                                        file's token stack where the token
-     *                                        was found.
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -59,7 +49,7 @@ class ConstantsSniff implements Sniff
 
         if (!preg_match('/^[A-Z][A-Z_]*[0-9]*$/', $name)) {
             $phpcsFile->addWarning(
-                "Constant \"%s\" should be UPPERCASED_AND_UNDERSCORED",
+                'Constant "%s" should be UPPERCASED_AND_UNDERSCORED',
                 $stackPtr,
                 'InvalidName',
                 [$name]

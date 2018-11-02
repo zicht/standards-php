@@ -14,9 +14,7 @@ use PHP_CodeSniffer\Sniffs\AbstractPatternSniff;
 class ControlSignatureSniff extends AbstractPatternSniff
 {
     /**
-     * Returns the patterns that this test wishes to verify.
-     *
-     * @return array(string)
+     * {@inheritdoc}
      */
     protected function getPatterns()
     {
