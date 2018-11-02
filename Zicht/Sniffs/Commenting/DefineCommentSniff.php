@@ -15,10 +15,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class DefineCommentSniff implements Sniff
 {
     /**
-     * Registers the tokens that this sniff wants to listen for.
-     *
-     * @return array(int)
-     * @see    Tokens.php
+     * {@inheritdoc}
      */
     public function register()
     {
@@ -26,25 +23,17 @@ class DefineCommentSniff implements Sniff
     }
 
     /**
-     * Called when one of the token types that this sniff is listening for
-     * is found.
-     *
-     * @param File $phpcsFile The PHP_CodeSniffer file where the
-     *                                        token was found.
-     * @param int $stackPtr The position in the PHP_CodeSniffer
-     *                                        file's token stack where the token
-     *                                        was found.
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        if ($tokens[ $stackPtr ]['content'] == 'define') {
+        if ('define' === $tokens[ $stackPtr ]['content']) {
             $pos = $stackPtr;
-            while ($tokens[ --$pos ]['code'] == T_WHITESPACE) {
+            while (T_WHITESPACE === $tokens[ --$pos ]['code']) {
+                // Wind back to non-whitespace token
             }
-            if (!($tokens[ $pos ]['code'] === T_DOC_COMMENT_CLOSE_TAG || $tokens[ $pos ]['code'] === T_DOC_COMMENT)) {
+            if (T_DOC_COMMENT_CLOSE_TAG !== $tokens[ $pos ]['code'] && T_DOC_COMMENT !== $tokens[ $pos ]['code']) {
                 $phpcsFile->addError('Doc comment missing for constant', $stackPtr, 'Missing');
             }
         }

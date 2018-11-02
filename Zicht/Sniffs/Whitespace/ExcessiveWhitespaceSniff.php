@@ -15,9 +15,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class ExcessiveWhitespaceSniff implements Sniff
 {
     /**
-     * Registers for whitespace tokens
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function register()
     {
@@ -30,32 +28,29 @@ class ExcessiveWhitespaceSniff implements Sniff
     /**
      * Sniffs for multiple newlines
      *
-     * @param File $phpcsFile
-     * @param int $stackPtr
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        if ($tokens[ $stackPtr - 1 ]['code'] == T_WHITESPACE) {
+        if (T_WHITESPACE === $tokens[ $stackPtr - 1 ]['code']) {
             // we already processed consecutive whitespace, no need to do it again.
             return;
         }
 
         $concat = $tokens[ $stackPtr ]['content'];
         $pos = $stackPtr;
-        while (isset($tokens[ ++$pos ]) && $tokens[ $pos ]['code'] == T_WHITESPACE) {
+        while (isset($tokens[ ++$pos ]) && T_WHITESPACE === $tokens[ $pos ]['code']) {
             $concat .= $tokens[ $pos ]['content'];
         }
 
-        if (preg_match('/^[^\n](\s+?)\n/', $concat, $m)) {
-            // carriage return should be catched by the line ending style sniffs
+        if (0 < preg_match('/^[^\n](\s+?)\n/', $concat, $m)) {
+            // Carriage return should be caught by the line ending style sniffs
             if (strpos($m[0], "\r") === false) {
                 $phpcsFile->addWarning(
-                    "There should be no whitespace before the end of line",
+                    'There should be no whitespace before the end of line',
                     $stackPtr,
-                    "WhitespaceBeforeEol"
+                    'WhitespaceBeforeEol'
                 );
             }
         }
@@ -72,22 +67,14 @@ class ExcessiveWhitespaceSniff implements Sniff
 
         if (!isset($tokens[ $pos ]) && $newlines > 1) {
             $phpcsFile->addWarning('Excess whitespace at end of file', $stackPtr, 'WhiteLinesAtEndOfFile');
-        } elseif (
-            isset($tokens[ $pos ])
-            && (
-            in_array(
-                $tokens[ $pos ]['type'],
-                ['T_CLOSE_CURLY_BRACKET', 'T_CLOSE_PARENTHESIS']
-            )
-            ) && $newlines > 1
+        } elseif (isset($tokens[ $pos ]) && $newlines > 1
+            && in_array($tokens[ $pos ]['type'], ['T_CLOSE_CURLY_BRACKET', 'T_CLOSE_PARENTHESIS'])
         ) {
             $phpcsFile->addWarning(
                 'Excess whitespace before closing bracket',
                 $stackPtr,
                 'WhiteLinesBeforeClosingBracket'
             );
-        } else {
-//            var_dump($tokens[$pos]['type']);
         }
     }
 }

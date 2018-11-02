@@ -16,10 +16,7 @@ use PHP_CodeSniffer\Util\Tokens;
 class UseStatementSniff implements Sniff
 {
     /**
-     * Registers the tokens that this sniff wants to listen for.
-     *
-     * @return array(int)
-     * @see    Tokens.php
+     * {@inheritdoc}
      */
     public function register()
     {
@@ -29,16 +26,7 @@ class UseStatementSniff implements Sniff
     }
 
     /**
-     * Called when one of the token types that this sniff is listening for
-     * is found.
-     *
-     * @param File $phpcsFile The PHP_CodeSniffer file where the
-     *                                        token was found.
-     * @param int $stackPtr The position in the PHP_CodeSniffer
-     *                                        file's token stack where the token
-     *                                        was found.
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -57,7 +45,10 @@ class UseStatementSniff implements Sniff
         $this->processUseLists($phpcsFile, $stackPtr);
     }
 
-
+    /**
+     * @param File $phpcsFile
+     * @param int $stackPtr
+     */
     public function processUseLists(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
@@ -79,7 +70,10 @@ class UseStatementSniff implements Sniff
         }
     }
 
-
+    /**
+     * @param File $phpcsFile
+     * @param int $stackPtr
+     */
     public function processUseStatementPosition(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
@@ -115,7 +109,10 @@ class UseStatementSniff implements Sniff
         }
     }
 
-
+    /**
+     * @param File $phpcsFile
+     * @param int $stackPtr
+     */
     public function processUseStatementValue(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
