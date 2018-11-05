@@ -8,5 +8,13 @@
      "autoload": {
           "classmap": ["Zicht"],
           "exclude-from-classmap": ["/Zicht/correct.php", "/Zicht/incorrect.php"]
+     },
+     "scripts": {
+          "lint": [
+               "phpcs -s Zicht/Sniffs/ --standard=Zicht --extensions=php -p --parallel=$(nproc)"
+          ],
+          "lint-fix": [
+               "phpcbf -s Zicht/Sniffs/ --standard=Zicht --extensions=php --parallel=$(nproc)"
+          ]
      }
 }
