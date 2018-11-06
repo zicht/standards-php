@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="Zicht">
+<ruleset name="Zicht"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
     <description>The Zicht PHP coding standard.</description>
 
     <!-- see readme.md -->
@@ -49,7 +52,10 @@
     <rule ref="Zicht.Commenting.FunctionComment.SpacingAfterParams">
         <severity>0</severity>
     </rule>
-    <rule ref="Zicht.Commenting.FunctionComment.MissingReturn">
+    <rule ref="Zicht.Commenting.FunctionComment.SpacingAfterParamType">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Zicht.Commenting.FunctionComment.SpacingAfterParamName">
         <severity>0</severity>
     </rule>
 
