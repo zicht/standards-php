@@ -62,8 +62,17 @@ contain in a file doc comment.
 `@copyright` (if used).
 
 #### Zicht.Commenting.FunctionComment
-This is a fork of `PEAR_Sniffs_Commenting_FunctionCommentSniff`. The only difference is allowing `@{inheritDoc}` in the 
-function comments, but only if it is the sole content of the comment.
+Extends `\PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff` to allow `{@inheritdoc}` in the 
+function comment which makes it skip params and return tags validation (if no `@param` or `@return` is added additionally).
+Also this sniff allows skipping a function comment when there are no parameters and returned values or when all parameters
+and the returned value have their type declared (type _hinted_):
+```
+public function getMeSomeArray(int $id, SomeObject $someObject = null): array
+{
+    return [];
+}
+```
+No function doc comment is needed in above example.
 
 #### Zicht.ControlStructures.ControlSignature
 Checks if certain structures are formed according to the definition of the signature.
@@ -100,11 +109,9 @@ A number creates a warning whereas an underscore creates an error.
 Global functions are required to be `snake_cased` so all lower an divided by a underscore.
 
 #### Zicht.PHP.DisallowMultipleAssignmentsInIfStatementsSniff.TooManyAssignments
-Disallows multiple assignments in a condition of if statements.
-```
-if ($foo = $bar && $foo = $bar)
-```
-The example above is disallowed.
+~~Disallows multiple assignments in a condition of if statements.~~
+
+_Sniff is currently disabled by hardcoded `return;`_
 
 #### Zicht.PHP.Namespace
 Except for global classes all other classes in namespaces are not allowed to be used in code referring to the fully
