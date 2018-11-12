@@ -1,5 +1,6 @@
 <?php
 /**
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Sniffs\Commenting;
@@ -184,11 +185,23 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
     protected function doesReturnSomething(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+
+        if (!array_key_exists('scope_opener', $tokens[$stackPtr])) {
+            // No scope, might be inside an interface or an abstract declatared method
+            return false;
+        }
+
         $start = $tokens[$stackPtr]['scope_opener'] + 1;
         do {
-            $return = $phpcsFile->findNext([T_RETURN, T_CLOSURE], $start, $tokens[$stackPtr]['scope_closer'] - 1);
+            $return = $phpcsFile->findNext([T_RETURN, T_CLOSURE, T_YIELD, T_YIELD_FROM], $start, $tokens[$stackPtr]['scope_closer'] - 1);
+
+            if (in_array($tokens[$return]['code'], [T_YIELD, T_YIELD_FROM], true)) {
+                // `yield` indicates a `\Generator` a return type
+                return true;
+            }
 
             if (T_CLOSURE === $tokens[$return]['code']) {
+                // Skip the body of any closures found
                 $start = $tokens[$return]['scope_closer'] + 1;
                 continue;
             }
