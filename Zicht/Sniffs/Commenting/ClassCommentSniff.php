@@ -1,54 +1,53 @@
 <?php
 /**
- * @author Gerard van Helden <gerard@zicht.nl>
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Sniffs\Commenting;
 
-use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff as PEARClassCommentSniff;
+use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff as PearClassCommentSniff;
 
 /**
  * Sniffs the doc comment tags in class level comments
  */
-class ClassCommentSniff extends PEARClassCommentSniff
+class ClassCommentSniff extends PearClassCommentSniff
 {
+    use DisallowTagsTrait;
+
     protected $tags = [
-        'author' => [
-            'required' => false,
-            'allow_multiple' => true,
-            'order_text' => 'precedes @copyright',
+        '@category' => [
+            'disallow' => true,
         ],
-        'copyright' => [
-            'required' => false,
-            'allow_multiple' => true,
-            'order_text' => 'follows @author',
+        '@package' => [
+            'disallow' => true,
         ],
-        'version' => [
+        '@subpackage' => [
+            'disallow' => true,
+        ],
+        '@author' => [
+            'disallow' => true,
+        ],
+        '@copyright' => [
+            'disallow' => true,
+        ],
+        '@version' => [
             'required' => false,
             'allow_multiple' => false,
             'order_text' => 'follows @license',
         ],
-        'see' => [
+        '@link' => [
+            'required' => false,
+            'allow_multiple' => true,
+        ],
+        '@see' => [
             'required' => false,
             'allow_multiple' => true,
             'order_text' => 'follows @link',
         ],
-        'deprecated' => [
+        '@deprecated' => [
             'required' => false,
             'allow_multiple' => false,
             'order_text' => 'follows @see (if used) or @version (if used) or @copyright (if used)',
         ],
     ];
-
-    /**
-     * Override to skip the file comments
-     *
-     * @param int $commentStart
-     * @return void
-     */
-    protected function processCopyrights($commentStart)
-    {
-        // skip copyrights semantics.
-    }
 }
