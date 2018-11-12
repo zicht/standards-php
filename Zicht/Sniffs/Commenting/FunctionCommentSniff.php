@@ -88,7 +88,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
     }
 
     /**
-     * Process comment to look for and validate @inheritDoc tags
+     * Process comment to look for and validate `@inheritdoc` tags
      *
      * @param File $phpcsFile
      * @param int $commentStart
@@ -96,13 +96,25 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
      */
     protected function processInheritDoc(File $phpcsFile, $commentStart)
     {
-        $inheritDoc = false !== $this->hasCommentTag($phpcsFile, $commentStart, '@inheritdoc');
+        $tokens = $phpcsFile->getTokens();
+
+        $inheritDocPos = $this->hasCommentTag($phpcsFile, $commentStart, '@inheritdoc');
+        $inheritDoc = false !== $inheritDocPos;
+        if (false !== $inheritDocPos && $tokens[$inheritDocPos]['content'] !== strtolower($tokens[$inheritDocPos]['content'])) {
+            $error = 'Inherit doc tag should be written lower case: found %s, expecting %s';
+            $correctInheritDocTag = strtolower($tokens[$inheritDocPos]['content']);
+            $data = [$tokens[$inheritDocPos]['content'], $correctInheritDocTag];
+            $fix = $phpcsFile->addFixableError($error, $inheritDocPos, 'WrongInheritDocTagSyntax', $data);
+            if ($fix) {
+                $phpcsFile->fixer->replaceToken($inheritDocPos, $correctInheritDocTag);
+            }
+        }
+
         if (false !== ($tagPos = $this->hasCommentTag($phpcsFile, $commentStart, '@{inheritdoc}'))) {
             $inheritDoc = true;
 
-            $tokens = $phpcsFile->getTokens();
             $error = 'Wrong syntax for inherit doc tag: found %s, expecting %s';
-            $correctInheritDocTag = str_replace('@{', '{@', $tokens[$tagPos]['content']);
+            $correctInheritDocTag = str_replace('@{', '{@', strtolower($tokens[$tagPos]['content']));
             $data = [$tokens[$tagPos]['content'], $correctInheritDocTag];
             $fix = $phpcsFile->addFixableError($error, $tagPos, 'WrongInheritDocTagSyntax', $data);
             if ($fix) {
@@ -115,7 +127,6 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
         }
 
         $i = $commentStart;
-        $tokens = $phpcsFile->getTokens();
         $commentCloser = $tokens[$commentStart]['comment_closer'];
         while (false === $inheritDoc && ++$i < $commentCloser) {
             if (T_DOC_COMMENT_STRING === $tokens[$i]['code']
@@ -196,7 +207,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
             $return = $phpcsFile->findNext([T_RETURN, T_CLOSURE, T_YIELD, T_YIELD_FROM], $start, $tokens[$stackPtr]['scope_closer'] - 1);
 
             if (in_array($tokens[$return]['code'], [T_YIELD, T_YIELD_FROM], true)) {
-                // `yield` indicates a `\Generator` a return type
+                // `yield` indicates a `\Generator` return type
                 return true;
             }
 
