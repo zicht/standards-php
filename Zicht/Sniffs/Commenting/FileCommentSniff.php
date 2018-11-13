@@ -8,11 +8,12 @@ namespace Zicht\Sniffs\Commenting;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff as PearFileCommentSniff;
 
 /**
- * Sniffs the doc comment tags in a file comment
+ * Checks for empty or superfluous file doc comments, sniffs the doc comment tags in a file comment
  */
 class FileCommentSniff extends PearFileCommentSniff
 {
-    use DisallowTagsTrait;
+    use DisallowTagsTrait,
+        EmptyCommentTrait;
 
     protected $tags = [
         '@category' => [
@@ -51,6 +52,15 @@ class FileCommentSniff extends PearFileCommentSniff
             'order_text' => 'follows @see (if used) or @version (if used) or @copyright (if used)',
         ],
     ];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function processTags($phpcsFile, $stackPtr, $commentStart)
+    {
+        $this->processIsEmptyDocBlock($phpcsFile, $stackPtr, $commentStart);
+        $this->processDisallowedTags($phpcsFile, $stackPtr, $commentStart);
+    }
 
     /**
      * {@inheritdoc}

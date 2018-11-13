@@ -8,9 +8,6 @@ namespace Zicht\Sniffs\PHP;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
-/**
- * Class NamespaceSniff
- */
 class NamespaceSniff implements Sniff
 {
     /**

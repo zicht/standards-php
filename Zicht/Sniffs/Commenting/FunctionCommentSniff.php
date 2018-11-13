@@ -15,6 +15,8 @@ use PHP_CodeSniffer\Util\Tokens;
  */
 class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
 {
+    use EmptyCommentTrait;
+
     /** @var bool */
     protected $paramsNeedProcessing;
 
@@ -49,6 +51,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
 
         $hasDocComment = T_DOC_COMMENT_CLOSE_TAG === $tokens[$commentEnd]['code'];
         $commentStart = ($hasDocComment ? $tokens[$commentEnd]['comment_opener'] : null);
+
         $inheritDoc = $hasDocComment && $this->processInheritDoc($phpcsFile, $commentStart);
         $hasParamDefined = $hasDocComment && $this->hasCommentTag($phpcsFile, $commentStart, '@param');
         $hasReturnDefined = $hasDocComment && $this->hasCommentTag($phpcsFile, $commentStart, '@return');
@@ -59,6 +62,9 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
         $this->returnNeedsProcessing = $hasReturnDefined
             || !$inheritDoc && $this->doesReturnSomething($phpcsFile, $stackPtr) && !$this->hasReturnTypeDeclared($phpcsFile, $stackPtr);
 
+        if ($hasDocComment) {
+            $this->processIsEmptyDocBlock($phpcsFile, $stackPtr, $commentStart);
+        }
         if ($hasDocComment || $this->paramsNeedProcessing || $this->returnNeedsProcessing) {
             parent::process($phpcsFile, $stackPtr);
         }

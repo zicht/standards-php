@@ -8,9 +8,6 @@ namespace Zicht\Sniffs\Whitespace;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
-/**
- * A sniff that checks for excessive whitespace lines.
- */
 class ExcessiveWhitespaceSniff implements Sniff
 {
     /**
