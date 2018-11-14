@@ -11,20 +11,21 @@ standard applies some custom rules and modifications to these standards:
 - All constants, both global and class constants are `UPPERCASED_AND_UNDERSCORED`.
 - Excessive whitespace is discouraged, i.e. more than two lines of whitespace and whitespace before the end of a
   scope (before a closing '}') causes warnings.
-- Referring local namespaces in use statements is discouraged, and they should begin with a backslash.
-- Referring global namespaces for non-global classes (i.e., classes that do not reside in the global namespace
-  is discouraged.
+- Referring global namespaces in use statements is not allowed (must not begin with a backslash).
+- Referring global namespaces for non-global classes (classes that do not reside in the global namespace, i.e. PHP core classes) is discouraged.
 
 ## Usage 
 
-composer require --dev `zicht/standards-php`
+```
+composer require --dev zicht/standards-php
+```
 
-Run `./vendor/bin/phpcs -s src/Zicht/ --standard=vendor/zicht-standards/php/Zicht --extensions=php`
+Run `./vendor/bin/phpcs -s src/Zicht/ tests/Zicht/ --standard=vendor/zicht/standards-php/Zicht --extensions=php`
 
 Also you could incorporate the check in the `scripts` section of composer like this.
 ```
-"code-style": [
-    "./vendor/bin/phpcs -s src/Zicht/ --standard=vendor/zicht-standards/php/Zicht --extensions=php"
+"lint": [
+    "phpcs -s src/Zicht/ tests/Zicht/ --standard=vendor/zicht/standards-php/Zicht --extensions=php"
 ]
 ```
 
@@ -37,12 +38,11 @@ In this section each of the rules from the Zicht set are explained.
 Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff` and adds rules about what the doc block could 
 contain in a class doc comment.
 
-`@author` tag in doc is not required but one or more is allowed. Precedes `@copyright`.
-`@see` tag in doc is not required but one or more is allowed. Follows `@link`.
-`@copyright` tag in doc is not required but one or more is allowed. Follows `@author`.
-`@version` tag in doc is not required but only one is allowed. Follows `@license`.
-`@deprecated` tag in doc is not required but only one is allowed. Follows `@see` (if used) or `@version` (if used) or 
-`@copyright` (if used).
+- `@category`, `@package`, `@subpackage`, `@author` and `@copyright` tags are not allowed in class doc comments.
+- `@version` tag in doc is not required but only one is allowed. Follows `@license`.
+- `@link` tag in doc is not required but one or more is allowed.
+- `@see` tag in doc is not required but one or more is allowed. Follows `@link`.
+- `@deprecated` tag in doc is not required but only one is allowed. Follows `@see` (if used) or `@version` (if used).
 
 #### Zicht.Commenting.ClassConstantComment
 Requires constants in classes to have a doc block. 
@@ -54,11 +54,12 @@ Looks for comments before the `define` function of PHP.
 Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff` and adds rules about what the doc block could 
 contain in a file doc comment.
 
-`@author` tag in doc is not required but one or more is allowed. Precedes `@copyright`.
-`@see` tag in doc is not required but one or more is allowed. Follows `@link`.
-`@copyright` tag in doc is not required but one or more is allowed. Follows `@author`.
-`@version` tag in doc is not required but only one is allowed. Follows `@license`.
-`@deprecated` tag in doc is not required but only one is allowed. Follows `@see` (if used) or `@version` (if used) or 
+- `@category`, `@package`, `@subpackage` and `@author` tags are not allowed in file doc comments.
+- `@copyright` tag in doc is not required but one or more is allowed.
+- `@version` tag in doc is not required but only one is allowed. Follows `@license`.
+- `@link` tag in doc is not required but one or more is allowed.
+- `@see` tag in doc is not required but one or more is allowed. Follows `@link`.
+- `@deprecated` tag in doc is not required but only one is allowed. Follows `@see` (if used) or `@version` (if used) or 
 `@copyright` (if used).
 
 #### Zicht.Commenting.FunctionComment
@@ -232,4 +233,4 @@ Zicht
 # Maintainers
 * Boudewijn Schoon <boudewijn@zicht.nl>
 * Erik Trapman <erik@zicht.nl>
-* Robert van Kempen <robert@zicht.nl>
+* Jochem Klaver <jochem@zicht.nl>
