@@ -12,7 +12,8 @@ standard applies some custom rules and modifications to these standards:
 - Excessive whitespace is discouraged, i.e. more than two lines of whitespace and whitespace before the end of a
   scope (before a closing '}') causes warnings.
 - Referring global namespaces in use statements is not allowed (must not begin with a backslash).
-- Referring global namespaces for non-global classes (classes that do not reside in the global namespace, i.e. PHP core classes) is discouraged.
+- Referring global namespaces for non-global classes (classes that do not reside in the global namespace, i.e. PHP core
+  classes) is discouraged.
 
 ## Usage 
 
@@ -20,24 +21,39 @@ standard applies some custom rules and modifications to these standards:
 composer require --dev zicht/standards-php
 ```
 
-Run `vendor/bin/phpcs -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php <directories-and-files>`
+Basic usage `vendor/bin/phpcs --standard=vendor/zicht/standards-php/Zicht --extensions=php <directories-and-files>`
 
-Also you could incorporate the check in the `scripts` section of composer like this and also add a fix command:
+Projects should incorporate following commands in the `scripts` section of their `composer.json`. You should be using
+the `composer lint` command in your daily work to inspect code changes you made before submitting a pull request
+(you can also [incorporate these checks into PhpStorm](https://blog.jetbrains.com/phpstorm/2018/08/simplified-codesniffer-and-messdetector-setup/)).
+You can use the `composer lint-fix` command to auto-fix errors that can be fixed automatically. Projects should
+implement the `composer lint-no-warn` command into their Q&A jobs that should be ran on newly submitted pull requests
+(this ignores warnings to prevent loads of warning messages in the logs while the test will still pass).
+
 ```json
 {
     "scripts": {
         "lint": [
-            "phpcs -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php src/ tests/"
+            "phpcs -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php --runtime-set ignore_warnings_on_exit true src/ tests/"
+        ],
+        "lint-no-warn": [
+            "phpcs -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php --warning-severity=0 src/ tests/"
         ],
         "lint-fix": [
             "phpcbf -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php src/ tests/"
         ]
     }
 }
-
 ```
 
 ## Current ruleset
+
+### Generic
+
+#### Generic.Files.LineLength
+This rule is configured to give warnings on lines longer than **120** characters and never give errors on line lengths
+(following [PSR-2](https://www.php-fig.org/psr/psr-2/#23-lines)). You should fix these warnings and stick to a maximum
+line length of 120 characters, but the Q&A tests should not fail on code having lines longer than 120 characters.
 
 ### Zicht Sniffs
 In this section each of the rules from the Zicht set are explained.
@@ -48,8 +64,10 @@ blocks and doc blocks containing superfluous descriptions. Empty doc blocks and 
 comment (no tags) must be improved or removed. The description of doc blocks having a superfluous description and having
 tags must be improved or removed.
 
-Superfluous descriptions are detected by looking at the declaration the doc block belongs to and see if it is a repetition
-of its name, which obviously is not adding anything of value. Superfluous doc blocks/descriptions are auto-fixable.
+Superfluous descriptions are detected by looking at the declaration the doc block belongs to and see if it is a
+repetition of its name, which obviously is not adding anything of value. Superfluous doc blocks/descriptions are
+auto-fixable.
+
 Example, all three doc block comments produce an error by the related sniff because the descriptions are superfluous:
 ```php
 <?php
@@ -109,8 +127,8 @@ contain in a file doc comment.
 Extends `\PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff`. Additionally detects empty or
 superfluous comments (see _[Commenting in general](#commenting-in-general)_) and detects `{@inheritdoc}` in the function
 comment which makes it skip params and return tags validation (if no `@param` or `@return` is added additionally).
-Also this sniff allows skipping a function comment when there are no parameters and returned values or when all parameters
-and the returned value have their type declared (type _hinted_):
+Also this sniff allows skipping a function comment when there are no parameters and returned values or when all
+parameters and the returned value have their type declared (type _hinted_):
 ```php
 public function getMeSomeArray(int $id, SomeObject $someObject = null): array
 {
@@ -203,6 +221,7 @@ That will produce the following set:
      Generic.ControlStructures.InlineControlStructure
      Generic.Files.ByteOrderMark
      Generic.Files.LineEndings
+     Generic.Files.LineLength
      Generic.Formatting.DisallowMultipleStatements
      Generic.Formatting.NoSpaceAfterCast
      Generic.Formatting.SpaceAfterCast
@@ -288,14 +307,16 @@ That will produce the following set:
      Zicht.Whitespace.ExcessiveWhitespace
 ```
 
-These namespaces of rules are applied as you could see above. Check the documentation of these namespaces for explanation.
-Generic
-PEAR
-PSR1
-PSR2
-Squiz
-Zend
-Zicht
+These namespaces of rules are applied as you could see above. Check the documentation of these namespaces for
+explanation.
+
+- Generic
+- PEAR
+- PSR1
+- PSR2
+- Squiz
+- Zend
+- Zicht
 
 # Maintainers
 * Boudewijn Schoon <boudewijn@zicht.nl>

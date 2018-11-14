@@ -60,10 +60,12 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
         $hasReturnDefined = $hasDocComment && $docComment->hasTag('@return');
 
         $this->paramsNeedProcessing = $hasParamDefined
-            || !$inheritDoc && $this->hasParams($phpcsFile, $stackPtr) && !$this->hasAllParamTypesDeclared($phpcsFile, $stackPtr);
+            || !$inheritDoc && $this->hasParams($phpcsFile, $stackPtr)
+            && !$this->hasAllParamTypesDeclared($phpcsFile, $stackPtr);
 
         $this->returnNeedsProcessing = $hasReturnDefined
-            || !$inheritDoc && $this->doesReturnSomething($phpcsFile, $stackPtr) && !$this->hasReturnTypeDeclared($phpcsFile, $stackPtr);
+            || !$inheritDoc && $this->doesReturnSomething($phpcsFile, $stackPtr)
+            && !$this->hasReturnTypeDeclared($phpcsFile, $stackPtr);
 
         if ($hasDocComment) {
             $this->processIsEmptyOrSuperfluousDocComment($phpcsFile, $stackPtr, $commentStart);
@@ -221,7 +223,11 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
              * @see vendor/squizlabs/php_codesniffer/src/Util/Tokens.php:114
              */
             // phpcs:disable PHPCompatibility.Constants.NewConstants.t_yield_fromFound
-            $return = $phpcsFile->findNext([T_RETURN, T_CLOSURE, T_YIELD, T_YIELD_FROM], $start, $tokens[$stackPtr]['scope_closer'] - 1);
+            $return = $phpcsFile->findNext(
+                [T_RETURN, T_CLOSURE, T_YIELD, T_YIELD_FROM],
+                $start,
+                $tokens[$stackPtr]['scope_closer'] - 1
+            );
 
             if (in_array($tokens[$return]['code'], [T_YIELD, T_YIELD_FROM], true)) {
                 // `yield` indicates a `\Generator` return type
@@ -237,7 +243,12 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
 
             if (false !== $return) {
                 $start = $return + 1;
-                $returnWhat = $phpcsFile->findNext([T_WHITESPACE], $start, $tokens[$stackPtr]['scope_closer'] - 1, true);
+                $returnWhat = $phpcsFile->findNext(
+                    [T_WHITESPACE],
+                    $start,
+                    $tokens[$stackPtr]['scope_closer'] - 1,
+                    true
+                );
                 if (T_SEMICOLON !== $tokens[$returnWhat]['code']) {
                     return true;
                 }

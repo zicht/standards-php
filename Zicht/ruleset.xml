@@ -23,7 +23,6 @@
         <exclude name="PEAR.Functions.FunctionDeclaration"/>
         <exclude name="PEAR.Classes.ClassDeclaration"/>
         <exclude name="PEAR.WhiteSpace.ScopeIndent.Incorrect"/>
-        <exclude name="Generic.Files.LineLength"/>
     </rule>
 
     <rule ref="Internal.NoCodeFound">
@@ -149,13 +148,6 @@
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired">
         <severity>5</severity>
         <type>warning</type>
-    </rule>
-
-    <rule ref="Generic.Files.LineLength">
-        <properties>
-            <property name="lineLimit" value="120"/>
-            <property name="absoluteLineLimit" value="130"/>
-        </properties>
     </rule>
 
     <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine" />

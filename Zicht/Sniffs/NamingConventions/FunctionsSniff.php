@@ -55,7 +55,10 @@ class FunctionsSniff implements Sniff
                 if (substr($functionName, 0, 2) == '__'
                     && in_array(
                         substr($functionName, 2),
-                        ['construct', 'get', 'set', 'call', 'callStatic', 'invoke', 'destruct', 'toString', 'clone', 'invoke', 'invokeStatic']
+                        [
+                            'construct', 'get', 'set', 'call', 'callStatic', 'invoke',
+                            'destruct', 'toString', 'clone', 'invoke', 'invokeStatic',
+                        ]
                     )
                 ) {
                     return;

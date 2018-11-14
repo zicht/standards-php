@@ -39,10 +39,19 @@ trait DisallowTagsTrait
                 if ($fix) {
                     $phpcsFile->fixer->beginChangeset();
                     $commentEnd = $tokens[$commentStart]['comment_closer'];
-                    ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $tagPos, ['start' => $commentStart, 'end' => $commentEnd]);
-                    while (null !== ($nextLinePos = ZichtPhpCs_File::getNextLine($phpcsFile, (isset($nextLinePos) ? $nextLinePos : $tagPos)))
+                    ZichtPhpCs_File::fixRemoveWholeLine(
+                        $phpcsFile,
+                        $tagPos,
+                        ['start' => $commentStart, 'end' => $commentEnd]
+                    );
+                    $nextLinePos = $tagPos;
+                    while (null !== ($nextLinePos = ZichtPhpCs_File::getNextLine($phpcsFile, $nextLinePos))
                         && '' === trim(ZichtPhpCs_File::getLineContents($phpcsFile, $nextLinePos), " *\r\n")
-                        || !ZichtPhpCs_File::lineContainsTokens($phpcsFile, $nextLinePos, [T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_TAG])) {
+                        || !ZichtPhpCs_File::lineContainsTokens(
+                            $phpcsFile,
+                            $nextLinePos,
+                            [T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_TAG]
+                        )) {
                         ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $nextLinePos);
                     }
                     $phpcsFile->fixer->endChangeset();
