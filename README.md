@@ -44,9 +44,6 @@ contain in a class doc comment.
 - `@see` tag in doc is not required but one or more is allowed. Follows `@link`.
 - `@deprecated` tag in doc is not required but only one is allowed. Follows `@see` (if used) or `@version` (if used).
 
-#### Zicht.Commenting.ClassConstantComment
-Requires constants in classes to have a doc block. 
-
 #### Zicht.Commenting.DefineComment
 Looks for comments before the `define` function of PHP.
 
@@ -207,7 +204,6 @@ That gives us the following set.
    Zicht (13 sniffs)
    -----------------
      Zicht.Commenting.ClassComment
-     Zicht.Commenting.ClassConstantComment
      Zicht.Commenting.DefineComment
      Zicht.Commenting.FileComment
      Zicht.Commenting.FunctionComment
