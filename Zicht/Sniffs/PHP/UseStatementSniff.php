@@ -8,6 +8,7 @@ namespace Zicht\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Sniffs for
@@ -83,45 +84,24 @@ class UseStatementSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-
         $ptr = $stackPtr;
-        // scan back to the start of file, and make sure only the specified tokens occur before
-        // the use statement
+        // Scan back to the start of file, and see if certain tokens occur before the use statement
+        $tokensNotAllowedBeforeUseStatement = [
+            T_VARIABLE, T_STATIC, T_UNSET, T_CONST, T_LIST, T_CALLABLE,
+            T_NEW, T_CLOSURE, T_OBJECT_OPERATOR, T_SELF,
+            T_WHILE, T_DO, T_FOR, T_FOREACH, T_SWITCH, T_BREAK, T_CONTINUE,
+            T_IF, T_ELSE, T_ELSEIF, T_ENDIF,
+            T_THROW, T_TRY, T_CATCH, T_FINALLY,
+            T_RETURN, T_EXIT, T_ECHO,
+        ];
+
         do {
             --$ptr;
-        } while (
-            $ptr > 0
-            && in_array(
-                $tokens[ $ptr ]['code'],
-                [
-                    T_OPEN_TAG,
-                    T_DECLARE,
-                    T_LNUMBER,
-                    T_NAMESPACE,
-                    T_COMMENT,
-                    T_DOC_COMMENT,
-                    T_WHITESPACE,
-                    T_SEMICOLON,
-                    T_STRING,
-                    T_NS_SEPARATOR,
-                    T_USE,
-                    T_AS,
-                    T_DOC_COMMENT_CLOSE_TAG,
-                    T_DOC_COMMENT_STAR,
-                    T_DOC_COMMENT_WHITESPACE,
-                    T_DOC_COMMENT_TAG,
-                    T_DOC_COMMENT_OPEN_TAG,
-                    T_DOC_COMMENT_CLOSE_TAG,
-                    T_DOC_COMMENT_STRING,
-                ]
-            )
-        );
+        } while ($ptr > 0 && !in_array($tokens[ $ptr ]['code'], $tokensNotAllowedBeforeUseStatement));
+
         if ($ptr !== 0) {
-            $phpcsFile->addWarning(
-                'Use statement on any other position than top of file is discouraged.',
-                $stackPtr,
-                'TopOfFile'
-            );
+            $error = 'Use statement on any other position than top of file is discouraged. Found %s on line %d';
+            $phpcsFile->addWarning($error, $stackPtr, 'TopOfFile', [$tokens[ $ptr ]['type'], $tokens[ $ptr ]['line']]);
         } else {
             if (!empty($tokens[ $stackPtr - 1 ])) {
                 $previous = $tokens[ $stackPtr - 1 ];
