@@ -16,17 +16,25 @@ standard applies some custom rules and modifications to these standards:
 
 ## Usage 
 
-```
+```bash
 composer require --dev zicht/standards-php
 ```
 
-Run `./vendor/bin/phpcs -s src/Zicht/ tests/Zicht/ --standard=vendor/zicht/standards-php/Zicht --extensions=php`
+Run `vendor/bin/phpcs -s --standard=vendor/zicht/standards-php/Zicht --extensions=php <directories-and-files>`
 
-Also you could incorporate the check in the `scripts` section of composer like this.
-```
-"lint": [
-    "phpcs -s src/Zicht/ tests/Zicht/ --standard=vendor/zicht/standards-php/Zicht --extensions=php"
-]
+Also you could incorporate the check in the `scripts` section of composer like this and also add a fix command:
+```json
+{
+    "scripts": {
+        "lint": [
+            "phpcs -s --standard=vendor/zicht/standards-php/Zicht --extensions=php src/Zicht/ tests/Zicht/"
+        ],
+        "lint-fix": [
+            "phpcbf -s --standard=vendor/zicht/standards-php/Zicht --extensions=php src/Zicht/ tests/Zicht/"
+        ]
+    }
+}
+
 ```
 
 ## Current ruleset
@@ -34,8 +42,45 @@ Also you could incorporate the check in the `scripts` section of composer like t
 ### Zicht Sniffs
 In this section each of the rules from the Zicht set are explained.
 
+#### Commenting in general
+All doc block comment sniffs (ClassComment, FileComment and FunctionComment) will scan for empty doc blocks and doc blocks
+containing superfluous descriptions. Empty doc blocks and doc block containing only a superfluous comment (no tags) must
+be improved or removed. The description of doc blocks having a superfluous description and having tags must be improved
+or removed.
+
+Superfluous descriptions are detected by looking at the declaration the doc block belongs to and see if it is a repetition
+of its name, which obviously is not adding anything of value. Superfluous doc blocks/descriptions are auto-fixable.
+Example, all three doc block comments produce an error by the related sniff because the descriptions are superfluous:
+```php
+<?php
+/**
+ * Class SomeExampleClass                   <-- Doc block must be improved or removed
+ */
+class SomeExampleClass
+{
+    /**
+     * SomeClass constructor.               <-- Doc block must be improved or removed
+     */
+    public function __construct()
+    {
+        $this->setSomeValues([1, 2, 3]);
+    }
+
+    /**
+     * Set some values                      <-- Description must be improved or removed
+     *
+     * @param int[] $someValues  Integer values to set
+     */
+    public function setSomeValues(array $someValues)
+    {
+        $this->someValues = $someValues;
+    }
+}
+```
+
 #### Zicht.Commenting.ClassComment
-Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff` and adds rules about what the doc block could 
+Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff`. Additionally detects empty or superfluous
+comments (see _[Commenting in general](#commenting-in-general)_) and adds rules about what the doc block is allowed to
 contain in a class doc comment.
 
 - `@category`, `@package`, `@subpackage`, `@author` and `@copyright` tags are not allowed in class doc comments.
@@ -48,7 +93,8 @@ contain in a class doc comment.
 Looks for comments before the `define` function of PHP.
 
 #### Zicht.Commenting.FileComment
-Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff` and adds rules about what the doc block could 
+Extends `PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff`. Additionally detects empty or superfluous
+comments (see _[Commenting in general](#commenting-in-general)_) and adds rules about what the doc block is allowed to
 contain in a file doc comment.
 
 - `@category`, `@package`, `@subpackage` and `@author` tags are not allowed in file doc comments.
@@ -60,11 +106,12 @@ contain in a file doc comment.
 `@copyright` (if used).
 
 #### Zicht.Commenting.FunctionComment
-Extends `\PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff` to allow `{@inheritdoc}` in the 
-function comment which makes it skip params and return tags validation (if no `@param` or `@return` is added additionally).
+Extends `\PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff`. Additionally detects empty or
+superfluous comments (see _[Commenting in general](#commenting-in-general)_) and detects `{@inheritdoc}` in the function
+comment which makes it skip params and return tags validation (if no `@param` or `@return` is added additionally).
 Also this sniff allows skipping a function comment when there are no parameters and returned values or when all parameters
 and the returned value have their type declared (type _hinted_):
-```
+```php
 public function getMeSomeArray(int $id, SomeObject $someObject = null): array
 {
     return [];
@@ -124,13 +171,13 @@ a declare statement, doc blocks or the namespace declaration (and surely whitesp
 This sniff looks for more then one whitespace after the last `}` in a file. 
 
 ### Other rules
-To view the rules in this ruleset you can use the following command.
+To view the rules in this ruleset you can use the following command from the package root:
+```bash
+vendor/bin/phpcs --standard=Zicht -e
 ```
-./vendor/bin/phpcs --standard=Zicht -e
-```
-That gives us the following set.
+That will produce the following set:
 
-```  
+```text
    The Zicht standard contains 63 sniffs
    
    Generic (14 sniffs)

@@ -8,6 +8,7 @@ namespace Zicht\Sniffs\Commenting;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff as PearClassCommentSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff as PearFileCommentSniff;
+use Zicht\PhpCsFile as ZichtPhpCs_File;
 
 trait DisallowTagsTrait
 {
@@ -19,7 +20,7 @@ trait DisallowTagsTrait
      * @param int $commentStart  Position in the stack where the comment started.
      * @see PearFileCommentSniff::processTags()
      */
-    protected function processTags($phpcsFile, $stackPtr, $commentStart)
+    protected function processDisallowedTags($phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -36,15 +37,13 @@ trait DisallowTagsTrait
                 $code = sprintf('NotAllowed%sTag', ucfirst(substr($name, 1)));
                 $fix = $phpcsFile->addFixableError($error, $tagPos, $code, $data);
                 if ($fix) {
-                    $linePos = $tagPos;
-                    while ($linePos > $commentStart && $tokens[$linePos]['line'] === $tokens[$tagPos]['line']) {
-                        $linePos--;
-                    }
-                    $linePos++;
                     $commentEnd = $tokens[$commentStart]['comment_closer'];
-                    do {
-                        $phpcsFile->fixer->replaceToken($linePos, '');
-                    } while ($tokens[++$linePos]['line'] === $tokens[$tagPos]['line'] && $linePos !== $commentEnd);
+                    ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $tagPos, ['start' => $commentStart, 'end' => $commentEnd]);
+                    while (null !== ($nextLinePos = ZichtPhpCs_File::getNextLine($phpcsFile, (isset($nextLinePos) ? $nextLinePos : $tagPos)))
+                        && '' === trim(ZichtPhpCs_File::getLineContents($phpcsFile, $nextLinePos), " *\r\n")
+                        || !ZichtPhpCs_File::lineContainsTokens($phpcsFile, $nextLinePos, [T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_TAG])) {
+                        ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $nextLinePos);
+                    }
                 }
             }
         }
