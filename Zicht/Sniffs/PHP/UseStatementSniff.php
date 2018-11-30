@@ -7,7 +7,6 @@ namespace Zicht\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use PHP_CodeSniffer\Util\Tokens;
 
 class UseStatementSniff implements Sniff
 {
@@ -31,7 +30,7 @@ class UseStatementSniff implements Sniff
 
         // only check if the use statement is part of the global scope
         while (--$ptr) {
-            if (in_array($tokens[ $ptr ]['code'], [T_FUNCTION, T_CLASS, T_TRAIT, T_INTERFACE])) {
+            if (in_array($tokens[$ptr]['code'], [T_FUNCTION, T_CLASS, T_TRAIT, T_INTERFACE])) {
                 return;
             }
         }
@@ -53,16 +52,16 @@ class UseStatementSniff implements Sniff
         $commas = 0;
         do {
             $ptr++;
-            if ($tokens[ $ptr ]['code'] == T_COMMA) {
+            if ($tokens[$ptr]['code'] == T_COMMA) {
                 $commas++;
             }
-        } while ($tokens[ $ptr ]['code'] != T_SEMICOLON);
+        } while ($tokens[$ptr]['code'] != T_SEMICOLON);
 
         if ($commas > 0) {
             $phpcsFile->addError(
                 'Use statements must be split up, usage of comma\'s in use statement is disallowed',
                 $stackPtr,
-                'SplitUp'
+                'SplitStatements'
             );
         }
     }
@@ -88,16 +87,16 @@ class UseStatementSniff implements Sniff
 
         do {
             --$ptr;
-        } while ($ptr > 0 && !in_array($tokens[ $ptr ]['code'], $tokensNotAllowedBeforeUseStatement));
+        } while ($ptr > 0 && !in_array($tokens[$ptr]['code'], $tokensNotAllowedBeforeUseStatement));
 
         if ($ptr !== 0) {
             $error = 'Use statement on any other position than top of file is discouraged. Found %s on line %d';
-            $phpcsFile->addWarning($error, $stackPtr, 'TopOfFile', [$tokens[ $ptr ]['type'], $tokens[ $ptr ]['line']]);
+            $phpcsFile->addError($error, $stackPtr, 'TopOfFile', [$tokens[$ptr]['type'], $tokens[$ptr]['line']]);
         } else {
-            if (!empty($tokens[ $stackPtr - 1 ])) {
-                $previous = $tokens[ $stackPtr - 1 ];
+            if (!empty($tokens[$stackPtr - 1])) {
+                $previous = $tokens[$stackPtr - 1];
                 if ($previous['content']{strlen($previous['content']) - 1} != "\n") {
-                    $phpcsFile->addWarning(
+                    $phpcsFile->addError(
                         'Use statement should be on its own line.',
                         $stackPtr,
                         'OwnLine'
@@ -117,15 +116,15 @@ class UseStatementSniff implements Sniff
         $ptr = $stackPtr;
         do {
             ++$ptr;
-        } while ($tokens[ $ptr ]['code'] == T_WHITESPACE);
+        } while ($tokens[$ptr]['code'] == T_WHITESPACE);
 
-        if ($tokens[ $ptr ]['code'] == T_NS_SEPARATOR) {
+        if ($tokens[$ptr]['code'] == T_NS_SEPARATOR) {
             $code = '';
             do {
-                $code .= $tokens[ $ptr ]['content'];
+                $code .= $tokens[$ptr]['content'];
                 ++$ptr;
-            } while (isset($tokens[ $ptr ]) && !in_array($tokens[ $ptr ]['content'], [';', 'as']));
-            $phpcsFile->addWarning(
+            } while (isset($tokens[$ptr]) && !in_array($tokens[$ptr]['content'], [';', 'as']));
+            $phpcsFile->addError(
                 'Use statements should not refer global namespace, found ' . trim($code),
                 $stackPtr,
                 'GlobalReference'

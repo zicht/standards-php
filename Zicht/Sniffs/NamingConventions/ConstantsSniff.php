@@ -47,7 +47,7 @@ class ConstantsSniff implements Sniff
         }
 
         if (!preg_match('/^[A-Z][A-Z_]*[0-9]*$/', $name)) {
-            $phpcsFile->addWarning(
+            $phpcsFile->addError(
                 'Constant "%s" should be UPPERCASED_AND_UNDERSCORED',
                 $stackPtr,
                 'InvalidName',
