@@ -103,12 +103,16 @@ trait EmptyCommentTrait
             while ($tokens[$linePos]['line'] === $tokens[$commentStart]['line'] && T_WHITESPACE === $tokens[$linePos]['code']) {
                 $linePos--;
             }
+
+            $phpcsFile->fixer->beginChangeset();
             $linePos++;
             do {
                 $phpcsFile->fixer->replaceToken($linePos, '');
             } while ($tokens[++$linePos]['line'] <= $tokens[$commentEnd]['line']
                 && ($linePos <= $commentEnd || T_WHITESPACE === $tokens[$linePos]['code']));
+            $phpcsFile->fixer->endChangeset();
         } elseif (false !== $fixRemoveLinePos) {
+            $phpcsFile->fixer->beginChangeset();
             $commentEnd = $tokens[$commentStart]['comment_closer'];
             ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $fixRemoveLinePos, ['start' => $commentStart, 'end' => $commentEnd]);
             while (null !== ($nextLinePos = ZichtPhpCs_File::getNextLine($phpcsFile, (isset($nextLinePos) ? $nextLinePos : $fixRemoveLinePos)))
@@ -116,6 +120,7 @@ trait EmptyCommentTrait
                 || !ZichtPhpCs_File::lineContainsTokens($phpcsFile, $nextLinePos, [T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_TAG])) {
                 ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $nextLinePos);
             }
+            $phpcsFile->fixer->endChangeset();
         }
 
         return $docBlockEmpty;
