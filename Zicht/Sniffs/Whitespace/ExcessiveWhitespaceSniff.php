@@ -43,8 +43,8 @@ class ExcessiveWhitespaceSniff implements Sniff
         if (0 < preg_match('/^[^\n](\s+?)\n/', $concat, $m)) {
             // Carriage return should be caught by the line ending style sniffs
             if (strpos($m[0], "\r") === false) {
-                $phpcsFile->addWarning(
-                    'There should be no whitespace before the end of line',
+                $phpcsFile->addError(
+                    'There must be no whitespace before the end of line',
                     $stackPtr,
                     'WhitespaceBeforeEol'
                 );
@@ -54,7 +54,7 @@ class ExcessiveWhitespaceSniff implements Sniff
         $newlines = substr_count($concat, "\n");
 
         if ($newlines > 3) {
-            $phpcsFile->addWarning(
+            $phpcsFile->addError(
                 'Excessive whitespace, no more than two lines of whitespace is allowed',
                 $stackPtr,
                 'WhiteLines'
@@ -62,11 +62,11 @@ class ExcessiveWhitespaceSniff implements Sniff
         }
 
         if (!isset($tokens[ $pos ]) && $newlines > 1) {
-            $phpcsFile->addWarning('Excess whitespace at end of file', $stackPtr, 'WhiteLinesAtEndOfFile');
+            $phpcsFile->addError('Excess whitespace at end of file', $stackPtr, 'WhiteLinesAtEndOfFile');
         } elseif (isset($tokens[ $pos ]) && $newlines > 1
             && in_array($tokens[ $pos ]['type'], ['T_CLOSE_CURLY_BRACKET', 'T_CLOSE_PARENTHESIS'])
         ) {
-            $phpcsFile->addWarning(
+            $phpcsFile->addError(
                 'Excess whitespace before closing bracket',
                 $stackPtr,
                 'WhiteLinesBeforeClosingBracket'
