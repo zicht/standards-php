@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright Zicht Online <https://zicht.nl>
+ */
 
 namespace Zicht\Sniffs\Methods;
 
