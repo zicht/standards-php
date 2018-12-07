@@ -17,7 +17,6 @@
         <exclude name="Zend.NamingConventions.ValidVariableName"/>
         <exclude name="PEAR.Commenting.ClassComment"/>
         <exclude name="Squiz.Functions.GlobalFunction"/>
-        <!-- overridden in Zicht standard -->
         <exclude name="Generic.WhiteSpace.ScopeIndent"/>
         <exclude name="PEAR.Functions.FunctionDeclaration"/>
         <exclude name="PEAR.Classes.ClassDeclaration"/>
@@ -87,6 +86,10 @@
         <severity>0</severity>
     </rule>
 
+    <rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterCloseBracket">
+        <severity>0</severity>
+    </rule>
+
     <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine">
         <severity>0</severity>
     </rule>
@@ -108,5 +111,9 @@
     <rule ref="PSR1" />
 
     <rule ref="PSR2" />
+
+    <rule ref="PSR12.Operators.OperatorSpacing.NoSpaceBefore" />
+
+    <rule ref="PSR12.Operators.OperatorSpacing.NoSpaceAfter" />
 
 </ruleset>
