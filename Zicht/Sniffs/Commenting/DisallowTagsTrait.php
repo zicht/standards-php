@@ -37,6 +37,7 @@ trait DisallowTagsTrait
                 $code = sprintf('NotAllowed%sTag', ucfirst(substr($name, 1)));
                 $fix = $phpcsFile->addFixableError($error, $tagPos, $code, $data);
                 if ($fix) {
+                    $phpcsFile->fixer->beginChangeset();
                     $commentEnd = $tokens[$commentStart]['comment_closer'];
                     ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $tagPos, ['start' => $commentStart, 'end' => $commentEnd]);
                     while (null !== ($nextLinePos = ZichtPhpCs_File::getNextLine($phpcsFile, (isset($nextLinePos) ? $nextLinePos : $tagPos)))
@@ -44,6 +45,7 @@ trait DisallowTagsTrait
                         || !ZichtPhpCs_File::lineContainsTokens($phpcsFile, $nextLinePos, [T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_TAG])) {
                         ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $nextLinePos);
                     }
+                    $phpcsFile->fixer->endChangeset();
                 }
             }
         }
