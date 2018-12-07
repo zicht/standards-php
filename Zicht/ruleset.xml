@@ -18,6 +18,7 @@
         <exclude name="PEAR.Commenting.ClassComment"/>
         <exclude name="Squiz.Functions.GlobalFunction"/>
         <exclude name="Generic.WhiteSpace.ScopeIndent"/>
+        <exclude name="PEAR.Functions.FunctionCallSignature"/><!-- Replaced by Zicht.Functions.FunctionCallSignature -->
         <exclude name="PEAR.Functions.FunctionDeclaration"/>
         <exclude name="PEAR.Classes.ClassDeclaration"/>
         <exclude name="PEAR.WhiteSpace.ScopeIndent.Incorrect"/>
