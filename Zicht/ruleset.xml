@@ -60,6 +60,9 @@
         <severity>0</severity>
     </rule>
 
+    <rule ref="Zicht.Commenting.FileComment.Missing">
+        <severity>0</severity>
+    </rule>
     <rule ref="Zicht.Commenting.FileComment.MissingVersion">
         <severity>0</severity>
     </rule>
