@@ -15,6 +15,9 @@ class FileCommentSniff extends PearFileCommentSniff
     use DisallowTagsTrait,
         CommentTrait;
 
+    /**
+     * @var array<string, array<string, bool>>
+     */
     protected $tags = [
         '@category' => [
             'disallow' => true,
@@ -35,7 +38,6 @@ class FileCommentSniff extends PearFileCommentSniff
         '@version' => [
             'required' => false,
             'allow_multiple' => false,
-            'order_text' => 'follows @license',
         ],
         '@link' => [
             'required' => false,
@@ -44,12 +46,10 @@ class FileCommentSniff extends PearFileCommentSniff
         '@see' => [
             'required' => false,
             'allow_multiple' => true,
-            'order_text' => 'follows @link',
         ],
         '@deprecated' => [
             'required' => false,
             'allow_multiple' => false,
-            'order_text' => 'follows @see (if used) or @version (if used) or @copyright (if used)',
         ],
     ];
 

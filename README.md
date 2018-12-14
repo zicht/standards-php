@@ -43,10 +43,10 @@ Also you could incorporate the check in the `scripts` section of composer like t
 In this section each of the rules from the Zicht set are explained.
 
 #### Commenting in general
-All doc block comment sniffs (ClassComment, FileComment and FunctionComment) will scan for empty doc blocks and doc blocks
-containing superfluous descriptions. Empty doc blocks and doc block containing only a superfluous comment (no tags) must
-be improved or removed. The description of doc blocks having a superfluous description and having tags must be improved
-or removed.
+All doc block comment sniffs (ClassComment, FileComment, FunctionComment and PropertyComment) will scan for empty doc
+blocks and doc blocks containing superfluous descriptions. Empty doc blocks and doc block containing only a superfluous
+comment (no tags) must be improved or removed. The description of doc blocks having a superfluous description and having
+tags must be improved or removed.
 
 Superfluous descriptions are detected by looking at the declaration the doc block belongs to and see if it is a repetition
 of its name, which obviously is not adding anything of value. Superfluous doc blocks/descriptions are auto-fixable.
@@ -119,6 +119,13 @@ public function getMeSomeArray(int $id, SomeObject $someObject = null): array
 ```
 No function doc comment is needed in above example.
 
+#### Zicht.Commenting.PropertyComment
+This sniffs checks for required property comment tags (`@var`), their (required) content and the order of tags (`@var`
+tag must always come first and official PHPDoc tags must be placed above other custom tags. Empty lines are not allowed
+within the property comment and a separate description is not allowed and must be placed with the `@var` tag.
+The sniff also detects for superfluous descriptions (see _[Commenting in general](#commenting-in-general)_).
+Single line property comments (`/** @var <type> */`) are allowed.
+
 #### Zicht.ControlStructures.ControlSignature
 Checks if certain structures are formed according to the definition of the signature.
 
@@ -185,7 +192,7 @@ vendor/bin/phpcs --standard=Zicht -e
 That will produce the following set:
 
 ```text
-   The Zicht standard contains 64 sniffs
+   The Zicht standard contains 65 sniffs
 
    Generic (14 sniffs)
    -------------------
@@ -258,12 +265,13 @@ That will produce the following set:
      Zend.Debug.CodeAnalyzer
      Zend.Files.ClosingTag
 
-   Zicht (14 sniffs)
+   Zicht (15 sniffs)
    -----------------
      Zicht.Commenting.ClassComment
      Zicht.Commenting.DefineComment
      Zicht.Commenting.FileComment
      Zicht.Commenting.FunctionComment
+     Zicht.Commenting.PropertyComment
      Zicht.ControlStructures.ControlSignature
      Zicht.Functions.FunctionCallSignature
      Zicht.Methods.FunctionOpeningBrace
