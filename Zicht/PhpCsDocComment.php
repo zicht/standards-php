@@ -170,5 +170,4 @@ class PhpCsDocComment
         return array_key_exists(strtolower($tag), $this->tags)
             ? $this->tags[strtolower($tag)] : null;
     }
-public function dump(){var_dump(['description'=>$this->descriptionStrings,'tags'=>$this->tags,'empty'=>$this->isEmpty(),]);}
 }

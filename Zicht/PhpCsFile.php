@@ -174,6 +174,6 @@ class PhpCsFile
                 $callback($linePos, $tokens[$linePos]);
             }
         } while ($tokens[++$linePos]['line'] === $tokens[$stackPtr]['line']
-        && (null === $limit['end'] || $linePos < $limit['end']));
+            && (null === $limit['end'] || $linePos < $limit['end']));
     }
 }

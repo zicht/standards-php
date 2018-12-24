@@ -11,10 +11,10 @@
      },
      "scripts": {
           "lint": [
-               "phpcs -s -p Zicht/Sniffs/ --standard=Zicht,vendor/phpcompatibility/php-compatibility/PHPCompatibility/ --extensions=php --runtime-set testVersion 5.6- --parallel=$(nproc)"
+               "phpcs -s -p Zicht/ --ignore=correct.php,incorrect.php --standard=Zicht,vendor/phpcompatibility/php-compatibility/PHPCompatibility/ --extensions=php --runtime-set testVersion 5.6- --parallel=$(nproc)"
           ],
           "lint-fix": [
-               "phpcbf -s Zicht/Sniffs/ --standard=Zicht --extensions=php --parallel=$(nproc)"
+               "phpcbf -s Zicht/ --ignore=correct.php,incorrect.php --standard=Zicht --extensions=php --parallel=$(nproc)"
           ]
      },
      "require-dev": {

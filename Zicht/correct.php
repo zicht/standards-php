@@ -5,30 +5,21 @@
 
 namespace Zicht;
 
-/**
- * Trait D
- */
 trait D
 {
-
 }
 
 /**
- * Comment of class A
+ * Comment of class A explaining what it is about
  */
 class A
 {
-
     use D;
 
-    /**
-     * Constant description
-     */
     const CONSTANT = 'Some value';
 
-
     /**
-     * Constructor of A
+     * Constructor of A taking in two parameters
      *
      * @param string $paramOne First parameter
      * @param string $paramTwo Second parameter
@@ -38,12 +29,11 @@ class A
         $this->somethingElse();
     }
 
-
     /**
      * Documentation of this method.
      *
-     * @param string $someParameter some parameter that does something cool
-     * @return mixed
+     * @param string|null $someParameter some parameter that does something cool
+     * @return string|bool
      */
     public function somethingElse($someParameter = null)
     {
