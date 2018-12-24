@@ -216,12 +216,18 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
 
         $start = $tokens[$stackPtr]['scope_opener'] + 1;
         do {
+            /**
+             * Disable message about T_YIELD_FROM. PHPCS will define the constant itself if it is not defined
+             * @see vendor/squizlabs/php_codesniffer/src/Util/Tokens.php:114
+             */
+            // phpcs:disable PHPCompatibility.Constants.NewConstants.t_yield_fromFound
             $return = $phpcsFile->findNext([T_RETURN, T_CLOSURE, T_YIELD, T_YIELD_FROM], $start, $tokens[$stackPtr]['scope_closer'] - 1);
 
             if (in_array($tokens[$return]['code'], [T_YIELD, T_YIELD_FROM], true)) {
                 // `yield` indicates a `\Generator` return type
                 return true;
             }
+            // phpcs:enable PHPCompatibility.Constants.NewConstants.t_yield_fromFound
 
             if (T_CLOSURE === $tokens[$return]['code']) {
                 // Skip the body of any closures found
