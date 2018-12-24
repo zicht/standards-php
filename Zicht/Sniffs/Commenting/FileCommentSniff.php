@@ -13,7 +13,7 @@ use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff as PearFil
 class FileCommentSniff extends PearFileCommentSniff
 {
     use DisallowTagsTrait,
-        EmptyCommentTrait;
+        CommentTrait;
 
     protected $tags = [
         '@category' => [
@@ -58,7 +58,7 @@ class FileCommentSniff extends PearFileCommentSniff
      */
     protected function processTags($phpcsFile, $stackPtr, $commentStart)
     {
-        $this->processIsEmptyDocBlock($phpcsFile, $stackPtr, $commentStart);
+        $this->processIsEmptyOrSuperfluousDocComment($phpcsFile, $stackPtr, $commentStart);
         $this->processDisallowedTags($phpcsFile, $stackPtr, $commentStart);
     }
 

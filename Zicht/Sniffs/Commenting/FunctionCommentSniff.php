@@ -9,13 +9,15 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff as PearFunctionCommentSniff;
 use PHP_CodeSniffer\Util\Tokens;
+use Zicht\PhpCsDocComment;
+use Zicht\PhpCsFile as ZichtPhpCs_File;
 
 /**
  * Override of PearFunctionCommentSniff to implement @inheritDoc and check for self explanatory definitions
  */
 class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
 {
-    use EmptyCommentTrait;
+    use CommentTrait;
 
     /** @var bool */
     protected $paramsNeedProcessing;
@@ -51,10 +53,11 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
 
         $hasDocComment = T_DOC_COMMENT_CLOSE_TAG === $tokens[$commentEnd]['code'];
         $commentStart = ($hasDocComment ? $tokens[$commentEnd]['comment_opener'] : null);
+        $docComment = ($hasDocComment ? $this->parseDocComment($phpcsFile, $stackPtr, $commentStart) : null);
 
-        $inheritDoc = $hasDocComment && $this->processInheritDoc($phpcsFile, $commentStart);
-        $hasParamDefined = $hasDocComment && $this->hasCommentTag($phpcsFile, $commentStart, '@param');
-        $hasReturnDefined = $hasDocComment && $this->hasCommentTag($phpcsFile, $commentStart, '@return');
+        $inheritDoc = $hasDocComment && $this->processInheritDoc($phpcsFile, $docComment);
+        $hasParamDefined = $hasDocComment && $docComment->hasTag('@param');
+        $hasReturnDefined = $hasDocComment && $docComment->hasTag('@return');
 
         $this->paramsNeedProcessing = $hasParamDefined
             || !$inheritDoc && $this->hasParams($phpcsFile, $stackPtr) && !$this->hasAllParamTypesDeclared($phpcsFile, $stackPtr);
@@ -63,7 +66,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
             || !$inheritDoc && $this->doesReturnSomething($phpcsFile, $stackPtr) && !$this->hasReturnTypeDeclared($phpcsFile, $stackPtr);
 
         if ($hasDocComment) {
-            $this->processIsEmptyDocBlock($phpcsFile, $stackPtr, $commentStart);
+            $this->processIsEmptyOrSuperfluousDocComment($phpcsFile, $stackPtr, $commentStart);
         }
         if ($hasDocComment || $this->paramsNeedProcessing || $this->returnNeedsProcessing) {
             parent::process($phpcsFile, $stackPtr);
@@ -97,68 +100,71 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
      * Process comment to look for and validate `@inheritdoc` tags
      *
      * @param File $phpcsFile
-     * @param int $commentStart
+     * @param PhpCsDocComment $docComment
      * @return bool
      */
-    protected function processInheritDoc(File $phpcsFile, $commentStart)
+    protected function processInheritDoc(File $phpcsFile, $docComment)
     {
         $tokens = $phpcsFile->getTokens();
 
-        $inheritDocPos = $this->hasCommentTag($phpcsFile, $commentStart, '@inheritdoc');
-        $inheritDoc = false !== $inheritDocPos;
-        if (false !== $inheritDocPos && $tokens[$inheritDocPos]['content'] !== strtolower($tokens[$inheritDocPos]['content'])) {
-            $error = 'Inherit doc tag should be written lower case: found %s, expecting %s';
-            $correctInheritDocTag = strtolower($tokens[$inheritDocPos]['content']);
-            $data = [$tokens[$inheritDocPos]['content'], $correctInheritDocTag];
-            $fix = $phpcsFile->addFixableError($error, $inheritDocPos, 'WrongInheritDocTagSyntax', $data);
-            if ($fix) {
-                $phpcsFile->fixer->replaceToken($inheritDocPos, $correctInheritDocTag);
-            }
-        }
+        $correctInheritDocTag = '{@inheritdoc}';
 
-        if (false !== ($tagPos = $this->hasCommentTag($phpcsFile, $commentStart, '@{inheritdoc}'))) {
+        $inheritDoc = $hasInlineTag = $docComment->hasInlineTag('@inheritdoc');
+        if ($docComment->hasTag('@{inheritdoc}')) {
             $inheritDoc = true;
-
-            $error = 'Wrong syntax for inherit doc tag: found %s, expecting %s';
-            $correctInheritDocTag = str_replace('@{', '{@', strtolower($tokens[$tagPos]['content']));
-            $data = [$tokens[$tagPos]['content'], $correctInheritDocTag];
-            $fix = $phpcsFile->addFixableError($error, $tagPos, 'WrongInheritDocTagSyntax', $data);
-            if ($fix) {
-                $phpcsFile->fixer->replaceToken($tagPos, $correctInheritDocTag);
+            foreach ($docComment->getTag('@{inheritdoc}') as $inheritDocPos => $tagDesc) {
+                $error = 'Wrong syntax for inherit doc tag: found %s, expecting %s';
+                $data = [$tokens[$inheritDocPos]['content'], $correctInheritDocTag];
+                $fix = $phpcsFile->addFixableError($error, $inheritDocPos, 'WrongInheritDocTagSyntax', $data);
+                if ($fix) {
+                    $phpcsFile->fixer->replaceToken($inheritDocPos, $correctInheritDocTag);
+                }
             }
         }
 
-        if (false !== $inheritDoc) {
-            return true;
-        }
-
-        $i = $commentStart;
-        $commentCloser = $tokens[$commentStart]['comment_closer'];
-        while (false === $inheritDoc && ++$i < $commentCloser) {
-            if (T_DOC_COMMENT_STRING === $tokens[$i]['code']
-                && false !== stripos($tokens[$i]['content'], '{@inheritdoc}')) {
-                return true;
+        if ($docComment->hasTag('@inheritdoc')) {
+            $inheritDoc = true;
+            foreach ($docComment->getTag('@inheritdoc') as $inheritDocPos => $tagDesc) {
+                $error = (!$hasInlineTag ? 'Inherit doc tag should be written inline: found %s, expecting %s'
+                    : 'Inherit doc tag should be written inline only. Separate tag should be removed');
+                $data = [$tokens[$inheritDocPos]['content'], $correctInheritDocTag];
+                $fix = $phpcsFile->addFixableError($error, $inheritDocPos, 'WrongInheritDocTagSyntax', $data);
+                if ($fix) {
+                    if ($hasInlineTag) {
+                        $phpcsFile->fixer->beginChangeset();
+                        ZichtPhpCs_File::fixRemoveWholeLine(
+                            $phpcsFile,
+                            $inheritDocPos,
+                            ['end' => $docComment->getCommentEnd()]
+                        );
+                        $phpcsFile->fixer->endChangeset();
+                    } else {
+                        $phpcsFile->fixer->replaceToken($inheritDocPos, $correctInheritDocTag);
+                    }
+                }
             }
         }
 
-        return false;
-    }
-
-    /**
-     * @param File $phpcsFile
-     * @param int $commentStart
-     * @param string $tag
-     * @return bool|int
-     */
-    protected function hasCommentTag(File $phpcsFile, $commentStart, $tag)
-    {
-        $tokens = $phpcsFile->getTokens();
-        foreach ($tokens[$commentStart]['comment_tags'] as $tagPos) {
-            if (strtolower($tag) === strtolower($tokens[$tagPos]['content'])) {
-                return $tagPos;
+        if ($hasInlineTag && false === strpos($docComment->getDescription(), $correctInheritDocTag)) {
+            $error = 'Inherit doc tag should be written lowercase: found %s, expecting %s';
+            foreach ($docComment->getDescriptionStrings() as $descPos => $description) {
+                if (false === stripos($description, $correctInheritDocTag)) {
+                    continue;
+                }
+                $found = substr(
+                    $tokens[$descPos]['content'],
+                    stripos($tokens[$descPos]['content'], $correctInheritDocTag),
+                    strlen($correctInheritDocTag)
+                );
+                $data = [$found, $correctInheritDocTag];
+                $fix = $phpcsFile->addFixableError($error, $descPos, 'WrongInheritDocTagSyntax', $data);
+                if ($fix) {
+                    $phpcsFile->fixer->replaceToken($descPos, $correctInheritDocTag);
+                }
             }
         }
-        return false;
+
+        return $inheritDoc;
     }
 
     /**

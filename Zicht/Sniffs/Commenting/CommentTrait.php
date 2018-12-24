@@ -7,38 +7,38 @@ namespace Zicht\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
+use Zicht\PhpCsDocComment;
 use Zicht\PhpCsFile as ZichtPhpCs_File;
 
-trait EmptyCommentTrait
+trait CommentTrait
 {
     /**
-     * Check if doc block is empty or superfluous
+     * Get doc comment info (description, tags, etc.)
+     *
+     * @param File $phpcsFile
+     * @param int $stackPtr
+     * @param int $commentStart
+     * @return PhpCsDocComment
+     */
+    protected function parseDocComment(File $phpcsFile, $stackPtr, $commentStart)
+    {
+        return new PhpCsDocComment($phpcsFile, $stackPtr, $commentStart);
+    }
+
+    /**
+     * Check if doc comment is empty or superfluous
      *
      * @param File $phpcsFile
      * @param int $stackPtr
      * @param int|null $commentStart
      * @return bool
      */
-    protected function processIsEmptyDocBlock(File $phpcsFile, $stackPtr, $commentStart)
+    protected function processIsEmptyOrSuperfluousDocComment(File $phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
         $commentEnd = $tokens[$commentStart]['comment_closer'];
-        $docBlockEmpty = true;
-        $docBlockStrings = [];
-
-        if ($commentStart + 1 !== $commentEnd) {
-            for ($pos = $commentStart + 1; $pos < $commentEnd; $pos++) {
-                if (!in_array($tokens[$pos]['code'], [T_DOC_COMMENT_WHITESPACE, T_DOC_COMMENT_STAR])) {
-                    $docBlockEmpty = false;
-                    if (T_DOC_COMMENT_STRING === $tokens[$pos]['code']) {
-                        $docBlockStrings[$pos] = $tokens[$pos]['content'];
-                    } elseif (T_DOC_COMMENT_TAG === $tokens[$pos]['code']) {
-                        break;
-                    }
-                }
-            }
-        }
+        $docComment = $this->parseDocComment($phpcsFile, $stackPtr, $commentStart);
 
         $fixRemoveWhole = $fixRemoveLinePos = false;
         try {
@@ -49,20 +49,20 @@ trait EmptyCommentTrait
             $type = 'file';
         }
 
-        if ($docBlockEmpty) {
+        if ($docComment->isEmpty()) {
             $fixRemoveWhole = $phpcsFile->addFixableError(
                 'Doc comment for %s %s%s is empty and must be removed',
                 $commentEnd,
                 'Empty',
                 [$type, $declarationName, ('function' === $type ? '()' : '')]
             );
-        } elseif (0 < count($docBlockStrings)) {
+        } elseif (0 < count($docComment->getDescriptionStrings())) {
             /**
              * - Filtering out everything that is not an `a-z` character leaves an empty comment: so superfluous
              * - Filtered comment is exactly the same as filtered function name: comment doesn't add anything => superfluous
              * - Comment is the same as type + name: "Function/Method Bla Bla Xyz" ~ "blaBlyXyz()" => superfluous
              */
-            $filteredDocBlockString = preg_replace('/[^a-z]/', '', strtolower(implode('', $docBlockStrings)));
+            $filteredDocBlockString = preg_replace('/[^a-z]/', '', strtolower(implode('', $docComment->getDescriptionStrings())));
             $superfluousReplacements = [
                 preg_replace('/[^a-z]/', '', strtolower($declarationName)),
                 $type,
@@ -85,8 +85,8 @@ trait EmptyCommentTrait
 
             if (3 >= strlen($filteredDocBlockString) || 3 >= strlen(str_replace($superfluousReplacements, '', $filteredDocBlockString))) {
                 $code = 'Superfluous';
-                $errorPos = key($docBlockStrings);
-                $errorMssgData = [implode(' ', $docBlockStrings), $type, $declarationName, ('function' === $type ? '()' : '')];
+                $errorPos = key($docComment->getDescriptionStrings());
+                $errorMssgData = [implode(' ', $docComment->getDescriptionStrings()), $type, $declarationName, ('function' === $type ? '()' : '')];
                 if (!isset($tokens[$commentStart]['comment_tags']) || 0 === count($tokens[$commentStart]['comment_tags'])) {
                     $errorMssg = 'Doc comment "%s" for %s %s%s is superfluous and must be improved or removed';
                     $fixRemoveWhole = $phpcsFile->addFixableError($errorMssg, $errorPos, $code, $errorMssgData);
@@ -123,6 +123,6 @@ trait EmptyCommentTrait
             $phpcsFile->fixer->endChangeset();
         }
 
-        return $docBlockEmpty;
+        return $docComment->isEmpty();
     }
 }
