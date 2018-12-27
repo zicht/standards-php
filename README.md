@@ -20,17 +20,17 @@ standard applies some custom rules and modifications to these standards:
 composer require --dev zicht/standards-php
 ```
 
-Run `vendor/bin/phpcs -s --standard=vendor/zicht/standards-php/Zicht --extensions=php <directories-and-files>`
+Run `vendor/bin/phpcs -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php <directories-and-files>`
 
 Also you could incorporate the check in the `scripts` section of composer like this and also add a fix command:
 ```json
 {
     "scripts": {
         "lint": [
-            "phpcs -s --standard=vendor/zicht/standards-php/Zicht --extensions=php src/Zicht/ tests/Zicht/"
+            "phpcs -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php src/ tests/"
         ],
         "lint-fix": [
-            "phpcbf -s --standard=vendor/zicht/standards-php/Zicht --extensions=php src/Zicht/ tests/Zicht/"
+            "phpcbf -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php src/ tests/"
         ]
     }
 }
@@ -136,6 +136,13 @@ for example `do {EOL...} while (...);EOL` means:
 do {// (EOL) End of line from here
 } while ();// (EOL) End of line from here.
 
+#### Zicht.Functions.FunctionCallSignature
+This sniff overrides the PEAR Sniff to allow function call opening parenthesis and array square brackets on the same
+line. It is only allowing this if there's only one argument, which should be an array or could be a closure.
+
+#### Zicht.Methods.FunctionOpeningBrace
+Detects if there are no empty lines between a function's opening brace and the first line of code.
+
 #### Zicht.NamingConventions.Classname
 This sniff requires class names to be `CamelCased`.
 
@@ -178,8 +185,8 @@ vendor/bin/phpcs --standard=Zicht -e
 That will produce the following set:
 
 ```text
-   The Zicht standard contains 63 sniffs
-   
+   The Zicht standard contains 64 sniffs
+
    Generic (14 sniffs)
    -------------------
      Generic.Arrays.DisallowLongArraySyntax
@@ -196,20 +203,23 @@ That will produce the following set:
      Generic.PHP.LowerCaseConstant
      Generic.PHP.LowerCaseKeyword
      Generic.WhiteSpace.DisallowTabIndent
-   
-   PEAR (4 sniffs)
+
+   PEAR (3 sniffs)
    ---------------
      PEAR.ControlStructures.ControlSignature
-     PEAR.Functions.FunctionCallSignature
      PEAR.Functions.ValidDefaultValue
      PEAR.WhiteSpace.ScopeClosingBrace
-   
+
    PSR1 (3 sniffs)
    ---------------
      PSR1.Classes.ClassDeclaration
      PSR1.Files.SideEffects
      PSR1.Methods.CamelCapsMethodName
-   
+
+   PSR12 (1 sniff)
+   ----------------
+     PSR12.Operators.OperatorSpacing
+
    PSR2 (12 sniffs)
    ----------------
      PSR2.Classes.ClassDeclaration
@@ -224,7 +234,7 @@ That will produce the following set:
      PSR2.Methods.MethodDeclaration
      PSR2.Namespaces.NamespaceDeclaration
      PSR2.Namespaces.UseDeclaration
-   
+
    Squiz (15 sniffs)
    -----------------
      Squiz.Classes.ValidClassName
@@ -242,19 +252,21 @@ That will produce the following set:
      Squiz.WhiteSpace.ScopeClosingBrace
      Squiz.WhiteSpace.ScopeKeywordSpacing
      Squiz.WhiteSpace.SuperfluousWhitespace
-   
+
    Zend (2 sniffs)
    ---------------
      Zend.Debug.CodeAnalyzer
      Zend.Files.ClosingTag
-   
-   Zicht (13 sniffs)
+
+   Zicht (14 sniffs)
    -----------------
      Zicht.Commenting.ClassComment
      Zicht.Commenting.DefineComment
      Zicht.Commenting.FileComment
      Zicht.Commenting.FunctionComment
      Zicht.ControlStructures.ControlSignature
+     Zicht.Functions.FunctionCallSignature
+     Zicht.Methods.FunctionOpeningBrace
      Zicht.NamingConventions.Classname
      Zicht.NamingConventions.Constants
      Zicht.NamingConventions.Functions
