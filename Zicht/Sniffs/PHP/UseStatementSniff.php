@@ -61,7 +61,8 @@ class UseStatementSniff implements Sniff
         if ($commas > 0) {
             $phpcsFile->addError(
                 'Use statements must be split up, usage of comma\'s in use statement is disallowed',
-                $stackPtr
+                $stackPtr,
+                'SplitUp'
             );
         }
     }
@@ -98,7 +99,8 @@ class UseStatementSniff implements Sniff
                 if ($previous['content']{strlen($previous['content']) - 1} != "\n") {
                     $phpcsFile->addWarning(
                         'Use statement should be on its own line.',
-                        $stackPtr
+                        $stackPtr,
+                        'OwnLine'
                     );
                 }
             }
