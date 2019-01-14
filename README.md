@@ -245,8 +245,9 @@ That will produce the following set:
      PSR2.Namespaces.NamespaceDeclaration
      PSR2.Namespaces.UseDeclaration
 
-   Squiz (15 sniffs)
+   Squiz (16 sniffs)
    -----------------
+     Squiz.Arrays.ArrayDeclaration
      Squiz.Classes.ValidClassName
      Squiz.ControlStructures.ControlSignature
      Squiz.ControlStructures.ForEachLoopDeclaration

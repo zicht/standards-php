@@ -356,7 +356,7 @@ class PropertyCommentSniff extends AbstractVariableSniff
         }
 
         $types = [
-            'null', 'bool', 'true', 'false', 'int', 'float', 'string', 'array', 'iterable', 'resource', 'callable'
+            'null', 'bool', 'true', 'false', 'int', 'float', 'string', 'array', 'iterable', 'resource', 'callable',
         ];
         if (in_array(strtolower($type), $types) && $type !== strtolower($type)) {
             $warning = 'Type "%s" should be written lower case for type definition in @var tag for property';

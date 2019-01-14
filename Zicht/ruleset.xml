@@ -10,6 +10,7 @@
     <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
+    <rule ref="Squiz.Arrays.ArrayDeclaration" />
 
     <rule ref="Zend">
         <exclude name="PEAR.Commenting.FileComment"/>
@@ -39,6 +40,31 @@
 
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
      <severity>0</severity>
+    </rule>
+
+    <rule ref="Squiz.Arrays.ArrayDeclaration.KeyNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.IndexNoNewline">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNoNewline">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">
+        <severity>0</severity>
     </rule>
 
     <rule ref="Zicht.Commenting.FunctionComment.ParameterNamesNotAligned">

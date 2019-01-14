@@ -33,7 +33,7 @@ class FileCommentSniff extends PearFileCommentSniff
         ],
         '@copyright' => [
             'required' => false,
-            'allow_multiple' => true
+            'allow_multiple' => true,
         ],
         '@version' => [
             'required' => false,
