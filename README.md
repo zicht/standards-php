@@ -136,6 +136,14 @@ for example `do {EOL...} while (...);EOL` means:
 do {// (EOL) End of line from here
 } while ();// (EOL) End of line from here.
 
+#### Zicht.ControlStructures.DisallowAssignments
+Detects if there are any assignments happening in if, elseif, while, foreach and switch control structures. By
+default configuration a maximum of 1 assignment is allowed and it must come first before any other logic in the
+statement:
+```php
+    if ($result = someDataRetrieval() && isset($result['success']) && true === $result['success'])
+```
+
 #### Zicht.Functions.FunctionCallSignature
 This sniff overrides the PEAR Sniff to allow function call opening parenthesis and array square brackets on the same
 line. It is only allowing this if there's only one argument, which should be an array or could be a closure.
@@ -159,11 +167,6 @@ Underscore and numbers are discouraged to be used in method names in classes.
 A number creates a warning whereas an underscore creates an error.
 
 Global functions are required to be `snake_cased` so all lower an divided by a underscore.
-
-#### Zicht.PHP.DisallowMultipleAssignmentsInIfStatementsSniff.TooManyAssignments
-~~Disallows multiple assignments in a condition of if statements.~~
-
-_Sniff is currently disabled by hardcoded `return;`_
 
 #### Zicht.PHP.Namespace
 Except for global classes all other classes in namespaces are not allowed to be used in code referring to the fully

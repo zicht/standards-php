@@ -86,6 +86,13 @@
         <severity>0</severity>
     </rule>
 
+    <rule ref="Zicht.ControlStructures.DisallowAssignments">
+        <properties>
+            <property name="allowedAssignments" value="1" />
+            <property name="assignmentsFirst" value="true" />
+        </properties>
+    </rule>
+
     <rule ref="PEAR.ControlStructures.ControlSignature">
         <severity>0</severity>
     </rule>
