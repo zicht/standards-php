@@ -21,7 +21,7 @@ standard applies some custom rules and modifications to these standards:
 composer require --dev zicht/standards-php
 ```
 
-Basic usage `vendor/bin/phpcs --standard=vendor/zicht/standards-php/Zicht --extensions=php <directories-and-files>`
+Basic usage `vendor/bin/phpcs --standard=vendor/zicht/standards-php/phpcs.xml <directories-and-files>`
 
 Projects should incorporate following commands in the `scripts` section of their `composer.json`. You should be using
 the `composer lint` command in your daily work to inspect code changes you made before submitting a pull request
@@ -34,13 +34,13 @@ implement the `composer lint-no-warn` command into their Q&A jobs that should be
 {
     "scripts": {
         "lint": [
-            "phpcs -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php --runtime-set ignore_warnings_on_exit true src/ tests/"
+            "phpcs --standard=vendor/zicht/standards-php/phpcs.xml src/ tests/"
         ],
         "lint-no-warn": [
-            "phpcs -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php --warning-severity=0 src/ tests/"
+            "phpcs -n --standard=vendor/zicht/standards-php/phpcs.xml src/ tests/"
         ],
         "lint-fix": [
-            "phpcbf -s -p --standard=vendor/zicht/standards-php/Zicht --extensions=php src/ tests/"
+            "phpcbf --standard=vendor/zicht/standards-php/phpcs.xml src/ tests/"
         ]
     }
 }

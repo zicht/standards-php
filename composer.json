@@ -6,15 +6,17 @@
           "squizlabs/php_codesniffer": "^3"
      },
      "autoload": {
-          "classmap": ["Zicht"],
-          "exclude-from-classmap": ["/Zicht/correct.php", "/Zicht/incorrect.php"]
+          "psr-4": {
+              "Zicht\\StandardsPhp\\": "src/Zicht/StandardsPhp",
+              "Zicht\\Sniffs\\": "src/Zicht/Sniffs"
+          }
      },
      "scripts": {
           "lint": [
-               "phpcs -s -p Zicht/ --ignore=correct.php,incorrect.php --standard=Zicht,vendor/phpcompatibility/php-compatibility/PHPCompatibility/ --extensions=php --runtime-set testVersion 5.6- --parallel=$(nproc)"
+               "phpcs --standard=phpcs-dev.xml --parallel=$(nproc) src/"
           ],
           "lint-fix": [
-               "phpcbf -s Zicht/ --ignore=correct.php,incorrect.php --standard=Zicht --extensions=php --parallel=$(nproc)"
+               "phpcbf --standard=phpcs-dev.xml --parallel=$(nproc) src/"
           ]
      },
      "require-dev": {

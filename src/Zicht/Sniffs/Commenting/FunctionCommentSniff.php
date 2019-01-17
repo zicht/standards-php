@@ -9,8 +9,8 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff as PearFunctionCommentSniff;
 use PHP_CodeSniffer\Util\Tokens;
-use Zicht\PhpCsDocComment;
-use Zicht\PhpCsFile as ZichtPhpCs_File;
+use Zicht\StandardsPhp\DocComment;
+use Zicht\StandardsPhp\FileUtils;
 
 /**
  * Override of PearFunctionCommentSniff to implement @inheritDoc and check for self explanatory definitions
@@ -102,7 +102,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
      * Process comment to look for and validate `@inheritdoc` tags
      *
      * @param File $phpcsFile
-     * @param PhpCsDocComment $docComment
+     * @param DocComment $docComment
      * @return bool
      */
     protected function processInheritDoc(File $phpcsFile, $docComment)
@@ -134,7 +134,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
                 if ($fix) {
                     if ($hasInlineTag) {
                         $phpcsFile->fixer->beginChangeset();
-                        ZichtPhpCs_File::fixRemoveWholeLine(
+                        FileUtils::fixRemoveWholeLine(
                             $phpcsFile,
                             $inheritDocPos,
                             ['end' => $docComment->getCommentEnd()]

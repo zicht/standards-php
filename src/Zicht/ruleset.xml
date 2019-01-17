@@ -5,7 +5,7 @@
 
     <description>The Zicht PHP coding standard.</description>
 
-    <!-- see readme.md -->
+    <!-- see ../../README.md -->
 
     <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>

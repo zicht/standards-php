@@ -7,7 +7,7 @@ namespace Zicht\Sniffs\Methods;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
-use Zicht\PhpCsFile as ZichtPhpCs_File;
+use Zicht\StandardsPhp\FileUtils;
 
 /**
  * Detects if there are no empty lines between a function's opening brace and the first line of code
@@ -59,8 +59,8 @@ class FunctionOpeningBraceSniff implements Sniff
             $phpcsFile->fixer->beginChangeset();
             $linePos = $openBrace;
             do {
-                $linePos = ZichtPhpCs_File::getNextLine($phpcsFile, $linePos);
-                ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $linePos);
+                $linePos = FileUtils::getNextLine($phpcsFile, $linePos);
+                FileUtils::fixRemoveWholeLine($phpcsFile, $linePos);
             } while ($tokens[$linePos]['line'] < $tokens[$bodyContent]['line'] - 1);
             $phpcsFile->fixer->endChangeset();
         }
