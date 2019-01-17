@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
+Nothing so far 
+
+## 4.0.0 [Unreleased]
+### Added|Changed|Deprecated|Removed|Fixed|Security
 - Generic.Files.LineLength is enforced
 - Changed long lines in existing code
 - Change warnings into errors now that warnings will be ignored

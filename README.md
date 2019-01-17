@@ -213,9 +213,9 @@ vendor/bin/phpcs --standard=Zicht -e
 That will produce the following set:
 
 ```text
-   The Zicht standard contains 65 sniffs
+   The Zicht standard contains 67 sniffs
 
-   Generic (14 sniffs)
+   Generic (15 sniffs)
    -------------------
      Generic.Arrays.DisallowLongArraySyntax
      Generic.ControlStructures.InlineControlStructure
