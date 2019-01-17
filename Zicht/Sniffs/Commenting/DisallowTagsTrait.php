@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <https://www.zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Sniffs\Commenting;
