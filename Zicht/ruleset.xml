@@ -67,6 +67,11 @@
         <severity>0</severity>
     </rule>
 
+    <rule ref="Zicht.Commenting.FunctionComment">
+        <properties>
+            <property name="minLengthFilteredDescription" value="4" />
+        </properties>
+    </rule>
     <rule ref="Zicht.Commenting.FunctionComment.ParameterNamesNotAligned">
         <severity>0</severity>
     </rule>
@@ -86,6 +91,11 @@
         <severity>0</severity>
     </rule>
 
+    <rule ref="Zicht.Commenting.FileComment">
+        <properties>
+            <property name="minLengthFilteredDescription" value="4" />
+        </properties>
+    </rule>
     <rule ref="Zicht.Commenting.FileComment.Missing">
         <severity>0</severity>
     </rule>
@@ -102,6 +112,11 @@
         <severity>0</severity>
     </rule>
 
+    <rule ref="Zicht.Commenting.ClassComment">
+        <properties>
+            <property name="minLengthFilteredDescription" value="4" />
+        </properties>
+    </rule>
     <rule ref="Zicht.Commenting.ClassComment.Missing">
         <severity>0</severity>
     </rule>

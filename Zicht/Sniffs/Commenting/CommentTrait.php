@@ -13,6 +13,12 @@ use Zicht\PhpCsFile as ZichtPhpCs_File;
 trait CommentTrait
 {
     /**
+     * @var int The minimum string length a description should have after filtering out all superfluous words and
+     *          non alphabetic characters
+     */
+    public $minLengthFilteredDescription = 4;
+
+    /**
      * Get doc comment info (description, tags, etc.)
      *
      * @param File $phpcsFile
@@ -58,19 +64,30 @@ trait CommentTrait
             );
         } elseif (0 < count($docComment->getDescriptionStrings())) {
             /**
+             * - Filter out stopwords
              * - Filtering out everything that is not an `a-z` character leaves an empty comment: so superfluous
              * - Filtered comment is exactly the same as filtered function name: comment doesn't add anything => superfluous
              * - Comment is the same as type + name: "Function/Method Bla Bla Xyz" ~ "blaBlyXyz()" => superfluous
              */
-            $filteredDocBlockString = preg_replace('/[^a-z]/', '', strtolower(implode('', $docComment->getDescriptionStrings())));
+            $descriptionStrings = strtolower(implode(' ', $docComment->getDescriptionStrings()));
+            $filteredDocBlockString = preg_replace(
+                '/ (a|an|and|as|at|for|in|it|no|not|of|on|or|the|to)(?= )/',
+                ' ',
+                $descriptionStrings
+            );
+            $filteredDocBlockString = preg_replace('/[^a-z]+/', '', $filteredDocBlockString);
             $superfluousReplacements = [
                 preg_replace('/[^a-z]/', '', strtolower($declarationName)),
                 $type,
             ];
+
             if ('function' === $type) {
                 $superfluousReplacements[] = 'method';
                 if ('__' === substr($declarationName, 0, 2)) {
                     $superfluousReplacements[] = 'magic';
+                }
+                if ('__construct' === $declarationName) {
+                    $superfluousReplacements = array_merge($superfluousReplacements, ['initialize', 'new', 'instance']);
                 }
             }
             if (isset($tokens[$stackPtr]['conditions']) && 0 < count($tokens[$stackPtr]['conditions'])) {
@@ -83,7 +100,11 @@ trait CommentTrait
                 }
             }
 
-            if (3 >= strlen($filteredDocBlockString) || 3 >= strlen(str_replace($superfluousReplacements, '', $filteredDocBlockString))) {
+            if (strlen($filteredDocBlockString) < $this->minLengthFilteredDescription
+                || strlen(
+                    str_replace($superfluousReplacements, '', $filteredDocBlockString)
+                ) < $this->minLengthFilteredDescription
+            ) {
                 $code = 'Superfluous';
                 $errorPos = key($docComment->getDescriptionStrings());
                 $errorMssgData = [implode(' ', $docComment->getDescriptionStrings()), $type, $declarationName, ('function' === $type ? '()' : '')];
