@@ -9,10 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Nothing so far 
 
 ## 4.0.0 [Unreleased]
-### Added|Changed|Deprecated|Removed|Fixed|Security
+### Changed in Sniffs
 - Generic.Files.LineLength is enforced
 - Changed long lines in existing code
 - Change warnings into errors now that warnings will be ignored
+### Changed in package
+- PHP files were moved into the src/ dir
+- Created a phpcs.xml file that can be used with some configs and the
+  reference to the old ruleset.xml
+- Created a phpcs-dev.xml file to include PHPCompatibility
+- Updated the README.md file Usage section
+- Remove incorrect.php and correct.php
 
 ## 3.5.0 - 2019-02-12
 ### Added

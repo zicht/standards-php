@@ -7,8 +7,8 @@ namespace Zicht\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
-use Zicht\PhpCsDocComment;
-use Zicht\PhpCsFile as ZichtPhpCs_File;
+use Zicht\StandardsPhp\DocComment;
+use Zicht\StandardsPhp\FileUtils;
 
 trait CommentTrait
 {
@@ -24,11 +24,11 @@ trait CommentTrait
      * @param File $phpcsFile
      * @param int $stackPtr
      * @param int $commentStart
-     * @return PhpCsDocComment
+     * @return DocComment
      */
     protected function parseDocComment(File $phpcsFile, $stackPtr, $commentStart)
     {
-        return new PhpCsDocComment($phpcsFile, $stackPtr, $commentStart);
+        return new DocComment($phpcsFile, $stackPtr, $commentStart);
     }
 
     /**
@@ -146,20 +146,20 @@ trait CommentTrait
         } elseif (false !== $fixRemoveLinePos) {
             $phpcsFile->fixer->beginChangeset();
             $commentEnd = $tokens[$commentStart]['comment_closer'];
-            ZichtPhpCs_File::fixRemoveWholeLine(
+            FileUtils::fixRemoveWholeLine(
                 $phpcsFile,
                 $fixRemoveLinePos,
                 ['start' => $commentStart, 'end' => $commentEnd]
             );
             $nextLinePos = $fixRemoveLinePos;
-            while (null !== ($nextLinePos = ZichtPhpCs_File::getNextLine($phpcsFile, $nextLinePos))
-                && '' === trim(ZichtPhpCs_File::getLineContents($phpcsFile, $nextLinePos), " *\r\n")
-                || !ZichtPhpCs_File::lineContainsTokens(
+            while (null !== ($nextLinePos = FileUtils::getNextLine($phpcsFile, $nextLinePos))
+                && '' === trim(FileUtils::getLineContents($phpcsFile, $nextLinePos), " *\r\n")
+                || !FileUtils::lineContainsTokens(
                     $phpcsFile,
                     $nextLinePos,
                     [T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_TAG]
                 )) {
-                ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $nextLinePos);
+                FileUtils::fixRemoveWholeLine($phpcsFile, $nextLinePos);
             }
             $phpcsFile->fixer->endChangeset();
         }

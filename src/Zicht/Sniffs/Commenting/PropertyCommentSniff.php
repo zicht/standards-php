@@ -9,8 +9,8 @@ use PHP_CodeSniffer\Exceptions\RuntimeException as PhpCsRuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Util\Tokens;
-use Zicht\PhpCsDocComment;
-use Zicht\PhpCsFile as ZichtPhpCs_File;
+use Zicht\StandardsPhp\DocComment;
+use Zicht\StandardsPhp\FileUtils;
 
 /**
  * Checks for empty or superfluous class doc comments, sniffs the doc comment tags in class level comments
@@ -90,15 +90,15 @@ class PropertyCommentSniff extends AbstractVariableSniff
             if ($fix) {
                 $phpcsFile->fixer->beginChangeset();
                 $nextLinePos = $commentEnd;
-                while (null !== ($nextLinePos = ZichtPhpCs_File::getNextLine($phpcsFile, $nextLinePos))
+                while (null !== ($nextLinePos = FileUtils::getNextLine($phpcsFile, $nextLinePos))
                     && $tokens[$nextLinePos]['line'] < $tokens[$stackPtr]['line']) {
-                    ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $nextLinePos);
+                    FileUtils::fixRemoveWholeLine($phpcsFile, $nextLinePos);
                 }
                 $phpcsFile->fixer->endChangeset();
             }
         }
 
-        $docComment = new PhpCsDocComment($phpcsFile, $stackPtr, $commentStart);
+        $docComment = new DocComment($phpcsFile, $stackPtr, $commentStart);
 
         // Check for separate description
         if (0 < count($docComment->getDescriptionStrings())) {
@@ -114,12 +114,12 @@ class PropertyCommentSniff extends AbstractVariableSniff
                 if ($line < $tokens[$pos]['line']
                     && $tokens[$pos]['line'] !== $tokens[$commentStart]['line']
                     && $tokens[$pos]['line'] !== $tokens[$commentEnd]['line']) {
-                    if ('' === trim(ZichtPhpCs_File::getLineContents($phpcsFile, $pos), " \t*\r\n")) {
+                    if ('' === trim(FileUtils::getLineContents($phpcsFile, $pos), " \t*\r\n")) {
                         $error = 'Empty comment lines are not allowed in property doc comments';
                         $fix = $phpcsFile->addFixableError($error, $pos, 'EmptyLinesNotAllowed');
                         if ($fix) {
                             $phpcsFile->fixer->beginChangeset();
-                            ZichtPhpCs_File::fixRemoveWholeLine($phpcsFile, $pos);
+                            FileUtils::fixRemoveWholeLine($phpcsFile, $pos);
                             $phpcsFile->fixer->endChangeset();
                         }
                     }
@@ -225,7 +225,7 @@ class PropertyCommentSniff extends AbstractVariableSniff
 
     /**
      * @param File $phpcsFile
-     * @param PhpCsDocComment $docComment
+     * @param DocComment $docComment
      * @param int $tagPos
      * @param string[] $descriptionStrings
      * @return bool
@@ -369,7 +369,7 @@ class PropertyCommentSniff extends AbstractVariableSniff
 
     /**
      * @param File $phpcsFile
-     * @param PhpCsDocComment $docComment
+     * @param DocComment $docComment
      * @param int $tagPos
      * @param string[] $description
      * @param string[] $superfluousWords

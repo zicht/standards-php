@@ -3,14 +3,11 @@
  * @copyright Zicht Online <https://zicht.nl>
  */
 
-namespace Zicht;
+namespace Zicht\StandardsPhp;
 
 use PHP_CodeSniffer\Files\File;
 
-/**
- * @deprecated 3.4.1 Will be moved and renamed in version 4.0.0
- */
-class PhpCsDocComment
+class DocComment
 {
     /** @var File */
     private $phpcsFile;

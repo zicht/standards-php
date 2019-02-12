@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="Zicht PHP Projects and Libraries"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
+    <!-- Setting to scan only for .php extensions
+         (replacing the extensions=php CLI argument) -->
+    <arg name="extensions" value="php"/>
+    <!-- Setting s: Show full sniff codes, and p: Show progress -->
+    <arg value="sp"/>
+
+    <!-- Set to ignore warnings on exit resulting in a 0 exit code even when
+         there are warnings. This is done because a CI build should not fail
+         when there are only warnings (no errors, errors will still fail/cause
+         a non-zero exit code) -->
+    <config name="ignore_warnings_on_exit" value="true"/>
+
+    <!-- Include the actual ruleset.xml file, which must be tucked away inside
+         src/Zicht/ which is the directory that conatins the actual Sniffs -->
+    <rule ref="./src/Zicht/ruleset.xml"/>
+
+</ruleset>
