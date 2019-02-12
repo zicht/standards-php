@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
-## 3.5.0 [Unreleased]
+## 3.5.0 - 2019-02-12
 ### Added
 - Script to replace incorrect Zicht Online @copyright tags with correct ones
   (and corrected all in this package) (resolving #55)
