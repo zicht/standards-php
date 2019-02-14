@@ -8,7 +8,7 @@ namespace Zicht\Sniffs\Commenting;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\ClassCommentSniff as PearClassCommentSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FileCommentSniff as PearFileCommentSniff;
-use Zicht\PhpCsFile as ZichtPhpCs_File;
+use Zicht\StandardsPhp\FileUtils;
 
 trait DisallowTagsTrait
 {
