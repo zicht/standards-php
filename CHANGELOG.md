@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far 
 
-## 4.0.0 [Unreleased]
+## 4.0.0 - 2019-02-14 💕
 ### Changed in Sniffs
 - Generic.Files.LineLength is enforced
 - Changed long lines in existing code
