@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far 
 
+## 4.0.1 - 2019-03-29
+### Changed in Sniffs
+- Generic.Files.LineLength configuration changes: soft limit is now 256 chars
+  (warning), hard limit is now 512 charachters (error)
+
 ## 4.0.0 - 2019-02-14 💕
 ### Changed in Sniffs
 - Generic.Files.LineLength is enforced

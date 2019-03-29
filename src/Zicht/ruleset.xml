@@ -156,6 +156,14 @@
 
     <rule ref="PSR2" />
 
+    <!-- This configuration must come after including PSR2. PSR2 forces a max line length of 12 chars -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="256"/>
+            <property name="absoluteLineLimit" value="512"/>
+        </properties>
+    </rule>
+
     <rule ref="PSR12.Operators.OperatorSpacing.NoSpaceBefore" />
 
     <rule ref="PSR12.Operators.OperatorSpacing.NoSpaceAfter" />

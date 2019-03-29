@@ -4,8 +4,8 @@ Roughly based on the PEAR and Zend coding standards, with inclusion of the PSR-1
 standard applies some custom rules and modifications to these standards:
 
 - There are no required tags for file and class comments.
-- Since we do no longer live in an era with fixed width consoles, the line length limit is fixed at 120, warning at
-  120, erroring at 130.
+- Since we do no longer live in an era with fixed width consoles, the line length limit is fixed at 256, warning at
+  256, erroring at 512.
 - Doc comment tags are compulsory for define() calls.
 - Global function names are `underscored_and_lowercased()`, and method names are `studlyCased`.
 - All constants, both global and class constants are `UPPERCASED_AND_UNDERSCORED`.
@@ -51,9 +51,10 @@ implement the `composer lint-no-warn` command into their Q&A jobs that should be
 ### Generic
 
 #### Generic.Files.LineLength
-This rule is configured to give warnings on lines longer than **120** characters and never give errors on line lengths
-(following [PSR-2](https://www.php-fig.org/psr/psr-2/#23-lines)). You should fix these warnings and stick to a maximum
-line length of 120 characters, but the Q&A tests should not fail on code having lines longer than 120 characters.
+This rule is configured to give warnings on lines longer than **256** characters and give errors on lines longer than
+512 characters (deliberately not following [PSR-2](https://www.php-fig.org/psr/psr-2/#23-lines)). You should fix these
+warnings and stick to a maximum line length of 256 characters, but the Q&A tests should not fail on code having lines
+longer than 256 characters and less than 512 characters.
 
 ### Zicht Sniffs
 In this section each of the rules from the Zicht set are explained.
