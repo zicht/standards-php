@@ -18,7 +18,7 @@ use Zicht\StandardsPhp\FileUtils;
 class FunctionOpeningBraceSniff implements Sniff
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function register()
     {
@@ -29,7 +29,7 @@ class FunctionOpeningBraceSniff implements Sniff
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {

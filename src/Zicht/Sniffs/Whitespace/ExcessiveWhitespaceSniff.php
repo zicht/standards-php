@@ -11,7 +11,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class ExcessiveWhitespaceSniff implements Sniff
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function register()
     {
@@ -24,7 +24,7 @@ class ExcessiveWhitespaceSniff implements Sniff
     /**
      * Sniffs for multiple newlines
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {

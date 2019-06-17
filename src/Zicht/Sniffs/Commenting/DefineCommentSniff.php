@@ -14,7 +14,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class DefineCommentSniff implements Sniff
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function register()
     {
@@ -22,7 +22,7 @@ class DefineCommentSniff implements Sniff
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {

@@ -58,7 +58,7 @@ class PropertyCommentSniff extends AbstractVariableSniff
      * Process T_VARIABLE tokens. Properties are marked as T_VARIABLE just like all other variables, so we need to try
      * to filter out only the variables that are in a class scope and not in any other (sub) scope.
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @see \PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\VariableCommentSniff::processMemberVar()
      */
@@ -208,7 +208,7 @@ class PropertyCommentSniff extends AbstractVariableSniff
     /**
      * Must implement this because AbstractVariableSniff::processVariable() is abstract,
      * but there is no need for processing regular variables in this sniff
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function processVariable(File $phpcsFile, $stackPtr)
     {
@@ -217,7 +217,7 @@ class PropertyCommentSniff extends AbstractVariableSniff
     /**
      * Must implement this because AbstractVariableSniff::processVariableInString() is abstract,
      * but there is no need for processing variables in strings in this sniff
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function processVariableInString(File $phpcsFile, $stackPtr)
     {

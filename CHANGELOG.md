@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far 
 
+## 4.1.0 - 2019-06-17
+### Changed in Sniffs
+- Changed Zicht.Commenting.FunctionComment to only allow {@inheritDoc} instead
+  of {@inheritdoc} (camlecase instead of lowercase)
+
 ## 4.0.1 - 2019-03-29
 ### Changed in Sniffs
 - Generic.Files.LineLength configuration changes: soft limit is now 256 chars

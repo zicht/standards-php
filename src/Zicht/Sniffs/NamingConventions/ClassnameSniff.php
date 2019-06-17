@@ -14,7 +14,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class ClassnameSniff implements Sniff
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function register()
     {
@@ -24,7 +24,7 @@ class ClassnameSniff implements Sniff
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {
