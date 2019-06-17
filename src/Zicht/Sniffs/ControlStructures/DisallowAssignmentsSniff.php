@@ -40,7 +40,7 @@ class DisallowAssignmentsSniff implements Sniff
     protected $assignmentsFirst = true;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function register()
     {
@@ -77,7 +77,7 @@ class DisallowAssignmentsSniff implements Sniff
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {

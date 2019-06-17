@@ -14,7 +14,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class ConstantsSniff implements Sniff
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function register()
     {
@@ -27,7 +27,7 @@ class ConstantsSniff implements Sniff
     /**
      * Checks if constants are UPPERCASED_AND_UNDERSCORED
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {

@@ -22,7 +22,7 @@ class FunctionCallSignatureSniff extends PearFunctionCallSignatureSniff
      * for this by the parent sniff (PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket and
      * PEAR.Functions.FunctionCallSignature.CloseBracketLine)
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function processMultiLineCall(File $phpcsFile, $stackPtr, $openBracket, $tokens)
     {

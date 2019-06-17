@@ -13,7 +13,7 @@ use PHP_CodeSniffer\Sniffs\AbstractPatternSniff;
 class ControlSignatureSniff extends AbstractPatternSniff
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function getPatterns()
     {

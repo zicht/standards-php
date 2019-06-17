@@ -11,7 +11,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class NamespaceSniff implements Sniff
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function register()
     {
@@ -21,7 +21,7 @@ class NamespaceSniff implements Sniff
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function process(File $phpcsFile, $stackPtr)
     {

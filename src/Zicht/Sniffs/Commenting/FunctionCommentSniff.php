@@ -28,7 +28,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
     /**
      * Checking if there's a PHP Doc block for this function and see what needs to be processed
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws \PHP_CodeSniffer\Exceptions\TokenizerException
      */
@@ -79,7 +79,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function processParams(File $phpcsFile, $stackPtr, $commentStart)
     {
@@ -89,7 +89,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function processReturn(File $phpcsFile, $stackPtr, $commentStart)
     {
@@ -109,7 +109,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $correctInheritDocTag = '{@inheritdoc}';
+        $correctInheritDocTag = '{@inheritDoc}';
 
         $inheritDoc = $hasInlineTag = $docComment->hasInlineTag('@inheritdoc');
         if ($docComment->hasTag('@{inheritdoc}')) {
@@ -148,7 +148,7 @@ class FunctionCommentSniff extends PearFunctionCommentSniff implements Sniff
         }
 
         if ($hasInlineTag && false === strpos($docComment->getDescription(), $correctInheritDocTag)) {
-            $error = 'Inherit doc tag should be written lowercase: found %s, expecting %s';
+            $error = 'Inherit doc tag should be written camelcase: found %s, expecting %s';
             foreach ($docComment->getDescriptionStrings() as $descPos => $description) {
                 if (false === stripos($description, $correctInheritDocTag)) {
                     continue;

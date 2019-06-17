@@ -54,7 +54,7 @@ class FileCommentSniff extends PearFileCommentSniff
     ];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function processTags($phpcsFile, $stackPtr, $commentStart)
     {
@@ -63,7 +63,7 @@ class FileCommentSniff extends PearFileCommentSniff
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function processCopyright($phpcsFile, array $tags)
     {
