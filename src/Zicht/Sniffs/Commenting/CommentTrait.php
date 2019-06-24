@@ -60,7 +60,7 @@ trait CommentTrait
                 'Doc comment for %s %s%s is empty and must be removed',
                 $commentEnd,
                 'Empty',
-                [$type, $declarationName, ('function' === $type ? '()' : '')]
+                [$type, $declarationName, 'function' === $type ? '()' : '']
             );
         } elseif (0 < count($docComment->getDescriptionStrings())) {
             /**
@@ -71,36 +71,62 @@ trait CommentTrait
              * - Comment is the same as type + name: "Function/Method Bla Bla Xyz" ~ "blaBlyXyz()" => superfluous
              */
             $descriptionStrings = strtolower(implode(' ', $docComment->getDescriptionStrings()));
+            $descriptionStrings = preg_replace('/[\{@]+inheritdoc\}?/', '', $descriptionStrings, -1, $inheritDocsCount);
+            if ($inheritDocsCount > 0 && '' === trim($descriptionStrings)) {
+                return false;
+            }
             $filteredDocBlockString = preg_replace(
-                '/ (a|an|and|as|at|for|in|it|no|not|of|on|or|the|to)(?= )/',
+                '/ (a|all|an|and|as|at|for|in|it|no|not|of|on|or|the|to)(?= )/',
                 ' ',
                 $descriptionStrings
             );
             $filteredDocBlockString = preg_replace('/[^a-z]+/', '', $filteredDocBlockString);
-            $superfluousReplacements = [
-                preg_replace('/[^a-z]/', '', strtolower($declarationName)),
-                $type,
-            ];
+
+            $nameReplacements = array_map('strtolower', preg_split('/(?=[A-Z])/', str_replace('_', '', $declarationName), -1, PREG_SPLIT_NO_EMPTY));
+            $superfluousReplacements = [$type];
+            $parentType = null;
+            $parentPos = null;
+            $classStructKeywords = ['class', 'interface', 'trait'];
 
             if ('function' === $type) {
                 $superfluousReplacements[] = 'method';
-                if ('__' === substr($declarationName, 0, 2)) {
+                if (0 === strpos($declarationName, '__')) {
                     $superfluousReplacements[] = 'magic';
                 }
                 if ('__construct' === $declarationName) {
                     $superfluousReplacements = array_merge($superfluousReplacements, ['initialize', 'new', 'instance']);
                 }
+                if (T_STATIC === $tokens[$stackPtr - 2]['code']) {
+                    $superfluousReplacements[] = 'statically';
+                    $superfluousReplacements[] = $tokens[$stackPtr - 2]['content'];
+                }
             }
             if (isset($tokens[$stackPtr]['conditions']) && 0 < count($tokens[$stackPtr]['conditions'])) {
                 $parentPos = key($tokens[$stackPtr]['conditions']);
                 try {
-                    $declarationName = strtolower($phpcsFile->getDeclarationName($parentPos));
-                    $superfluousReplacements[] = preg_replace('/[^a-z]/', '', $declarationName);
-                    $superfluousReplacements[] = $tokens[$parentPos]['content'];
+                    $parentDeclarationName = $phpcsFile->getDeclarationName($parentPos);
                 } catch (RuntimeException $e) {
                     // Ignore if the declaration name of the parent cannot be found
+                    $parentDeclarationName = '';
+                }
+                $nameReplacements = array_merge($nameReplacements, array_map('strtolower', preg_split('/(?=[A-Z])/', $parentDeclarationName, -1, PREG_SPLIT_NO_EMPTY)));
+                $parentType = $tokens[$parentPos]['content'];
+                $superfluousReplacements[] = $parentType;
+            }
+
+            // Type or parent type is a class/interface/trait, so add some more superfluous words
+            if (in_array($type, $classStructKeywords, true) || in_array($parentType, $classStructKeywords, true)) {
+                $typeToCheck = in_array($parentType, $classStructKeywords, true) ? $parentType : $type;
+                $posToCheck = in_array($parentType, $classStructKeywords, true) ? $parentPos : $stackPtr;
+                $superfluousReplacements[] = 'class';
+                $superfluousReplacements[] = 'base';
+                $isAbstract = 'class' === $typeToCheck && T_ABSTRACT === $tokens[$posToCheck - 2]['code'];
+                if ($isAbstract) {
+                    $superfluousReplacements[] = $tokens[$posToCheck - 2]['content'];
                 }
             }
+
+            $superfluousReplacements = array_unique(array_merge($nameReplacements, $superfluousReplacements));
 
             if (strlen($filteredDocBlockString) < $this->minLengthFilteredDescription
                 || strlen(
@@ -113,7 +139,7 @@ trait CommentTrait
                     implode(' ', $docComment->getDescriptionStrings()),
                     $type,
                     $declarationName,
-                    ('function' === $type ? '()' : ''),
+                    'function' === $type ? '()' : '',
                 ];
                 if (!isset($tokens[$commentStart]['comment_tags'])
                     || 0 === count($tokens[$commentStart]['comment_tags'])) {
