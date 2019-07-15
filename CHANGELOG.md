@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
-Nothing so far 
+- Fixed: Fixes superflous description for constructor when class name would contain "New"
+- Added: Minor optimization: end by return when the description would only be "{@inheritDoc}"
+- Added: Better superflous description detection by splitting up the class/method names into separate words
 
 ## 4.1.0 - 2019-06-17
 ### Changed in Sniffs
