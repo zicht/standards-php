@@ -181,7 +181,8 @@ Detects if there are no empty lines between a function's opening brace and the f
 This sniff requires class names to be `CamelCased`.
 
 #### Zicht.NamingConventions.Constants
-This sniff requires a constant name to start with letters `A-Z` followed by `A-Z`, `_` or `0-9`.
+This sniff requires a constant name to be `UPPERCASE` (no lower case characters allowed) and no characters other than
+A-Z, 0-9 and underscore.
  
 #### Zicht.NamingConventions.Functions
 This sniff defines the naming conventions.

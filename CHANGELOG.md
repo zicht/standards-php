@@ -33,6 +33,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated the README.md file Usage section
 - Remove incorrect.php and correct.php
 
+## 3.5.1 - 2019-07-15
+### Changed
+- Loosen the Zicht.NamingConventions.Constants.InvalidName sniff
+
 ## 3.5.0 - 2019-02-12
 ### Added
 - Script to replace incorrect Zicht Online @copyright tags with correct ones

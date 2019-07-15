@@ -46,9 +46,16 @@ class ConstantsSniff implements Sniff
             $name = substr($name, 1, -1);
         }
 
-        if (!preg_match('/^[A-Z][A-Z_]*[0-9]*$/', $name)) {
+        /**
+         * PHP language natively allows ^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$
+         * For example \x80 is € and \x85 is …, so we don't want \x80-\xff
+         * and starting with a _ is also not really conventional
+         * @see https://www.php.net/manual/en/language.constants.php
+         */
+        if (!preg_match('/^[A-Z][A-Z0-9_]*$/', $name)) {
             $phpcsFile->addError(
-                'Constant "%s" should be UPPERCASED_AND_UNDERSCORED',
+                'Constant "%s" should be UPPERCASED_AND_UNDERSCORED, should start wit a letter '
+                . 'and cannot contain characters other than A-Z, 0-9 and underscore',
                 $stackPtr,
                 'InvalidName',
                 [$name]
