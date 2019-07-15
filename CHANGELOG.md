@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
+
+## 3.5.1 - 2019-07-15
+### Changed
 - Loosen the Zicht.NamingConventions.Constants.InvalidName sniff
 
 ## 3.5.0 - 2019-02-12
