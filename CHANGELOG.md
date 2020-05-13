@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 4.1.2 - 2020-05-13
+### Fixed
+- Allow numbers in classnames to prevent errors on Symfony Migration Version20200506070809 classes
+
 ## 4.1.1 - 2019-07-15
 ### Fixed
 - Fixes superflous description for constructor when class name would contain "New"

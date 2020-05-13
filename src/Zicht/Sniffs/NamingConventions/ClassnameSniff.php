@@ -36,7 +36,7 @@ class ClassnameSniff implements Sniff
         $name = $tokens[ $pos ]['content'];
         $parts = explode('_', $name);
         foreach ($parts as $part) {
-            if (!preg_match('/^([A-Z][a-z]*)+$/', $part)) {
+            if (!preg_match('/^([A-Z][a-z]*[0-9]*)+$/', $part)) {
                 $phpcsFile->addError(
                     'Classname "%s" is not formatted UpperCamelCased',
                     $stackPtr,
