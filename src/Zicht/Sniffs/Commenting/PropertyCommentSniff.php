@@ -66,11 +66,16 @@ class PropertyCommentSniff extends AbstractVariableSniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $ignore = array_merge(Tokens::$scopeModifiers, [T_VAR, T_STATIC, T_WHITESPACE]);
+        $ignore = array_merge(Tokens::$scopeModifiers, [T_VAR, T_STATIC, T_NULLABLE, T_STRING, T_WHITESPACE]);
         $commentEnd = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
+        $hasTypeDef = $tokens[$phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), $commentEnd ? $commentEnd : null, true)]['code'] === T_STRING;
+
+        // If the var does not have a type definition, then it should have a comment (with @var type)
         if ($commentEnd === false || ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT)) {
-            $phpcsFile->addError('Missing property doc comment', $stackPtr, 'Missing');
+            if (!$hasTypeDef) {
+                $phpcsFile->addError('Missing property doc comment', $stackPtr, 'Missing');
+            }
             return;
         }
 
@@ -101,7 +106,7 @@ class PropertyCommentSniff extends AbstractVariableSniff
         $docComment = new DocComment($phpcsFile, $stackPtr, $commentStart);
 
         // Check for separate description
-        if (0 < count($docComment->getDescriptionStrings())) {
+        if (0 < count($docComment->getDescriptionStrings()) && (!$hasTypeDef || $docComment->hasTag('@var'))) {
             $error = 'Description in property doc comment should be placed in the @var tag, '
                 . 'not separately on top of the doc comment';
             $phpcsFile->addError($error, key($docComment->getDescriptionStrings()), 'DescriptionNotAllowed');
@@ -131,7 +136,8 @@ class PropertyCommentSniff extends AbstractVariableSniff
         // Check for missing (required) tags and check for tags that are not allowed to be placed multiple times
         foreach ($this->tags as $tag => $tagConfig) {
             $tagCode = ucfirst(strtolower(substr($tag, 1)));
-            if (isset($tagConfig['required']) && true === $tagConfig['required'] && !$docComment->hasTag($tag)) {
+            if (isset($tagConfig['required']) && true === $tagConfig['required'] && !$docComment->hasTag($tag)
+                && ($tag !== '@var' || !$hasTypeDef)) {
                 $error = 'Missing %s tag in property comment';
                 $phpcsFile->addError($error, $commentEnd, 'Missing' . $tagCode, [$tag]);
             }

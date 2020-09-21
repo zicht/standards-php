@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 4.1.3 - 2020-09-21
+### Fixed
+- Fixed PropertyCommentSniff to detect PHP 7.4 property type definitions and do not make @var required
+  when a type is defined.
+
 ## 4.1.2 - 2020-05-13
 ### Fixed
 - Allow numbers in classnames to prevent errors on Symfony Migration Version20200506070809 classes
