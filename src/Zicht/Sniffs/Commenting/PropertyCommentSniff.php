@@ -258,7 +258,7 @@ class PropertyCommentSniff extends AbstractVariableSniff
          * @example Or go wild and combine all the things!
          *         ArrayCollection<Object, (string|int)[]>|(bool[]|\Exception[])[]
          */
-        $classPattern = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
+        $classPattern = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9\-_\x7f-\xff]*';
         $varPattern = sprintf('(\\\\?%s(?:\\\\%1$s)*)', $classPattern);
         $arrayPostfix = '(?:\\[\\])+|<(?:(?R), ?)?(?R)>';
         $typePattern = sprintf('(%1$s(%2$s)?|\\(((?R)(?:\\|(?R))+)\\)(%2$s))', $varPattern, $arrayPostfix);
@@ -300,9 +300,11 @@ class PropertyCommentSniff extends AbstractVariableSniff
                             $arraySpec,
                             $arraySpecMatch
                         );
+                        var_dump($arraySpecMatch);
                         $typeStrings[] = $arraySpecMatch['v'];
                         if (!empty($arraySpecMatch['k'])) {
-                            $typeStrings[] = $arraySpecMatch['k'];
+                            // Add the key to be checked. If it is mixed, then add 'allow_' prefix to trick processVarTagType() to allow it
+                            $typeStrings[] = ($arraySpecMatch['k'] === 'mixed' ? 'allow_' : '') . $arraySpecMatch['k'];
                         }
                     }
                 }
