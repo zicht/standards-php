@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 4.1.4 - 2021-02-26
+### Changed
+- Changed property comment sniff to allow dash in var type and allow mixed array key type
+### Added
+- Q&A through GitHub Actions
+
 ## 4.1.3 - 2020-09-21
 ### Fixed
 - Fixed PropertyCommentSniff to detect PHP 7.4 property type definitions and do not make @var required
