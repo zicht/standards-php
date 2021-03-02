@@ -95,7 +95,7 @@ class UseStatementSniff implements Sniff
         } else {
             if (!empty($tokens[$stackPtr - 1])) {
                 $previous = $tokens[$stackPtr - 1];
-                if ($previous['content']{strlen($previous['content']) - 1} != "\n") {
+                if ($previous['content'][strlen($previous['content']) - 1] != "\n") {
                     $phpcsFile->addError(
                         'Use statement should be on its own line.',
                         $stackPtr,
