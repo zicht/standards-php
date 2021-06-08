@@ -262,7 +262,7 @@ class PropertyCommentSniff extends AbstractVariableSniff
         $varPattern = sprintf('(\\\\?%s(?:\\\\%1$s)*)', $classPattern);
         $arrayPostfix = '(?:\\[\\])+|<(?:(?R), ?)?(?R)>';
         $typePattern = sprintf('(%1$s(%2$s)?|\\(((?R)(?:\\|(?R))+)\\)(%2$s))', $varPattern, $arrayPostfix);
-        $fullPattern = $typePattern . '(?:\\|' . $typePattern . ')*';
+        $fullPattern = $typePattern . '(?:[\\|&]' . $typePattern . ')*';
 
         $varTagContentPattern = str_replace('(?R)', '(?2)', '/^(' . $fullPattern . ')(?:[ \t]*$|[ \t]+(?P<d>.+)$)/');
         if (0 === (int)preg_match($varTagContentPattern, $descLine1, $match)) {

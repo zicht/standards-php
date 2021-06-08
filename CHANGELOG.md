@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 - Nothing so far
 
+## 4.1.6 - 2021-06-08
+### Fixed
+- Changed property comment sniff to allow ampersand `&` besides pipe `|` in var type lists
+
 ## 4.1.5 - 2021-03-02
 ### Fixed
 - String offset access syntax with curly braces is deprecated in PHP 7.4
