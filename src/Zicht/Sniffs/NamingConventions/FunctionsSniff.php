@@ -58,6 +58,7 @@ class FunctionsSniff implements Sniff
                         [
                             'construct', 'get', 'set', 'call', 'callStatic', 'invoke',
                             'destruct', 'toString', 'clone', 'invoke', 'invokeStatic',
+                            'isset', 'unset',
                         ]
                     )
                 ) {

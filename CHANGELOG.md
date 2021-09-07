@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 - Nothing so far
 
+## 4.1.7 - 2021-09-07
+### Added
+- Added missing 'magic' methods __isset and __unset to allow list
+
 ## 4.1.6 - 2021-06-08
 ### Fixed
 - Changed property comment sniff to allow ampersand `&` besides pipe `|` in var type lists
