@@ -57,8 +57,8 @@ class FunctionsSniff implements Sniff
                         substr($functionName, 2),
                         [
                             'construct', 'get', 'set', 'call', 'callStatic', 'invoke',
-			    'destruct', 'toString', 'clone', 'invoke', 'invokeStatic',
-			    'isset', 'unset',
+                            'destruct', 'toString', 'clone', 'invoke', 'invokeStatic',
+                            'isset', 'unset',
                         ]
                     )
                 ) {
