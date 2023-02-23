@@ -66,6 +66,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated the README.md file Usage section
 - Remove incorrect.php and correct.php
 
+## 3.5.2 - 2023-02-23
+### Added
+- Added abandoned information to composer.json. Suggesting friendsofphp/php-cs-fixer as an alternative.
+
 ## 3.5.1 - 2019-07-15
 ### Changed
 - Loosen the Zicht.NamingConventions.Constants.InvalidName sniff
