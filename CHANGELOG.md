@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 - Nothing so far
 
+## 4.1.8 - 2023-02-23
+### Added
+- Forward merge of 3.5.2: Added abandoned information to composer.json. Suggesting friendsofphp/php-cs-fixer as an alternative.
+
 ## 4.1.7 - 2021-09-07
 ### Added
 - Added missing 'magic' methods __isset and __unset to allow list
